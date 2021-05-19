@@ -17,6 +17,9 @@
     <script src="{{url('/')}}/public/assets/js/core/app-menu.js"></script>
     <script src="{{url('/')}}/public/assets/js/core/app.js"></script>
     <script type="text/javascript" >
+        $(".form-control-position").on("click", function(){                
+            $(this).parent(".search-bar").toggleClass("search-open");
+        });     
     
     $("document").ready(function(){
         setTimeout(function(){

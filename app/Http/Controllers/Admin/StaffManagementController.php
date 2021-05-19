@@ -61,7 +61,6 @@ class StaffManagementController extends Controller
         $this->arr_view_data['arr_data']      = $arr_data;
         $this->arr_view_data['roleArr']  = $roleArr;   
         $this->arr_view_data['businessArr']  = $businessArr;   
-        //dd($businessArr);
 
         return view($this->module_view_folder.'.index',$this->arr_view_data); 
     }

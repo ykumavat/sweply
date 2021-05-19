@@ -7,7 +7,7 @@
 			<div class="content-body">
 			<div>	
 				@include('flash-message')   			
-				<div class="card mb-0">					
+				<div class="card mb-0 padding-left-right">					
 					<div class="m-2">
 						<div class="row">
 							<div class="users-list-filter col-6">
@@ -34,8 +34,8 @@
 										</div>
 									</div>
 									<div class="">
-										<button type="button" class="btn btn-primary add-form-btn btn-add-bussiness"  data-toggle="modal" data-target="#inlineForm">
-											<span class="text-nowrap">Add Business</span>
+										<button type="button" class="btn btn-primary add-form-btn btn-add-bussiness"  data-toggle="modal" data-target="#inlineForm">											
+											<span class="text-nowrap"><span class="table-add-txt">Add Business</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
 										</button>
 									</div>
 								</div>

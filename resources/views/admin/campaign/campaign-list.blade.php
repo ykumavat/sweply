@@ -7,7 +7,7 @@
             <div class="content-body">
                 <div>   
                 @include('flash-message')   
-                    <div class="card mb-0  padding-left-right"> 
+                    <div class="card mb-0  padding-left-right no-add-button"> 
                         <div class="m-2">
                             <div class="row">
                                 <div class="users-list-filter col-6">
@@ -28,7 +28,7 @@
                                         <div class="filtter-btn">
                                             <div class="btn-group">
                                                 <div class="dropdown">
-                                                    <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-warning dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Filter 
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">

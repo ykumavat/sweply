@@ -68,7 +68,7 @@
 
 
 
-                <div class="card mb-0">	
+                <div class="card mb-0 padding-left-right">	
 
                 <div class="m-2">
 
@@ -102,7 +102,33 @@
 
 							<div class="col-6">
 
-								<div class="search-action-btn">                                    
+								<div class="search-action-btn">    
+                                    
+                                    <div class="filtter-btn">
+
+                                        <div class="btn-group">
+
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light filter-obj" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    Type 
+
+                                                </button>
+
+                                                <div class="dropdown-menu filter-obj-option" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+
+                                                    <a class="dropdown-item" href="#" value="CREDIT">Credit</a>
+
+                                                    <a class="dropdown-item" href="#" value="DEBIT">Debit</a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
 
 									<div class="search-filter-bx">
 
@@ -149,32 +175,7 @@
                                         </div>
 
                                     </div> -->
-
-                                    <div class="filtter-btn">
-
-                                        <div class="btn-group">
-
-                                            <div class="dropdown">
-
-                                                <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light filter-obj" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                                    Type 
-
-                                                </button>
-
-                                                <div class="dropdown-menu filter-obj-option" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-
-                                                    <a class="dropdown-item" href="#" value="CREDIT">Credit</a>
-
-                                                    <a class="dropdown-item" href="#" value="DEBIT">Debit</a>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                    
 
 								</div>
 
