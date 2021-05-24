@@ -55,8 +55,26 @@
                                 <input type="hidden" class="form-control" id="code" name="code"  value="+91" />
                                 <input type="text" class="form-control" placeholder="XXXXXXX" name="contact_number" id="contact_number" />
                                 <span class="number-flag-id">
-                                    <span><img src="{{url('/')}}/public/assets/images/logo/flag-arb.png" alt="" /></span> 
-                                    <span style="padding-top: 1px;">+966&nbsp&nbsp&nbsp 05</span>
+                                    <div class="dropdown">
+                                        <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 0;background: none;font-size: 14px">
+                                            <span style="display: inline-block;vertical-align: middle;"><img src="{{url('/')}}/public/assets/images/logo/flag-arb.png" alt="" /></span> 
+                                            <span class="india-dd contry-code" style="display:none;vertical-align: middle;">+91</span>
+                                            <span class="arabic-dd contry-code" style="display: inline-block;vertical-align: middle;">+966</span>
+                                            <!--&nbsp&nbsp&nbsp 05-->
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);margin-top: -6px;margin-left: -10px;">
+                                            <a class="dropdown-item" id="arabic-dd" href="javascript:void(0);">
+                                                <span style="display: inline-block;vertical-align: middle;" ><img src="{{url('/')}}/public/assets/images/logo/flag-arb.png" alt="" /></span> 
+                                                <span  style="display: inline-block;vertical-align: middle;">+966</span>
+                                            </a>
+                                            <a class="dropdown-item" id="india-dd" href="javascript:void(0);">
+                                                <span style="display: inline-block;vertical-align: middle;"><img src="{{url('/')}}/public/assets/images/logo/flag-arb.png" alt="" /></span> 
+                                                <span  style="display: inline-block;vertical-align: middle;">+91</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- <span><img src="{{url('/')}}/public/assets/images/logo/flag-arb.png" alt="" /></span> 
+                                    <span style="padding-top: 1px;">+966&nbsp&nbsp&nbsp 05</span> -->
                                 </span>
                             </div>
                             <?php if($errors->first('contact_number')){ echo '<label for="name" class="error err-msg">'.$errors->first("contact_number").'</label>'; }?>
@@ -94,11 +112,11 @@
                         </div>
                     </div>
 
-                    <!-- <div id="recaptcha-container"></div>
-                        <div class="form-group">
+                    <div id="recaptcha-container"></div>
+                        <div class="form-group otp-fld" style="display:none;">
                             <label>Verification Code</label>
                             <input type="text" id="verificationcode" class="form-control" name="otp" placeholder="Enter OTP ">
-                        </div> -->
+                        </div>
 
 
                     <div class="check-box">
@@ -107,8 +125,11 @@
                         <span><a href="javascript:void(0);">Privacy Policy</a> and <a href="javascript:void(0);">Terms and Conditions</a></span>
                     </div>
                     <div class="more-services-btn animation-fadeinup signup-btn">
-                        <!-- <a href="dashboard.html" class="btn-more-services">Sign Up</a> -->
-                        <button type="submit" class="btn-more-services">Sign Up</button>
+                        <button type="button" value="Submit" class="btn-more-services activate-captcha" onclick="getCaptcha()"> Next</button>
+                        <button type="button" value="Submit" class="btn-more-services verify-otp" onclick="myFunction()" style="display:none;" > Verify OTP</button>
+                        <button style="display:none;" class="btn-more-services login-btn" type="submit">Sign Up</button>
+
+                        <!-- <button type="submit" class="btn-more-services">Sign Up</button> -->
                     </div>
                 </div>
             </div>
@@ -133,6 +154,11 @@
         });
     </script>
 
+
+
+
+
+
 <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
@@ -153,26 +179,85 @@
   firebase.analytics();
 </script>
 <script type="text/javascript"> 
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container'); 
-     var contact_number = jQuery('#contact_number').val();
-     var code = jQuery('#code').val();
-     var mobile_number = '+919657375881';
-     var mobile_number = code+''+contact_number;
+    function getCaptcha(){
+        var contact_number = jQuery('#contact_number').val();
+        var code = jQuery('#code').val();
+        var extension = jQuery('#extension').val();
+        // if(extension!=""){
+        //     contact_number = extension+''+contact_number;
+        // }
+        var token = "{{csrf_token()}}";
+        jQuery.ajax({
+            url: "{{url('/')}}/verify_contact",
+            data: {contact_number:contact_number,_token:token,code:code,type:'regiser'},
+            type: 'post',
+            success: function (data) {
+                if($.trim(data) == 'success'){
+                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container'); 
+                     var contact_number = jQuery('#contact_number').val();
+                     var code = jQuery('#code').val();
+                     var extension = jQuery('#extension').val();
+                     if(extension!=""){
+                        //var mobile_number = code+''+extension+''+contact_number;
+                        var mobile_number = code+''+contact_number;
+                     }else{
+                         var mobile_number = code+''+contact_number;
+                    }
+                     console.log(mobile_number);
+                    firebase.auth().signInWithPhoneNumber(mobile_number, window.recaptchaVerifier).then(function(confirmationResult) { 
+                            window.confirmationResult = confirmationResult; 
+                            a(confirmationResult); 
+                    }); 
+                    $('.otp-fld').show();
+                    $('.activate-captcha').hide();
+                    $('.verify-otp').show();
+                }else{
+                    swal("Oops !", "Contact is already exists, Login now", "error")
+                    .then((value) => {
+                        location.href = "{{url('/')}}/login/";
+                    });
+                }
+            }
+        }); 
+    }
 
-    firebase.auth().signInWithPhoneNumber(mobile_number, window.recaptchaVerifier) 
-    .then(function(confirmationResult) { 
-        window.confirmationResult = confirmationResult; 
-        a(confirmationResult); 
-    }); 
 var myFunction = function() { 
     window.confirmationResult.confirm(document.getElementById("verificationcode").value) 
     .then(function(result) { 
         jQuery('.login-btn').show();
+        jQuery('.login-btn').trigger('click');
         jQuery('.verify-otp').hide();
+        $('.loader-section-main').show();
     }, function(error) { 
         alert(error); 
     }); 
 };
+
+</script>
+
+<script>
+$(document).ready(function(){
+    $('.dropdown-item').click(function(){
+        var selector = $(this).attr('id');
+        $('.'+selector).css("display", "inline-block");
+        if(selector=="arabic-dd"){
+            $('.india-dd').hide();
+            $('.arabic-dd').show();
+            $('#code').val('+966');
+            $('#extension').val('05');
+
+        }else if(selector=="india-dd"){
+            $('.india-dd').show();
+            $('.arabic-dd').hide();
+            $('#code').val('+91');
+            $('#extension').val('');
+        }
+        $('.dropdown-menu').hide();
+    });
+});
+$(".dropdown-toggle").on("click", function(){
+    $(".dropdown-menu").slideToggle();
+});
 </script>
 
 @endsection

@@ -36,4 +36,9 @@ class ChannelCategory extends Authenticatable
      * @var array
      */
     protected $casts = [];
+
+    public function get_channel_detail()
+    {
+        return $this->hasOne('App\Models\Channel', 'id', 'channel_id');
+    }
 }

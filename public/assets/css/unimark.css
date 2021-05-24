@@ -102,14 +102,15 @@ textarea:focus, input.form-control:focus{outline: none;box-shadow: none;border: 
 
 
 /*header css start here*/
-.header-main {padding: 15px 0;position: relative;z-index: 9;}
-.logo-section{float: left;width: 180px;}
-.login-signup-btns{float: right;padding-top: 4px;}
-.login-signup-btns li{display: inline-block;vertical-align: middle;margin-left: 10px;cursor: pointer;}
-.login-signup-btns li a{background-color: #E40421; color: #ffffff;font-size: 14px;font-family: 'poppinsmedium';height: 40px;border-radius: 25px;text-align: center;display: block;line-height: 40px;text-transform: uppercase;border: 1px solid #E40421;padding: 0 25px;}
+.header-main {padding: 20px 0;position: relative;z-index: 9;}
+.logo-section{float: left;width: 165px;}
+.home-header .logo-section{margin-bottom: -70px;}
+.home-header .logo-section span{padding: 20px;}
+.logo-section span{display: block;background-color: #ffffff;border-radius: 30px;}
+.login-signup-btns{float: right;}
+.login-signup-btns li{display: inline-block;vertical-align: middle;margin-left: 10px;}
+.login-signup-btns li a{background-color: #E40421; color: #ffffff;font-size: 16px;font-family: 'poppinsmedium';height: 44px;border-radius: 25px;text-align: center;display: block;line-height: 43px;text-transform: uppercase;border: 1px solid #E40421;padding: 0 25px;}
 .login-signup-btns li a:hover{background-color: transparent;color: #E40421;}
-.login-signup-btns li span{display: inline-block;vertical-align: middle;font-family: 'poppinsmedium';} 
-.login-signup-btns li span img{border-radius: 50%;height: 24px;width: 24px;}
 
 .home-banner-slider .swiper-slide {height: 700px;background-color: #EBEBEB;}
 .home-banner-slider .container {height: 440px;position: relative;top: 49%;margin: auto;transform: translateY(-50%);z-index: 1;}
@@ -129,19 +130,19 @@ textarea:focus, input.form-control:focus{outline: none;box-shadow: none;border: 
 
 
 
-.btn-more-services{width: 170px;height: 46px;text-transform: uppercase;line-height: 46px;margin-top: 40px;border-radius: 60px;font-family: 'poppinsmedium';font-size: 15px;}
+.btn-more-services{width: 170px;height: 46px;text-transform: uppercase;line-height: 44px;margin-top: 40px;border-radius: 60px;font-family: 'poppinsmedium';font-size: 15px;}
 .btn-more-services:hover{background-color: transparent;color: #E40421;border-color: #E40421;}
 .banner-img-section {position: absolute;right: 0;top: 30px;width: 45%;}
 
 .unimark-services-section{text-align: center;padding: 60px 0;}
 .head-bottom-line{margin: 20px 0;}
-.head-bottom-line-small{width: 44px;height: 3px;background-color: #e40421;margin: 0 auto;display: block}
-.head-bottom-line-big{width: 115px;height: 1.5px;background-color: #e40421;margin: 0 auto;display: block;}
+.head-bottom-line-small{width: 44px;height: 3px;background-color: #E50D29;margin: 0 auto;display: block}
+.head-bottom-line-big{width: 115px;height: 1.5px;background-color: #E50D29;margin: 0 auto;display: block;}
 .unimark-services-head{font-size: 36px;font-family: 'poppinsmedium';color: #000000;}
 .unimark-services-txt{font-size: 15px;line-height: 26px;max-width: 580px;width: 100%;margin: 0 auto 50px;}
 .services-box-section{box-shadow: 0 0 30px rgba(0,0,0,0.16);padding: 8px;border-radius: 6px 6px 0 0;}
 .services-box-section:hover{box-shadow: 0 0 30px rgba(0,0,0,0.44);}
-.services-box-section:hover .services-box-buy-now a{color: #e40421;}
+.services-box-section:hover .services-box-buy-now a{color: #E50D29;}
 .services-box-head{text-align: left;font-size: 18px;font-family: 'poppinssemibold';color: #000000;line-height: 26px;padding: 15px 14px 10px;margin-bottom: 25px;overflow: hidden;height: 95px;text-overflow: ellipsis;-webkit-line-clamp: 3;-webkit-box-orient: vertical;display: -webkit-box;}
 .services-box-buy-now{padding: 10px 14px;}
 .services-box-buy-now a{color: #000000;}
@@ -163,7 +164,7 @@ textarea:focus, input.form-control:focus{outline: none;box-shadow: none;border: 
 .trusted-by-world-main li {margin: 0 25px 0px;}
 .logo-slider-head-section{width: 197px;background-color: #000000;float: left;text-align: center;text-decoration: underline;height: 129px;color: #ffffff;font-size: 19px;font-family: 'archivobold';position: relative;padding-right: 26px;line-height: 129px;}
 
-.copyright-bx{padding: 14px 0 10px;background-color: #E40421;color: #ffffff;}
+.copyright-bx{padding: 17px 0;background-color: #E40421;color: #ffffff;}
 .copyright-bx-txt{float: left;font-size: 15px;font-family: 'poppinsmedium';}
 .copyright-bx-social{float: right;}
 .copyright-bx-social li{display: inline-block;vertical-align: middle;padding: 0 15px;}
@@ -184,7 +185,6 @@ div#recaptcha-container {margin: 20px 0 15px;}
 .mobile-number-section input.form-control#verificationcode {padding: 7px 7px .375rem 10px;}
 .signup-form-semihead{font-size: 16px;text-align: center;margin-bottom: 40px;}
 .form-group label{margin-bottom: 2px;font-size: 13px;}
-label.err-msg{font-size: 13px;color: red}
 .form-group{margin-bottom: 20px;position: relative;}
 input.form-control,select.form-control{height: 42px;border-radius: 3px;border: 1px solid #D6D6D6;font-size: 14px;color: #000000;}
 input::-webkit-input-placeholder {color: #A1A1A1 !important;}     
@@ -196,20 +196,16 @@ input:-ms-input-placeholder {color: #A1A1A1 !important;}
 .select-drop-icon{position: absolute;right: 10px;bottom: 6px;font-size: 23px;line-height: 0;}
 
 .login-form-main{max-width: 570px;}
-.number-flag-id{position: absolute;height: 24px;top: 0;margin: auto;bottom: 0;left: 10px;display: flex;align-items: center;}
+.number-flag-id{position: absolute;height: 24px;top: 0;margin: auto;bottom: 0;left: 10px;}
 .number-flag-id img{width: 30px;margin-right: 3px;}
-/* .number-flag-id span{display: inline-block;vertical-align: middle;line-height: 0;} */
-.login-form-main input.form-control{padding-left: 111px;padding-top: 0;padding-bottom: 0;}
-.mobile-number-section input.form-control{/*padding: 7px .75rem .375rem 114px;line-height: 42px;*/padding-left: 111px;}
-.mobile-number-section input.form-control:focus{color: #000000;}
-/* @-moz-document url-prefix() {
-    .mobile-number-section input.form-control{padding: 9px .75rem .375rem 114px;}
-} */
+.number-flag-id span{display: inline-block;vertical-align: middle;line-height: 0;}
+.login-form-main input.form-control{padding-left: 120px;}
+.mobile-number-section input.form-control{padding: 7px .75rem .375rem 120px;}
 .login-form-main .btn-more-services{width: 100%;margin-top: 10px;}
 .dont-have-account-section{font-size: 14px;text-align: center;padding-top: 35px;}
 .dont-have-account-section a{color: #E40421;}
 .login-man-img{position: absolute;bottom: 0;left: 0;}
-.signup-section-main{position: relative;min-height: 900px;background-image: url(../images/logo/login-bg-map.png);background-position: center center;}
+.signup-section-main{position: relative;min-height: 700px;background-image: url(../images/logo/login-bg-map.png);background-position: center center;}
 
 
 
@@ -245,12 +241,6 @@ transform: rotateZ(37deg);-webkit-transform-origin: 100% 100%;transform-origin: 
 [type="checkbox"].filled-in:disabled:checked + label:after {background-color: #BDBDBD;border-color: #BDBDBD; }
 /*  checkbox css end*/
 
-.swal-button{background-color: #e40421;border-radius: 50px;padding: 10px 34px;}
-.swal-button:not([disabled]):hover,.swal-button:hover{box-shadow: 0 8px 25px -8px #e40421;background-color: #e40421;}
-.swal-button:focus{box-shadow: none;border: none;outline: none;}
-.swal-footer{text-align: center;}
-.swal-icon{margin: 0px auto;border-color: #e40421;}
-.swal-icon--error__line{background-color: #e40421;}
 
 @media (max-width:1400px) {
     .slider-content-head{font-size: 70px;line-height: 70px;}
@@ -284,18 +274,12 @@ transform: rotateZ(37deg);-webkit-transform-origin: 100% 100%;transform-origin: 
 
 @media (max-width:767px) {    
 
-    .signup-section-main {    min-height: 750px;}
-   
-    .banner-content-big-txt br {display: none;}
-    .setup-step-number img { position: absolute; left: auto; top: -20px; right: -28px; }
     .home-header .logo-section span{padding: 3px 0 0;}
-    .logo-section {width: 130px;margin: 0;}
-    .login-signup-btns li a{font-size: 14px;height: 36px;line-height: 35px;padding: 0;background-color: transparent;color: #000000;border: none;text-transform: capitalize;}
-    .login-signup-btns{padding-top: 0px;}
-    .login-signup-btns li{margin-left: 15px;}
+    .logo-section {width: 160px;margin: 0;}
+    .login-signup-btns li a{font-size: 14px;height: 36px;line-height: 35px;padding: 0 20px;}
+    .login-signup-btns li{margin-left: 5px;}
     .home-header .logo-section{margin: 0;}
     .header-main {padding: 10px 0;}
-    .login-signup-btns li.mobile-hide{display: none;}
     
 
     .banner-content-big-txt {font-size: 22px;}    
@@ -310,11 +294,9 @@ transform: rotateZ(37deg);-webkit-transform-origin: 100% 100%;transform-origin: 
     .banner-secound-slide-content .banner-content-big-txt.secound-banner-txt-withus{margin-bottom: 0px;}    
     .banner-secound-slide-content .borderd-txt-section {margin-bottom: -8px;}    
     .banner-secound-slide-content .red-light-txt {font-size: 21px;margin-bottom: -5px;max-width: 120px;line-height: 26px;}
-    .banner-img-section {width: 40%; top: 0;}
-    
- 
+    .banner-img-section {width: 60%;}
+    .home-banner-slider .banner-secound-slide-content .banner-img-section {width: 60%;top: 15px;}
     .home-banner-slider .banner-secound-slide-content .banner-img-section.slide-3-section{top: 35px !important;}
-    .home-banner-slider .banner-secound-slide-content .banner-img-section {width: 42%;top: 0;}
 
     .btn-more-services {width: 130px;height: 40px;line-height: 39px;margin-top: 10px;font-size: 13px;}
     .swiper-pagination-bullet{height: 8px;width: 8px;}
@@ -322,13 +304,12 @@ transform: rotateZ(37deg);-webkit-transform-origin: 100% 100%;transform-origin: 
     .unimark-services-head {font-size: 25px;}
     .services-box-img {float: left;width: 100px;}
     .for-responsive-alignment{margin-left: 115px;}
-    .services-box-head{font-size: 16px;padding: 0;margin-bottom: 3px;overflow: hidden;height: 52px;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;display: -webkit-box;line-height: 24px;}
-    .breadcurmb-section-head {font-size: 18px;padding: 8px 0 4px;}
+    .services-box-head{font-size: 16px;padding: 0;margin-bottom: 3px;overflow: hidden;height: 52px;text-overflow: ellipsis;-webkit-line-clamp: 2;-webkit-box-orient: vertical;display: -webkit-box;}
     .services-box-buy-now {padding: 0;}
     .arrow-bye-now{font-size: 19px;}
     .txt-bye-now{font-size: 13px;}
     .unimark-services-section{padding: 30px 0;}
-    .services-box-section{box-shadow: none;margin-bottom: 35px;padding: 0;}
+    .services-box-section{box-shadow: none;margin-bottom: 15px;padding: 0;}
     .services-box-section:hover {box-shadow: none;}
     .services-box-buy-now a{color: #E40421;}
     .unimark-services-txt{margin-bottom: 30px;}
@@ -351,27 +332,6 @@ transform: rotateZ(37deg);-webkit-transform-origin: 100% 100%;transform-origin: 
     .copyright-bx-txt,.copyright-bx-social {float: none;}
 
     /*login page start here*/
-    .signup-form-section{padding: 30px 15px;margin: 30px auto;}
+    .signup-form-section{padding: 30px 15px;}
     .login-man-img {bottom: -30px;width: 270px;}
 }
-
-@media (max-width:575px) { 
-
-.banner-img-section {width: 50%;}
-.home-banner-slider .banner-secound-slide-content .banner-img-section { width: 54%;}
-
-}
-
-@media (max-width:480px) { 
-.banner-img-section {top: 30px;}
-.home-banner-slider .banner-secound-slide-content .banner-img-section{top: 20px;}
-   
-}
-
-   
-@media (max-width:375px) { 
-
-.home-banner-slider .banner-secound-slide-content .banner-img-section { top: 40px;}
-
-    
-   }

@@ -5868,7 +5868,7 @@ input:focus ~ .bg-warning {
 .btn-warning:hover {
   border-color : #FF922A !important;
   color : #FFFFFF !important;
-  box-shadow: 0 8px 25px -8px #e40421;
+  box-shadow : 0 8px 25px -8px #FF9F43;
 }
 .btn-warning:focus, .btn-warning:active {
   color : #FFFFFF !important;

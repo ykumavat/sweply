@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="{{url('/')}}/public/assets/css/fontawesome-v5.7.2-pro.min.css" />
     <link rel="stylesheet" href="{{url('/')}}/public/assets/css/swiper.min.css">
     <!--Custom Css-->
-    <link rel="stylesheet" href="{{url('/')}}/public/assets/css/unimark.css">
-    <link rel="stylesheet" href="{{url('/')}}/public/assets/css/animate.css">
+    <link rel="stylesheet" href="{{url('/')}}/public/assets/css/unimark.css">    
     <!--Main JS-->
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/bootstrap.min.js"></script>

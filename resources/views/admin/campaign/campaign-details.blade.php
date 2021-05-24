@@ -16,10 +16,9 @@
                 <h2>Snapchat Ad Details</h2>
                 <div class="brea-bx">
                     <ul>
-                        <li><a href="#">Home <i class="fal fa-angle-right"></i></a></li>                        
-                        <li><a href="#">Snapchat </a></li>                       
-                    </ul>
-                </div>
+                        <li><a href="{{url('/')}}/user/dashboard">Home <i class="fal fa-angle-right"></i></a></li>                        
+                        <li><a href="{{url('/')}}/user/campaign">Snapchat </a></li>                       
+                    </ul>                </div>
                 <div class="clearfix"></div>               
             </div>
 			<div class="ad-prive-bx ad-prive-details-bx">
@@ -201,7 +200,7 @@
 												Caption
 											</div>
 											<div class="info-main-content">
-												<?php echo isset($data['brand_name'])? $data['brand_name']: '-'; ?>
+												<?php echo isset($data['caption'])? $data['caption']: '-'; ?>
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -256,7 +255,7 @@
 												Note
 											</div>
 											<div class="info-main-content">
-												<?php echo isset($data['note'])? $data['age']: '-'; ?>	
+												<?php echo isset($data['note'])? $data['note']: '-'; ?>	
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -267,7 +266,7 @@
 												Start Date
 											</div>
 											<div class="info-main-content">
-												<?php echo isset($data['start_date'])? date('d-m-Y',strtotime($data['start_date'])): '-'; ?>
+												<?php echo isset($data['start_date'])? $data['start_date'] : '-'; ?>
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -278,7 +277,7 @@
 												End Date
 											</div>
 											<div class="info-main-content">
-												<?php echo isset($data['end_date'])? date('d-m-Y',strtotime($data['end_date'])): '-'; ?>
+												<?php echo isset($data['end_date'])? $data['end_date']: '-'; ?>
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -300,7 +299,14 @@
 												Budget - Daily / Life Time
 											</div>
 											<div class="info-main-content">
-												<?php echo isset($data['campaign_budget_type'])? $data['campaign_budget_type']: '-'; ?> 
+												<?php $campaign_budget_type =  isset($data['campaign_budget_type'])? $data['campaign_budget_type']: '-'; 
+												if($campaign_budget_type == '1'){
+													echo "Everyday";
+												}else{
+													echo "Lifetime";
+												}
+												
+												?> 
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -311,27 +317,58 @@
 								<div class="details-uploaded-section">								
 									<div class="info-main-section">
 										<div class="info-main-header">
-											Uploaded Image
+											Uploaded <?php if($data['upload_type']=='video'){
+														echo 'Video'; 
+													 }else{
+													  	echo 'Image'; 
+													 } ?>
 										</div>
 										<div class="info-main-content">
+
+											<?php if($data['upload_type']=='video'){ ?>
+											<div class="uploaded-img-main">
+												<div class="uploaded-img">
+													<!-- <img id="original_file_display" src="<?php //echo $data['post_image']; ?>"> -->
+													<video id="ad_video" style="background-color:black;object-fit: cover;" loop playsinline muted autoplay>
+                        								<source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
+                        								<source src="movie.ogg" type="video/ogg">
+                    								</video>  
+												</div>
+												Original Video 
+												<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
+												<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+
+											</div>
+											
+											<?php }else{ ?>
+
 											<div class="uploaded-img-main">
 												<div class="uploaded-img">
 													<img id="original_file_display" src="<?php echo $data['original_image']; ?>">
 												</div>
-												Original <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button>
+												Original 
+												<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
+												<a href="<?php echo $data['original_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
 											</div>
 											<div class="uploaded-img-main">
 												<div class="uploaded-img">
 													<img id="original_file_display" src="<?php echo $data['post_image']; ?>">												
 												</div>
-												Croped <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button>
+												Croped 
+												<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+
+												<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
 											</div>
+
+											<?php } ?>
 											<?php 
 											if(isset($data['app_icon']) && $data['app_icon']!=""){ ?>
 											<div class="uploaded-img-main">
 												<div class="uploaded-img">
 													<img id="original_file_display" src="<?php echo $data['app_icon']; ?>">
-													<button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button>
+													<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
+													App Icon <a href="<?php echo $data['app_icon']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+
 												</div>
 												App Icon
 											</div>
@@ -345,7 +382,7 @@
 								<div class="estamations-from-bx prive-estamations-calculation">
 									<div class="Estamations-left-right-bx">
 										<div class="reach-people">Estamated Reach</div>
-										<div class="reach-click"><i class="feather icon-users"></i><?php echo $data['estimeted_reach']; ?></div>
+										 <div class="reach-click"><i class="feather icon-users"></i><?php echo $data['estimated_reach']; ?></div> 
 										<div class="clearfix"></div>
 									</div>
 									<div class="Estamations-left-right-bx">
@@ -382,5 +419,7 @@
 		</div>
 	</div>
 </div>
+
+
     @endsection
     

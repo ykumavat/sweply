@@ -228,8 +228,10 @@ class WalletController extends Controller{
 		}else if($transaction_type == 'DEBIT'){
 			$transaction_type = 'Debited';
 		} 
-
-                
+                $remark = "";
+                if($data->remark){
+                    $remark = '<a href="#" title="Remark" data-toggle="popover" data-placement="bottom" data-content="'.$data->remark.'">View</a>';
+                }
                 $transactionDate="";
                 $transactionDate = date('d/m/Y',strtotime($data->created_at));
 
@@ -237,8 +239,9 @@ class WalletController extends Controller{
                 $build_result->data[$key]->business_name  = $business_name;                
                 $build_result->data[$key]->user_name  = $user_name;    
                 $build_result->data[$key]->campaign_name  = $campaign_name; 
-		$build_result->data[$key]->transaction_type  = $transaction_type;    
-                $build_result->data[$key]->transaction_date  = $transactionDate;    
+		        $build_result->data[$key]->transaction_type  = $transaction_type;    
+                $build_result->data[$key]->transaction_date  = $transactionDate;
+                $build_result->data[$key]->remark  = $remark;                
 
             }
             return response()->json($build_result);
@@ -308,6 +311,4 @@ class WalletController extends Controller{
 		} 
         
     }
-    
-
 }

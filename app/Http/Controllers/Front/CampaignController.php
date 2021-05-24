@@ -28,6 +28,7 @@ class CampaignController extends Controller{
         $this->module_view_folder = "front.campaign";
         $this->module_url_path    = url('/')."/user";
         $this->BaseModel		  = new CampaignModel();
+        $this->WalletModel		  = new WalletModel();
         $this->campaign_image_base_img_path   = base_path().config('app.project.img_path.campaign_image');
 		$this->campaign_image_public_img_path = url('/').config('app.project.img_path.campaign_image');
     }
@@ -147,18 +148,28 @@ class CampaignController extends Controller{
     }
 
     function store_campaign_data(Request $request){
+        
+        $campaign_id =0;
+	
         $arr_data = $arr_rules = [];   
         $form_data_arr = explode('&',$request->input('form_data'));
         foreach($form_data_arr as $data){
             $data_arr = explode('=',$data);
-            $arr_data[$data_arr[0]] =   urldecode($data_arr[1]);
-        }
+            if($data_arr[0] == 'campaign_id' ){
+                $campaign_id =   urldecode($data_arr[1]);
+            }else{
+                if($data_arr[0] != 'wallet_amount' && $data_arr[0] != 'campaign_target_area' ){
+                    $arr_data[$data_arr[0]] =   urldecode($data_arr[1]);
+                }
+            } 
             
-        $arr_data['website'] = $arr_data['website_url'];
+        }
+          //  dd( $arr_data); 
+        //$arr_data['website'] = $arr_data['website_url'];
         $start_date = $arr_data['start_date'];
-        $start_date = date('Y-m-d',strtotime($start_date));
+        //$start_date = date('Y-m-d',strtotime($start_date));
         $end_date = $arr_data['end_date'];
-        $end_date = date('Y-m-d',strtotime($end_date));
+        //$end_date = date('Y-m-d',strtotime($end_date));
         // Screenshot Upload
         $img = $_POST['screen_shot']; 
         if(isset($_POST['screen_shot']) && $_POST['screen_shot']!=""){ 
@@ -233,21 +244,33 @@ class CampaignController extends Controller{
         //$arr_data['screen_shot']        =   $screenshot_name;
         $arr_data['start_date']         =   $start_date;
         $arr_data['end_date']           =   $end_date;
-        $arr_data['estimeted_reach']    =   $arr_data['estimated_reach'];
-        $arr_data['vat_amount']         =   $arr_data['vat'];
-        $arr_data['service_amount']     =   $arr_data['service_fee'];
+        $arr_data['estimated_reach']    =   $arr_data['estimated_reach'];
+        $arr_data['vat_amount']         =   $arr_data['vat_amount'];
+        $arr_data['service_amount']     =   $arr_data['service_amount'];
         $arr_data['upload_type']        =   $request->input('upload_type', 0);
         $arr_data['target_audience']    =   $request->input('target_audience', 0);
         $arr_data['gender']             =   $request->input('gender', 0);
         $arr_data['age']                =   $request->input('age', 0);
         $arr_data['campaign_budget_type'] = $request->input('campaign_budget_type', 1);
-
-        $create  	= $this->BaseModel->create($arr_data);
+        $scall_from = '';
+        if($campaign_id  != ''  && $campaign_id  != 'undefined' && $campaign_id  != null){
+                $scall_from = 'update';
+             $create  	= $this->BaseModel->where('id',$campaign_id)->update($arr_data);
+        }else{
+                $scall_from = 'create';
+             $create  	= $this->BaseModel->create($arr_data);
+        }
+       
         
         if($create){
-            $campaign_id = $create->id;
+            if($campaign_id  != ''  && $campaign_id  != 'undefined' && $campaign_id  != null){
+                $campaign_id = $campaign_id;
+            }else{
+                $campaign_id = $create->id;
+            }
+            
 
-            $userID = Session::get('LoggedUser');
+             $userID = Session::get('LoggedUser');
             $notificationArr = array(
                                     "title"=>"New campaign created - ".$arr_data['campaign_name'],
                                     "message"=>" New campaign created from user panel",
@@ -255,13 +278,38 @@ class CampaignController extends Controller{
                                     "from_id"=>$userID,
                                     );
             addNotification($notificationArr);
+            if($scall_from == 'update'){
+                 $prev_data = $this->WalletModel->where('campaign_id',$campaign_id)->where('transaction_type','DEBIT')->orderBy('created_at','DESC')->first();
+                    $debited_amount = $balance_amount = "";
 
+
+
+
+
+                     $walletArr = WalletMasterModel::where('business_id',$arr_data['business_id'])->first();
+                     if(isset($prev_data['amount'])){
+                        $debited_amount = $walletArr['debited_amount']- $prev_data['amount'];
+                        $balance_amount = $walletArr['balance_amount']+ $prev_data['amount'];
+
+                        $update = WalletMasterModel::where('business_id',$arr_data['business_id'])->update(array("debited_amount"=>$debited_amount,"balance_amount"=>$balance_amount));
+
+                        //$result = $this->BaseModel->where('id',$campaign_id)->first();
+                        $prev_data_wallet = [];
+                        $prev_data_wallet['transaction_type'] = 'CREDIT';
+                        $prev_data_wallet['payment_status'] = 'DONE';
+                        $prev_data_wallet['remark'] = 'Updated Campaign';
+                    
+                         $prev_data = $this->WalletModel->where('id',$prev_data['id'])->update($prev_data_wallet);
+                }
+            }
+        
             $walletArr = [];
             $walletArr = WalletMasterModel::where('business_id',$arr_data['business_id'])->first();
-            $wallet_status = "warning";
+            $wallet_status = '';
+            
             if($walletArr){
                 if($walletArr['balance_amount']>=$arr_data['total_budget']){
-
+                    
                     $debited_amount = $balance_amount = "";
 
                     $debited_amount = $walletArr['debited_amount']+$arr_data['total_budget'];
@@ -281,14 +329,20 @@ class CampaignController extends Controller{
                         );
                         WalletModel::create($paymentArr);
                         $this->BaseModel->where('id',$campaign_id)->update(array("payment_status"=>"PAID"));
-
+                        
                     }
-
-                    $wallet_status = "success";
+                    
+                    $count =  WalletModel::where('campaign_id',$campaign_id)->count();
+                    if($count > 1 || $scall_from == 'update'){
+                        $wallet_status = "updated";
+                    }else{
+                        $wallet_status = "success";
+                    }
+                    //$wallet_status = "success";
                 }else{
                     $wallet_status = "warning";
                 }
-            }
+            } 
 			echo $wallet_status;
 		}else{
             echo "err";
@@ -305,7 +359,6 @@ class CampaignController extends Controller{
         if(Session::has('BUSINESSID')){
             $businessID = Session::get('BUSINESSID');
         }
-
 
         $obj_request_data = $this->BaseModel;
         if($businessID>0){
@@ -335,6 +388,8 @@ class CampaignController extends Controller{
             foreach ($build_result->data as $key => $data) 
             {
                 $settings_link_url    = $this->module_url_path."/customer/edit_staff/".base64_encode($data->id);
+                $edit_link_url    = $this->module_url_path."/snapchat-create-ads/".base64_encode($data->id);
+                $view_link_url    = $this->module_url_path."/campaign-details/".base64_encode($data->id);
                 $svg='<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-body feather feather-more-vertical">
                                                         <circle cx="12" cy="12" r="1"></circle>
                                                         <circle cx="12" cy="5" r="1"></circle>
@@ -343,8 +398,8 @@ class CampaignController extends Controller{
                 $action_button_html = '<div class="dropdown table-drop-action">
                                             <button class="btn-icon btn btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$svg.'</button>
                                             <div class="dropdown-menu dropdown-menu-right">';
-                $action_button_html .='<a class="dropdown-item edit-btn" title="Edit"  onclick="edit('."'".base64_encode($data->id)."'".')" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">View</a>';
-               // $action_button_html .='<a class="dropdown-item edit-btn" title="Edit"  onclick="edit('."'".base64_encode($data->id)."'".')" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">View</a>';
+                $action_button_html .='<a class="dropdown-item edit-btn" title="Edit"   href="'.$edit_link_url.'" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Edit</a>';
+                $action_button_html .='<a class="dropdown-item edit-btn" title="Show"   href="'.$view_link_url.'" data-original-title="Show" data-id="'.$data->id.'" id="open_edit_staff_modal">View</a>';
 
                 $action_button_html .='</div>
                                        </div>'; 
@@ -364,13 +419,20 @@ class CampaignController extends Controller{
                 if(isset($data->get_channel)){                       
                     $channelName = $data->get_channel->channel_name;
                 }
-		 $total_amount = $data->total_budget;
+		        $total_amount = $data->total_budget;
                 $campaign_name = $data->campaign_name;
                 $enc_id = base64_encode($data->id);
                 if($data->payment_status == 'PENDING'){
-                    $pay_now = '<a href="#" onclick="pay_now('.$total_amount.','.$balance_amount.",'$campaign_name','$enc_id '".')"><i class="feather icon-money"></i> Pay Now</a>';
+                    $pay_now = '<a href="#"  onclick="pay_now('.$total_amount.','.$balance_amount.",'$campaign_name','$enc_id '".')"> Pay Now</a>';
                 }else{
                    $pay_now = $data->payment_status;
+                }
+
+                $status = $data->status;
+                if($data->status=='PENDING' || $data->status=='REJECT'){
+                    $status = '<div class="badge badge-pill badge-warning">'.$data->status.'</div>';
+                }else{
+                    $status = '<div class="badge badge-pill badge-success">'.$data->status.'</div>';
                 }
 
 
@@ -381,9 +443,11 @@ class CampaignController extends Controller{
                 $build_result->data[$key]->id                   = $data->id;
                 $build_result->data[$key]->business_name        = $businessName;
                 $build_result->data[$key]->user_name        = $userName;
-                $build_result->data[$key]->channel_name        = $channelName;
-		$build_result->data[$key]->payment_status    = $pay_now;
-                $build_result->data[$key]->built_action_btns    = $invoiceHtml;
+                $build_result->data[$key]->channel_name        = "Snapchat";
+                $build_result->data[$key]->payment_status    = $pay_now;
+                $build_result->data[$key]->built_action_btns    = $action_button_html;
+                $build_result->data[$key]->status    = $status;
+
                 
             }
             return response()->json($build_result);
@@ -424,6 +488,37 @@ class CampaignController extends Controller{
             return view($this->module_view_folder.'.campaign-details',$this->arr_view_data);
         }
     }
+    
+    function load_campaign_data($enc_id){
+        $this->arr_view_data['page_title']       = "Transactions";
+        $this->arr_view_data['module_title']     = "Transactions";
+        $this->arr_view_data['module_url_path']  = $this->module_url_path;  
+        $id = base64_decode($enc_id);
+        
+        $sessionData = [];        
+        if(!session()->has('LoggedUser')){
+            return redirect(url('/').'/login');
+        }else{
+            $sessionData = Session::all();
+            $userID = 0;
+            $userID = Session::get('LoggedUser');
+            $this->arr_view_data['user'] = $userID;
+            $obj_user  = User::where('id',$userID)
+                                   ->first();
+            $obj_responce_data = $this->BaseModel->with('get_user','get_business')->where('id',$id)->first();
+            
+            $arr_data = $obj_responce_data->toArray();
+            
+            $arr_data['original_image'] = $this->campaign_image_public_img_path.$arr_data['original_image'];
+            $arr_data['post_image'] = $this->campaign_image_public_img_path.$arr_data['post_image'];
+            $arr_data['screen_shot'] = $this->campaign_image_public_img_path.$arr_data['screen_shot'];
+            
+            $this->arr_view_data['userData']  = $obj_user;              
+            $this->arr_view_data['data']  = $arr_data;              
+            return view($this->module_view_folder.'.snapchat.create',$this->arr_view_data);
+        }
+    }
+    
 
 /**********CAmpaign Payement Status -  Prashant  - 15-05-2021******/
       function campaign_payment_status(Request $request){

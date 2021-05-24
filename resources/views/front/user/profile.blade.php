@@ -57,7 +57,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="company_name"> Company Name </label>
-                                    <input type="text" placeholder="Enter  Company Name " class="form-control" id="company_name"  value="{{$userData->company_name}}">
+                                    <input type="text" placeholder="Enter  Company Name " class="form-control" id="company_name" name="company_name" value="{{$businessData->business_name}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -67,22 +67,24 @@
                                 </div>
                             </div>
 
+
+                            <input type="hidden" name="business_id" value="{{$businessData->id}}" />
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="website_url">Website</label>
-                                    <input type="text" placeholder="Enter Website" class="form-control" id="website_url" name="website_url"  value="{{$userData->website_url}}" >
+                                    <input type="text" placeholder="Enter Website" class="form-control" id="website_url" name="website_url"  value="{{$businessData->website_url}}" >
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="commercial_number"> Commercial Number </label>
-                                    <input type="text" placeholder="Enter Commercial Numbe" class="form-control" id="commercial_number" name="commercial_number" value="{{$userData->commercial_number}}">
+                                    <input type="text" placeholder="Enter Commercial Numbe" class="form-control" id="commercial_number" name="commercial_number" value="{{$businessData->contact_number}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="vat_number">  Vat Number </label>
-                                    <input type="text" placeholder="Enter Vat Number" class="form-control" id="vat_number" name="vat_number" value="{{$userData->vat_number}}">
+                                    <input type="text" placeholder="Enter Vat Number" class="form-control" id="vat_number" name="vat_number" value="{{$businessData->vat_number}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -92,10 +94,16 @@
                                     <input type="file" class="custom-file-input" id="vat_cr_certificate" name="vat_cr_certificate"  value="{{$userData->vat_cr_certificate}}">
                                     <label class="custom-file-label" for="vat_cr_certificate">Choose Certificate file</label>
                                 </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <?php if(isset($userData->vat_cr_certificate) && $userData->vat_cr_certificate!="" ){ ?>
+                                    <label><a style="width:100%;" href="<?php echo url('/').'/uploads/user_image/'.$userData->vat_cr_certificate; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"> &nbsp;Download</i></a></label>
+                                <?php } ?>
                             </div>
                         </div>
                         </div>
-                        <a style="width: 100%;" onclick="update_profile();" class="btn btn-primary shadow waves-effect waves-light mt-2">Submit</a>
+                        <a style="width: 100%;" href="javascript:void(0);" onclick="update_profile();" class="btn btn-primary shadow waves-effect waves-light mt-2">Submit</a>
                         </form>
                     </div>
                 </div>

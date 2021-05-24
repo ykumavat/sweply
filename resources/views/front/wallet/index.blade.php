@@ -60,9 +60,9 @@
                                     <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
                                         <div>Business</div>
                                     </th>
-                                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
+                                    <!-- <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
                                         <div>User</div>
-                                    </th>
+                                    </th> -->
                                     <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
                                         <div>Transaction Type</div>
                                     </th>
@@ -117,7 +117,7 @@
             columns: [
                 {data: 'id', name: 'transaction_id'},
                 {data: 'business_name', name: 'business_name'},
-                {data: 'user_name', name: 'user_name'},
+                // {data: 'user_name', name: 'user_name'},
                 {data: 'transaction_type', name: 'transaction_type'},
                 {data: 'amount', name: 'amount'},
                 {data: 'campaign_name', name: 'campaign_name'},

@@ -167,7 +167,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-4 col-12 apexchart-50 pl-5 pr-5">                                
+                            <div class="col-lg-4 col-12 apexchart-50 pl-5 pr-5">                                
                                 <section id="chartjs-charts">      
                                     <div class="card">
                                         <div class="card-header">
@@ -183,7 +183,7 @@
                                     </div>
                                 </section>                         
                             </div>
-                            <div class="col-lg-4 col-12 apexchart-50 pl-5 pr-5">
+                            <!--<div class="col-lg-4 col-12 apexchart-50 pl-5 pr-5">
                                 <div class="card recent-booking-box">
                                     <div class="card-header">
                                         <h4 class="card-title">Upcoming Campaigns</h4>
@@ -261,6 +261,26 @@
 
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{{url('/')}}/public/assets/vendors/js/charts/apexcharts.min.js"></script>    
+    <script src="{{url('/')}}/public/assets/vendors/js/extensions/shepherd.min.js"></script>
+    <!-- END: Page Vendor JS--> 
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{url('/')}}/public/assets/js/scripts/charts/chart-apex.js"></script>
+    <!-- END: Page JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{url('/')}}/public/assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS--> 
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{{url('/')}}/public/assets/vendors/js/charts/chart.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{url('/')}}/public/assets/js/scripts/charts/chart-chartjs.js"></script>
 
     @endsection
 

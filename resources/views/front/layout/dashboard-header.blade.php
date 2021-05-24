@@ -108,18 +108,23 @@
                                             </div>
                                         </li>
                                     <?php }else{ ?>
-                                        <li>
-                                            <div class="create-btn"><a href="#" data-toggle="modal" data-target="#upgrade-account">Upgrade</a></div>
-                                         </li>
-
+                                        <!-- <li>
+                                            <div class="create-btn"><a href="#" data-toggle="modal" data-target="#upgrade-account">Upgrade Now</a></div>
+                                         </li> -->
                                    <?php } ?>
                                 </ul>
                             </div>
                             <ul class="nav navbar-nav float-right">
+                                <?php if($userData['business_type']==0){ ?>
+                                <li class="upgrade-now-btn-link">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#upgrade-account">Upgrade Now</a>
+                                </li>
+                                <?php } ?>
                                 <li class="dropdown-language nav-item">
-                                    <a class="nav-link" id="dropdown-flag" href="#" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link" href="#">
                                         <span class="selected-language">
-                                            <img src="{{url('/')}}/public/assets/images/logo/lan-arabic.svg"/> <span class="select-language-txt">English</span>
+                                            <img src="{{url('/')}}/public/assets/images/logo/flag-arb.png"/> 
+                                            <span class="select-language-txt">English</span>
                                         </span>
                                     </a>                                    
                                 </li>
@@ -177,19 +182,30 @@
                                 </li>
                                 <li class="dropdown dropdown-user nav-item"><a
                                         class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                        <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">
+                                        <div class="user-nav d-sm-flex d-none"><span class="user-name">
                                            <?php echo $userData["name"]; ?>
-                                            </span><span class="user-status">Available</span></div><span><img
-                                                class="round" src="{{url('/')}}/public/assets/images/profile.png"
-                                                alt="avatar" height="40" width="40"></span>
+                                            </span><span class="user-status">Available</span></div><span>
+					<?php if($userData["profile_photo"] == ''){ ?>
+					<img class="round" src="{{url('/')}}/public/assets/images/profile.png" alt="avatar" height="40" width="40">
+
+					<?php }else{ ?>
+
+					<img class="round" src="{{url('/')}}//uploads/user_image/<?php echo $userData["profile_photo"]; ?>" alt="avatar" height="40" width="40">
+					<?php } ?>
+
+					</span>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
-                                            href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a
-                                            class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My
-                                            Inbox</a><a class="dropdown-item" href="app-todo.html"><i
-                                                class="feather icon-check-square"></i> Task</a><a class="dropdown-item"
-                                            href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="{{url('/')}}/logout"><i
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item"
+                                            href="{{url('/')}}/user/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                            <!-- <a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My
+                                            Inbox</a>
+                                            <a class="dropdown-item" href="app-todo.html"><i
+                                                class="feather icon-check-square"></i> Task</a>
+                                            <a class="dropdown-item"
+                                            href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a> -->
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{url('/')}}/logout"><i
                                                 class="feather icon-power"></i> Logout</a>
                                     </div>
                                 </li>
@@ -231,7 +247,7 @@
                         <input type="text" name="website_url" placeholder="Website" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label>Commercial Numbe: </label>                   
+                        <label>Commercial Number: </label>                   
                         <input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
                     </div>  
                     <div class="form-group">

@@ -75,6 +75,7 @@
                             <li><a href="{{url('/')}}/user/contact/"><i class="feather icon-circle"></i><span class="menu-item">Contact Us</span></a></li>
                         </ul>
                     </li>
+                    <li class=" nav-item"><a href="{{url('/')}}/logout"><i class="fal fa-sign-out-alt"></i><span class="menu-title" >Logout</span></a></li>
                 </ul>
                 <?php 
                 if($userData['business_type']==1){ // commercial 

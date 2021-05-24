@@ -33,10 +33,10 @@
                 el: '.swiper-pagination',
                 clickable: true,
             },
-            // autoplay: {
-            //     delay: 3500,
-            //     disableOnInteraction: false,
-            // },            
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },            
         });
     </script>
     <script type="text/javascript">
@@ -62,6 +62,23 @@
         }       
     </script>
 
+
+<div class="loader-section-main" style="display:none;">
+    <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
        
 </body>
 

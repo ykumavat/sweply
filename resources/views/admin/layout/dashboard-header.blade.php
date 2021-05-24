@@ -65,16 +65,16 @@
                                 </ul>
 
                                 <ul class="nav navbar-nav">
-                                    <li>
+                                    <!-- <li>
                                         <div class="create-btn"><a href="{{url('/')}}/user/create-ads/">Create Ads</a></div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <ul class="nav navbar-nav float-right">
                                 <li class="dropdown-language nav-item">
                                     <a class="nav-link" id="dropdown-flag" href="#" aria-haspopup="true" aria-expanded="false">
                                         <span class="selected-language">
-                                            <img src="{{url('/')}}/public/assets/images/logo/lan-arabic.svg"/> <span class="select-language-txt">English</span>
+                                            <img src="{{url('/')}}/public/assets/images/logo/flag-arb.png"/> <span class="select-language-txt">English</span>
                                         </span>
                                     </a>                                    
                                 </li>

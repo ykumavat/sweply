@@ -294,6 +294,14 @@ class CampaignController extends Controller{
                    $pay_now = $data->payment_status;
                 }
 
+
+                $status = $data->status;
+                if($data->status=='PENDING' || $data->status=='REJECT'){
+                    $status = '<div class="badge badge-pill badge-warning">'.$data->status.'</div>';
+                }else{
+                    $status = '<div class="badge badge-pill badge-success">'.$data->status.'</div>';
+                }
+
                 
 
                 $invoiceHtml = '<a href="'.$campaign_link_url.'"><i class="feather icon-eye"></i> View</a>';
@@ -305,6 +313,8 @@ class CampaignController extends Controller{
                 $build_result->data[$key]->channel_name        = $channelName;
 		$build_result->data[$key]->payment_status    = $pay_now;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
+                $build_result->data[$key]->status                   = $status;
+
                 
             }
             return response()->json($build_result);

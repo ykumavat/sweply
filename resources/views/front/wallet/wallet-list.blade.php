@@ -23,8 +23,8 @@
                             </div>                             -->
 
                             <img src="{{url('/')}}/public/assets/images/logo/wallet-img.svg" alt=""/>
-                            <a style="width: 100%; color: #fff;" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-primary shadow waves-effect waves-light mt-2">Charge you wallet </a>
-                           
+                            <a href="{{url('/')}}/user/payment/" style="width: 100%; color: #fff;"  class="btn btn-primary shadow waves-effect waves-light mt-2">Charge you wallet </a>    
+                            <!--data-toggle="modal" data-target="#exampleModalCenter"-->                        
                         </div>
                        
                     </div>
@@ -220,5 +220,14 @@
 	}
 
 
+
+
+</script>
+<script>
+$(document).ready(function(){
+    setTimeout(function(){ 
+        $('[data-toggle="popover"]').popover();  
+     }, 8000); 
+});
 </script>
     @endsection

@@ -68,7 +68,7 @@
 
 
 
-                <div class="card mb-0 padding-left-right">	
+                <div class="card mb-0 padding-left-right no-add-button">	
 
                 <div class="m-2">
 
@@ -110,7 +110,7 @@
 
                                             <div class="dropdown">
 
-                                                <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light filter-obj" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn btn-warning dropdown-toggle waves-effect waves-light filter-obj" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                                     Type 
 
@@ -197,7 +197,7 @@
 
                                         <tr>
 
-                                            <th>Transaction ID</th>
+                                            <th>ID</th>
 
                                             <th>Business</th>
 
