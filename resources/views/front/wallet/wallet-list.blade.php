@@ -96,7 +96,7 @@
                                     <thead>
                                         <tr>
                                             <th> ID</th>
-                                            <th>Business</th>
+                                            <!-- <th>Business</th> -->
                                             
                                             <th> Type</th>
                                             <th>Amount</th>
@@ -170,10 +170,10 @@
             "bLengthChange": false,
             "paging": true,
             "bPaginate": false,
-              "pageLength": 5,
+              "pageLength": 15,
             columns: [
                 {data: 'id', name: 'transaction_id'},
-                {data: 'business_name', name: 'business_name'},
+                //{data: 'business_name', name: 'business_name'},
                
                 {data: 'transaction_type', name: 'transaction_type'},
                 {data: 'amount', name: 'amount'},

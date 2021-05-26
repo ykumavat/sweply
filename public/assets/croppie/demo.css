@@ -132,16 +132,12 @@ max-width: 550px;
         width: 100%;
         min-width: 0;
         margin-left: 0;
-        margin-right: 0;
-        padding-left: 20px; /* grid-space to left */
-        padding-right: 10px; /* grid-space to right: (grid-space-left - column-space) e.g. 20px-10px=10px */
-    }   
+        margin-right: 0;        
+    }    
     .container, 
-    .section-header h2 {
-        min-width: 0;
-    }
-
-    .croppie-container {
-        padding: 30px 0;
-    }
+    .section-header h2 {min-width: 0;}    
+    .demo-wrap .container {padding: 0px;}
+    .demo-wrap{padding: 0;}
+    .upload-demo-wrap{height: 100vh;}
+    .actions-close-modal{top: 10px;right: 10px;}
 }

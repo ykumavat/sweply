@@ -135,7 +135,7 @@ class BusinessController extends Controller{
 					$status = '<a href="'.$unblock_link_url.'"  title="Unblock" onclick="return confirm_action(this,event,\'Do you really want to unblock this category ?\')"><span class="badge badge-pill badge-warning">Blocked</span></a>';
 					//$action_button_html 	 =  $action_delete_button;
 				} */
-                $build_result->data[$key]->id                   = $data->id;
+                $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_status      = $status;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
                 
@@ -277,7 +277,7 @@ class BusinessController extends Controller{
                     $business_name = $data->get_business_detail->business_name;
                 }
                 $user_role = "User";
-                $build_result->data[$key]->id                   = $data->id;
+                $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_name        = $business_name;
                 $build_result->data[$key]->user_role        = $user_role;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;

@@ -40,11 +40,17 @@
                                     <input type="text" placeholder="Enter Last Name" class="form-control" id="last_name" name="last_name" value="{{$userData->last_name}}">
                                 </div>
                             </div>
+                            <?php
+
+                            if($userData->contry_code==""){
+                                $userData->contry_code = "+91";
+                            }
+                            ?>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="contact_number"> Mobile Number </label>
                                     <input style="padding-left: 55px;" type="text" placeholder="Enter  Mobile Number " class="form-control" id="contact_number" name="contact_number" value="{{$userData->contact_number}}">
-                                    <span class="mobile-no-pro">+966</span>
+                                    <span class="mobile-no-pro">{{$userData->contry_code}}</span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -53,7 +59,7 @@
                                     <input type="text" placeholder="Enter Email" class="form-control" id="email" name="email" value="{{$userData->email}}">
                                 </div>
                             </div>
-                            
+                            <?php /*
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="company_name"> Company Name </label>
@@ -66,8 +72,6 @@
                                     <input type="text" placeholder="Enter Type" class="form-control" id="type" name="type"  value="{{$userData->type}}">
                                 </div>
                             </div>
-
-
                             <input type="hidden" name="business_id" value="{{$businessData->id}}" />
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
@@ -88,22 +92,24 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="emailAddress1">Upload Vat & Cr Certificate</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="vat_cr_certificate" name="vat_cr_certificate"  value="{{$userData->vat_cr_certificate}}">
-                                    <label class="custom-file-label" for="vat_cr_certificate">Choose Certificate file</label>
+                                <div class="form-group">
+                                    <label for="emailAddress1">Upload Vat & Cr Certificate</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="vat_cr_certificate" name="vat_cr_certificate"  value="{{$userData->vat_cr_certificate}}">
+                                        <label class="custom-file-label" for="vat_cr_certificate">Choose Certificate file</label>
+                                    </div>
+                                    
                                 </div>
-                                
+                                <div class="form-group">
+                                    <?php if(isset($userData->vat_cr_certificate) && $userData->vat_cr_certificate!="" ){ ?>
+                                        <label><a style="width:100%;" href="<?php echo url('/').'/uploads/user_image/'.$userData->vat_cr_certificate; ?>"  class="uploaded-img-download cirtificate-download"  download><i class="fal fa-download"></i>&nbsp;Download/View certificate</a></label>
+                                    <?php } ?>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <?php if(isset($userData->vat_cr_certificate) && $userData->vat_cr_certificate!="" ){ ?>
-                                    <label><a style="width:100%;" href="<?php echo url('/').'/uploads/user_image/'.$userData->vat_cr_certificate; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"> &nbsp;Download</i></a></label>
-                                <?php } ?>
-                            </div>
+                            */ ?>
+
                         </div>
-                        </div>
-                        <a style="width: 100%;" href="javascript:void(0);" onclick="update_profile();" class="btn btn-primary shadow waves-effect waves-light mt-2">Submit</a>
+                        <a style="width: 100%;" href="javascript:void(0);" onclick="update_profile();" class="btn btn-primary shadow waves-effect waves-light mt-2">Update</a>
                         </form>
                     </div>
                 </div>
@@ -145,9 +151,9 @@
        
             showLoader();
             
-            
+            var file_data = "";
             var logo = $('#logo_id').prop('files')[0]; 
-            var file_data = $('#vat_cr_certificate').prop('files')[0]; 
+            //var file_data = $('#vat_cr_certificate').prop('files')[0]; 
             var token    = "{{csrf_token()}}";
             
           

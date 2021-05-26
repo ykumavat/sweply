@@ -135,7 +135,7 @@
 					<div class="form-group">
 						
                         <button type="button" class="btn btn-primary  " onclick="update_status('CONFIRM');">CONFIRM</button>
-                        <button type="button" class="btn btn-primary "onclick="update_status('REJECT');" >REJECT</button>
+                        <!-- <button type="button" class="btn btn-primary "onclick="update_status('REJECT');" >REJECT</button> -->
                         <button type="button" class="btn btn-primary "onclick="update_status('START');" >START</button>
                         <button type="button" class="btn btn-primary "onclick="update_status('END');" >END</button>
                     </div>
@@ -245,7 +245,7 @@
              "bLengthChange": false,
              "paging": true,
              "bPaginate": true,
-             "pageLength": 5,
+             "pageLength": 15,
             
             columns: [
                 {data: 'id', name: 'id'},

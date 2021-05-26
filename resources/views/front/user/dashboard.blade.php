@@ -45,33 +45,28 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-12 pl-5 pr-5">
                             <div class="card wallet-bx">
-                                <div class="wallet-sub-bx">
-                                    <div class="wallet-icon-bx">
-                                        <i class="fas fa-wallet"></i>
-                                    </div>
+                                <div class="wallet-balance-bx">
+                                    <div class="wallet-sub-bx">
                                     <?php
                                     $walletData = array();
                                     $walletData['balance'] = 0;
-                                    $walletData = getUserWalletBalance($userData["id"]); ?>
-                                    <div class="wallet-name">Wallet</div>
-                                    <div class="wallet-amt">SAR <?php echo number_format($walletData['balance'],2); ?></div>
-                                    <p class="mb-0">Wallet Balance</p>
-                                </div>
-
-                                <div class="card-content">
-                                    <div id="subscribe-gain-chart"></div>
-                                </div>
+                                    $walletData = getUserWalletBalance($userData["id"]); ?>                       
+                                        <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt="">                           
+                                        <div class="wallet-amt">SAR <?php echo number_format($walletData['balance'],2); ?></div>
+                                        <p class="mb-0">Wallet Balance</p>
+                                    </div>                       
+                                </div>                                
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-12 pl-5 pr-5">
                             <div class="card wallet-bx">
-                                <div class="wallet-sub-bx">
+                                <div class="wallet-sub-bx manager-information">
                                     <div class="wallet-icon-bx">
                                        <img src="{{url('/')}}/public/assets/images/logo/avatar-s-1-old.jpg" alt=""/>
-                                    </div>
-                                    <div class="wallet-name">Account Manager</div>
+                                    </div>                                    
                                     <div class="wallet-amt">Nikhil Pawar</div>
-                                    <p class="mb-3">
+                                    <div class="wallet-name">Account Manager</div>
+                                    <p class="">
                                         <a href="tel:+966 555154580">+966 555154580</a>
                                     </p>
                                 </div>
@@ -85,7 +80,7 @@
                     </div>
                     <div class="row ml--5 mr--5">
                         <div class="col-md-6 col-12 pl-5 pr-5">
-                            <div style="height: 425px;" class="card graph-section-block">
+                            <div style="height: 425px;" class="card graph-section-block avg-traffic-graph">
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="row pb-50">
@@ -433,4 +428,20 @@
     <!-- <div class="drag-target"></div> -->
         <script src="{{url('/')}}/public/assets/js/scripts/pages/dashboard-analytics.js"></script>
 
-    @endsection
+
+<?php 
+if(Session::get('SHOW-POPUP')){ 
+    $isShowPopup = 0;
+    $isShowPopup = Session::get('SHOW-POPUP');
+    if($isShowPopup==1){ ?>
+        <script type="text/javascript">
+        $(document).ready(function(){
+             $('[data-target="#multi-business-select"]').attr('data-backdrop','static');
+             $('[data-target="#multi-business-select"]').trigger('click');
+        });
+        </script>
+        <?php 
+    }
+    Session::put('SHOW-POPUP','0');
+} ?>
+@endsection

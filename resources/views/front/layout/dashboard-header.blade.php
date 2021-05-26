@@ -26,8 +26,8 @@
     <script src="{{url('/')}}/public/assets/vendors/js/vendors.min.js"></script>
     <script src="{{url('/')}}/public/assets/vendors/js/charts/apexcharts.min.js"></script>    
     <script src="{{url('/')}}/public/assets/js/scripts/components.js"></script>
-    <script src="{{url('/')}}/public/assets/vendors/js/extensions/jquery.steps.min.js"></script>
-    <script src="{{url('/')}}/public/assets/js/scripts/forms/wizard-steps.js"></script>
+    <!-- <script src="{{url('/')}}/public/assets/vendors/js/extensions/jquery.steps.min.js"></script> -->
+    <!-- <script src="{{url('/')}}/public/assets/js/scripts/forms/wizard-steps.js"></script> -->
     <script src="{{url('/')}}/public/assets/vendors/js/pickers/pickadate/picker.js"></script>
     <script src="{{url('/')}}/public/assets/vendors/js/pickers/pickadate/picker.date.js"></script>
     <script src="{{url('/')}}/public/assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
@@ -85,33 +85,7 @@
                                 <ul class="nav navbar-nav">
                                     <li>
                                         <div class="create-btn"><a href="{{url('/')}}/user/create-ads/">Create Ads</a></div>
-                                    </li>
-                                    <?php 
-                                       if($userData['business_type']==1){ ?>
-                                        <li>
-                                            <div class="filtter-btn business-btn">
-                                                <div class="btn-group">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <?php if(Session::has('BUSINESSID')){ 
-    							
-                                                                echo $businessArr['business_name'];
-                                                             }else{ echo "Switch Business"; }
-                                                            ?>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 40px; left: 20px; transform: translate3d(0px, 37px, 0px);">
-                                                            <!-- <a class="dropdown-item" href="#">Year</a> -->
-                                                            <?php echo getActiveBusinessList(); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    <?php }else{ ?>
-                                        <!-- <li>
-                                            <div class="create-btn"><a href="#" data-toggle="modal" data-target="#upgrade-account">Upgrade Now</a></div>
-                                         </li> -->
-                                   <?php } ?>
+                                    </li>                                    
                                 </ul>
                             </div>
                             <ul class="nav navbar-nav float-right">
@@ -120,14 +94,32 @@
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#upgrade-account">Upgrade Now</a>
                                 </li>
                                 <?php } ?>
-                                <li class="dropdown-language nav-item">
-                                    <a class="nav-link" href="#">
-                                        <span class="selected-language">
-                                            <img src="{{url('/')}}/public/assets/images/logo/flag-arb.png"/> 
-                                            <span class="select-language-txt">English</span>
-                                        </span>
-                                    </a>                                    
-                                </li>
+                                <!-- <li>
+                                    <a href="javascript:void(0);" data-toggle="modal" class="business-popup" data-target="#multi-business-select">Switch Business</a>
+                                </li> -->
+                                <?php 
+                                       if($userData['business_type']==1){ ?>
+                                        <li>
+                                            <div class="filtter-btn business-btn" >
+                                                <div class="btn-group">
+                                                    <span class="business-head-title">Business :</span>
+                                                    <div class="dropdown">
+                                                        <button class="business-popup btn btn-warning dropdown-toggle mr-1 waves-effect waves-light" type="button" aria-expanded="false"   data-toggle="modal"  data-target="#multi-business-select">
+                                                            <?php if(Session::has('BUSINESSID')){ 
+                                                                echo $businessArr['business_name'];
+                                                             }else{ echo "Switch Business"; }
+                                                            ?>
+                                                        </button>
+
+                                                        <!-- id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" 
+                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 40px; left: 20px; transform: translate3d(0px, 37px, 0px);">
+                                                            <?php //echo getActiveBusinessList()['headerDD']; ?>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php  } ?>
                                 
                                 <?php 
                                 $notificationArr = [];
@@ -185,28 +177,20 @@
                                         <div class="user-nav d-sm-flex d-none"><span class="user-name">
                                            <?php echo $userData["name"]; ?>
                                             </span><span class="user-status">Available</span></div><span>
-					<?php if($userData["profile_photo"] == ''){ ?>
-					<img class="round" src="{{url('/')}}/public/assets/images/profile.png" alt="avatar" height="40" width="40">
+                    					<?php if($userData["profile_photo"] == ''){ ?>
+                    					<img class="round" src="{{url('/')}}/public/assets/images/profile.png" alt="avatar" height="40" width="40">
 
-					<?php }else{ ?>
+                    					<?php }else{ ?>
 
-					<img class="round" src="{{url('/')}}//uploads/user_image/<?php echo $userData["profile_photo"]; ?>" alt="avatar" height="40" width="40">
-					<?php } ?>
-
-					</span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item"
-                                            href="{{url('/')}}/user/profile"><i class="feather icon-user"></i> Edit Profile</a>
-                                            <!-- <a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My
-                                            Inbox</a>
-                                            <a class="dropdown-item" href="app-todo.html"><i
-                                                class="feather icon-check-square"></i> Task</a>
+                    					<img class="round" src="{{url('/')}}//uploads/user_image/<?php echo $userData["profile_photo"]; ?>" alt="avatar" height="40" width="40">
+                    					<?php } ?></span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item"
-                                            href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a> -->
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{url('/')}}/logout"><i
-                                                class="feather icon-power"></i> Logout</a>
+                                                href="{{url('/')}}/user/profile"><i class="feather icon-user"></i> Edit Profile</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{url('/')}}/logout"><i
+                                                    class="feather icon-power"></i> Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -227,44 +211,43 @@
     </script> 
 
     <div class="modal fade text-left defaultSize-modal modal-padding-change" id="upgrade-account" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Upgrade account</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Upgrade account</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{url('/')}}/user/upgrade-account" method="POST" id="accountUpgradeFrm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Company Name: </label>                   
+                            <input type="text" name="business_name" placeholder="Company Name" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Website: </label>                    
+                            <input type="text" name="website_url" placeholder="Website" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Commercial Number: </label>                   
+                            <input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
+                        </div>  
+                        <div class="form-group">
+                            <label>Vat Number: </label>                 
+                            <input type="text" placeholder="Vat Number" name="vat_number" class="form-control">
+                        </div>                  
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary validate-frm-upgrade">Submit</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        
+                    </div>
+                </form>
             </div>
-            <form action="{{url('/')}}/user/upgrade-account" method="POST" id="accountUpgradeFrm">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Company Name: </label>                   
-                        <input type="text" name="business_name" placeholder="Company Name" class="form-control" required />
-                    </div>
-                    <div class="form-group">
-                        <label>Website: </label>                    
-                        <input type="text" name="website_url" placeholder="Website" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Commercial Number: </label>                   
-                        <input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
-                    </div>  
-                    <div class="form-group">
-                        <label>Vat Number: </label>                 
-                        <input type="text" placeholder="Vat Number" name="vat_number" class="form-control">
-                    </div>                  
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                    <button type="button" class="btn btn-primary validate-frm-upgrade">Submit</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    
-                </div>
-            </form>
         </div>
     </div>
-</div>
 <script type="text/javascript">
     $(document).ready(function(){
         $('.validate-frm-upgrade').click(function(){
@@ -273,10 +256,10 @@
             if($('input[name="business_name"]').val()=="" || $('input[name="business_name"]').val()=="undefined"){
                 flag = 1;
                 $('input[name="business_name"]').parent().append('<span class="err-msg">Please enter business name</span>');
+            }else{
+                flag = 0;
             }
             if(flag==0){
-                //$('#accountUpgradeFrm').submit(function(e){
-                //e.preventDefault();
                 $.ajax({
                  type: "POST",
                   url: "{{url('/')}}/user/upgrade-account",
@@ -300,3 +283,24 @@
 
     });
 </script>
+
+
+
+<!--------------------- TEMP added Switch business popup ------------------>
+<?php 
+if(getActiveBusinessList()['count']>1){ ?>
+ <div class="modal fade text-left multi-business-modal" id="multi-business-select" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Select Business</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <?php echo getActiveBusinessList()['popupDD']; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<?php } ?> 

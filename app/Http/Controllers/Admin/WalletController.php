@@ -487,9 +487,9 @@ class WalletController extends Controller{
 
                 $transactionDate = date('d/m/Y',strtotime($data->created_at));
 
+                $i = $key+1;
 
-
-                $build_result->data[$key]->id  = $data->id;                
+                $build_result->data[$key]->id  = $i;                
 
                 $build_result->data[$key]->business_name  = $business_name;                
 
@@ -536,7 +536,7 @@ class WalletController extends Controller{
 
              if($status == 'active'){
 
-                 $arr_data['payment_status'] = 'ADMIN';
+                 $arr_data['payment_status'] = 'APPROVED';
 
                  $update = $this->WalletModel->where('id',$id)->first();
 

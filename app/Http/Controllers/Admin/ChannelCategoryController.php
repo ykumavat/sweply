@@ -127,7 +127,7 @@ class ChannelCategoryController extends Controller{
                     $channel_name = $data->get_channel_detail->channel_name;
                 } 
 
-                $build_result->data[$key]->id                  = $data->id;
+                $build_result->data[$key]->id                  = $i;
                 $build_result->data[$key]->category_status     = $status;
                 $build_result->data[$key]->category_image      = $imageUrl;
                 $build_result->data[$key]->channel_name        = $channel_name;

@@ -307,13 +307,13 @@ class CampaignController extends Controller{
                 $invoiceHtml = '<a href="'.$campaign_link_url.'"><i class="feather icon-eye"></i> View</a>';
                                                                       
                 $i = $key+1;    
-                $build_result->data[$key]->id                   = $data->id;
+                $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_name        = $businessName;
-                $build_result->data[$key]->user_name        = $userName;
-                $build_result->data[$key]->channel_name        = $channelName;
-		$build_result->data[$key]->payment_status    = $pay_now;
+                $build_result->data[$key]->user_name            = $userName;
+                $build_result->data[$key]->channel_name         = "Snapchat";
+		$build_result->data[$key]->payment_status               = $pay_now;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
-                $build_result->data[$key]->status                   = $status;
+                $build_result->data[$key]->status               = $status;
 
                 
             }

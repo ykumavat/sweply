@@ -37,7 +37,7 @@
                     <li class=" nav-item"><a href="{{url('/')}}/admin/channel-category/"><i class="fal fa-peace"></i><span class="menu-title" >Channel Category</span></a></li>
 
                     <li class=" nav-item hide"><a href="#"><i class="fal fa-user-cog"></i><span class="menu-title" >Profile Setting</span></a> </li>
-                    <li class=" nav-item"><a href="#" class="nav-item-link"><i class="fal fa-credit-card"></i><span class="menu-title"data-i18n="User">Billing & Payment</span> <!-- <i class="fal fa-angle-down"></i> --></a>                    
+                    <li class=" nav-item hide"><a href="#" class="nav-item-link"><i class="fal fa-credit-card"></i><span class="menu-title"data-i18n="User">Billing & Payment</span> <!-- <i class="fal fa-angle-down"></i> --></a>                    
                         <ul class="menu-content">
                             <li><a href="{{url('/')}}/admin/wallet-list/"><i class="feather icon-circle"></i><span class="menu-item">Wallet</span></a></li>
                             <li><a href="#"><i class="feather icon-circle"></i><span class="menu-item">Transactions</span></a></li>
@@ -45,6 +45,7 @@
 
                         </ul>
                     </li>
+                    
                     <li class=" nav-item hide"><a href="#" class="nav-item-link"><i class="fal fa-user-headset"></i><span class="menu-title"data-i18n="User">Help Center</span> <!-- <i class="fal fa-angle-down"></i> --></a>
                         <ul class="menu-content">
                             <li><a href="faq.html"><i class="feather icon-circle"></i><span class="menu-item">FAQ</span></a></li>

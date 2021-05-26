@@ -120,7 +120,7 @@ class ChannelController extends Controller{
                 }
                 $imageUrl = "";
                 $imageUrl = '<img src="'.$this->uploadDir.$data->channel_image.'" width="40" height="40" />';
-                $build_result->data[$key]->id                   = $data->id;
+                $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->channel_status       = $status;
                 $build_result->data[$key]->channel_image        = $imageUrl;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;

@@ -32,7 +32,6 @@
                     <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-user-cog"></i><span class="menu-title" data-i18n="User">Permissions</span></a>
                         <ul class="menu-content">
                             <li><a href="{{url('/')}}/user/role/"><i class="feather icon-circle"></i><span class="menu-item">User Role</span></a></li>
-                            <!-- <li><a href="{{url('/')}}/user/assign-role/"><i class="feather icon-circle"></i><span class="menu-item">Permission Settings</span></a></li> -->
                         </ul>
                     </li>
 
@@ -74,35 +73,44 @@
                             <li><a href="{{url('/')}}/user/faq/"><i class="feather icon-circle"></i><span class="menu-item">FAQ</span></a></li>
                             <li><a href="{{url('/')}}/user/contact/"><i class="feather icon-circle"></i><span class="menu-item">Contact Us</span></a></li>
                         </ul>
-                    </li>
-                    <li class=" nav-item"><a href="{{url('/')}}/logout"><i class="fal fa-sign-out-alt"></i><span class="menu-title" >Logout</span></a></li>
-                </ul>
-                <?php 
-                if($userData['business_type']==1){ // commercial 
-                    $businessArr = [];
-                    if(Session::has('BUSINESSID')){
-                        $businessArr = getBusinessDetails(Session::get('BUSINESSID'));
-                         if(sizeof($businessArr) == 0){
-                           $businessArr['business_name'] ='Switch Business';
-                        }
-                    }  ?>
-                    <div class="filtter-btn business-btn" style="display: none">
-                    <div class="btn-group">
-                        <div class="dropdown">
-                            <button class="btn btn-warning dropdown-toggle mr-1 waves-effect waves-light" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?php if(Session::has('BUSINESSID')){ 
-                                    echo $businessArr['business_name'];
-                                    }else{ echo "Switch Business"; }
-                                ?>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 40px; left: 20px; transform: translate3d(0px, 37px, 0px);">
-                                <!-- <a class="dropdown-item" href="#">Year</a> -->
-                                <?php echo getActiveBusinessList(); ?>
+                    </li>                    
+                    <li class=" nav-item language-for-mobile">
+                        <a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-globe-asia"></i><span class="menu-title"data-i18n="User">Language</span> <!-- <i class="fal fa-angle-down"></i> --></a>
+                        <ul class="menu-content">
+                            <li><a href="javascript:void(0);"><i class="feather icon-circle"></i><span class="menu-item">English</span></a></li>
+                            <li><a href="javascript:void(0);"><i class="feather icon-circle"></i><span class="menu-item">Arabic</span></a></li>
+                        </ul>
+                    </li>      
+                    <li class=" nav-item language-for-mobile">
+                        <a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-briefcase"></i><span class="menu-title " data-i18n="User"   data-toggle="modal"  data-target="#multi-business-select" >Select Business</span></a>
+                        <ul class="menu-content">
+                            <?php 
+                            if($userData['business_type']==1){ // commercial 
+                                $businessArr = [];
+                                if(Session::has('BUSINESSID')){
+                                    $businessArr = getBusinessDetails(Session::get('BUSINESSID'));
+                                     if(sizeof($businessArr) == 0){
+                                       $businessArr['business_name'] ='Switch Business';
+                                    }
+                                }
+                                //echo  getActiveBusinessList()['mobileDD'];
+                            } ?>  
+                        </ul>
+                    </li>                    
+                    <li class="nav-item language-leftbar-section">
+                        <a href="javascript:void(0);">
+                            <div class="language-word">
+                                <img src="{{url('/')}}/public/assets/images/logo/flag-arb.png"/> 
+                                <span class="menu-title" >Language</span>
                             </div>
-                        </div>
-                    </div>
-                    </div>
-                <?php } ?>
+                            <div class="language-txt">
+                                English
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>                    
+                </ul>
+                            
             </div>
         </div>
         <!-- END: Main Menu-->

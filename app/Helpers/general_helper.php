@@ -62,20 +62,40 @@ function getBusinessDetails($businessID){
 }
 
 function getActiveBusinessList(){
-	$userID = 0;
-	$userID = Illuminate\Support\Facades\Session::get('LoggedUser');
-	$str = "";
+    $userID = 0;
+    $userID = Illuminate\Support\Facades\Session::get('LoggedUser');
+    $strMobileSidebar = $str = $strPopup = "";
     $businessArr = $arr_view_data = [];
     if($userID>0){
-	    $businessArr  = Business::where('user_id',$userID)->get();
-	    if($businessArr){
-	    	foreach($businessArr as $business){
-	    		$str .= '<a class="dropdown-item" href="javascript:void(0);" onclick="setBusinessDashboard('.$business->id.')" >'.$business->business_name.'</a>';
-	    	}
-	    }
-	}
-    return $str;
+        $businessArr  = Business::where('user_id',$userID)->get();
+        $businessID = 0;
+        $businessID = Session::get('BUSINESSID');
+        if($businessArr){
+            foreach($businessArr as $business){
+                $str .= '<a class="dropdown-item" href="javascript:void(0);" onclick="setBusinessDashboard('.$business->id.')" >'.$business->business_name.'</a>';
+
+                $strMobileSidebar .= ' <li><a href="javascript:void(0);" onclick="setBusinessDashboard('.$business->id.')" ><i class="feather icon-circle"></i><span class="menu-item">'.$business->business_name.'</span></a></li>';
+
+                $activeClass="";
+                if($businessID == $business->id){
+                    $activeClass = "active-biz";
+                }
+
+                $strPopup .= '<div class="col-sm-6 col-md-6 col-lg-6">
+                                <a href="javascript:void(0);" onclick="setBusinessDashboard('.$business->id.')" >
+                                    <div class="modal-business-name-section '.$activeClass.' ">
+                                        <h2>'.$business->business_name.'</h2>
+                                        <span>ID: '.$business->business_id.'</span>
+                                    </div>
+                                </a>
+                             </div>';
+            }
+        }
+    }
+    return array("headerDD"=>$str,"mobileDD"=>$strMobileSidebar,"popupDD"=>$strPopup,"count"=>count($businessArr));
 }
+
+
 
 function getTimeZone($latitude,$longitude)
 {

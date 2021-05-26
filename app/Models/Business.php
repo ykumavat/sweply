@@ -27,6 +27,7 @@ class Business extends Authenticatable
         'contact_number',  
         'vat_number',
         'user_id',
+        'business_id',
     ];
 
     /**

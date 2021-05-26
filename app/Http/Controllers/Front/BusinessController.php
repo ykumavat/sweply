@@ -53,11 +53,12 @@ class BusinessController extends Controller{
         $userID = Session::get('LoggedUser');
 
         $requestData = [];
-        $requestData['business_name']              = trim($request->business_name);
-        $requestData['website_url']           = trim($request->website_url);
-        $requestData['contact_number']            = trim($request->contact_number);
-        $requestData['vat_number']           = trim($request->vat_number);
+        $requestData['business_name']     = trim($request->business_name);
+        $requestData['website_url']       = trim($request->website_url);
+        $requestData['contact_number']    = trim($request->contact_number);
+        $requestData['vat_number']        = trim($request->vat_number);
         $requestData['user_id']           = $userID;
+        $requestData['business_id']       = mt_rand(10000000,99999999);
 
         $queryResponse = Business::create($requestData); 
         if($queryResponse){
@@ -105,7 +106,9 @@ class BusinessController extends Controller{
         $build_status_btn       = '';
         $arr_data               = [];
         $arr_search_column      = $request->input('column_filter');
-        $obj_request_data = Business::orderBy('created_at','DESC');
+        $userID = Session::get('LoggedUser');
+
+        $obj_request_data = Business::where('user_id',$userID)->orderBy('created_at','DESC');
         $obj_request_data = $obj_request_data->latest();
 
         $json_result    = DataTables::of($obj_request_data)->filter(function ($instance) use ($request) {
@@ -152,8 +155,9 @@ class BusinessController extends Controller{
                     $status = '<div class="badge badge-pill badge-warning">Inactive</div>';
 
                 }
-                $build_result->data[$key]->id                   = $data->id;
-                $build_result->data[$key]->business_status                   = $status;
+
+                $build_result->data[$key]->id                   = $i;
+                $build_result->data[$key]->business_status      = $status;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
                 
             }
@@ -311,7 +315,8 @@ class BusinessController extends Controller{
                 }
 
                 $user_role = "User";
-                $build_result->data[$key]->id                   = $data->id;
+                $i = $key+1;    
+                $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_name        = $business_name;
                 $build_result->data[$key]->user_role        = $role_name;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;

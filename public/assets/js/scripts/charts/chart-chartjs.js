@@ -160,10 +160,60 @@ $(window).on("load", function () {
     },
 
   };
+    
+      // Bar Chart
+  // ------------------------------------------
+
+  //Get the context of the Chart canvas element we want to select
+  var barChartctx = $("#bar-chart-1");
+
+  // Chart Options
+  var barchartOptions = {
+    // Elements options apply to all of the options unless overridden in a dataset
+    // In this case, we are setting the border of each bar to be 2px wide
+    elements: {
+      rectangle: {
+        borderWidth: 2,
+        borderSkipped: 'left'
+      }
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    responsiveAnimationDuration: 500,
+    legend: { display: false },
+    scales: {
+      xAxes: [{
+        display: true,
+        gridLines: {
+          color: grid_line_color,
+        },
+        scaleLabel: {
+          display: true,
+        }
+      }],
+      yAxes: [{
+        display: true,
+        gridLines: {
+          color: grid_line_color,
+        },
+        scaleLabel: {
+          display: true,
+        },
+        ticks: {
+          stepSize: 1000
+        },
+      }],
+    },
+    title: {
+      display: true,
+      text: 'Predicted world population (millions) in 2050'
+    },
+
+  };
 
   // Chart Data
   var barchartData = {
-    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+    labels: ["Spark", "Accent", "Elentra", "Focus ", "Rio"],
     datasets: [{
       label: "Population (millions)",
       data: [2478, 5267, 734, 784, 433],

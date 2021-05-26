@@ -61,11 +61,10 @@ function initialize() {
   });
 
   // Read the data from example.xml
-  downloadUrl("cga-3_gndc_harvard_edu_cluster.xml", function(doc) {
+  /*downloadUrl("cga-3_gndc_harvard_edu_cluster.xml", function(doc) {
     var xmlDoc = xmlParse(doc);
     var markers = xmlDoc.documentElement.getElementsByTagName("marker");
     for (var i = 0; i < markers.length; i++) {
-      // obtain the attribues of each marker
       var lat = parseFloat(markers[i].getAttribute("lat"));
       var lng = parseFloat(markers[i].getAttribute("lng"));
       var point = new google.maps.LatLng(lat,lng);
@@ -77,7 +76,7 @@ function initialize() {
     }
     // put the assembled side_bar_html contents into the side_bar div
     document.getElementById("side_bar").innerHTML = side_bar_html;
-  });
+  });*/
 }
 
 function makeSidebar() {

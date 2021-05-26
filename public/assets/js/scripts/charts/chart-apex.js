@@ -34,7 +34,7 @@ $(document).ready(function () {
         enabled: false
       }
     },
-    colors: themeColors,
+    colors: ['#e40421',' #000000'],
     dataLabels: {
       enabled: false
     },
@@ -186,7 +186,7 @@ $(document).ready(function () {
       height: 350,
       type: 'bar',
     },
-    colors: themeColors,
+    colors: ['#e40421',' #000000'],
     plotOptions: {
       bar: {
         horizontal: true,
@@ -790,11 +790,11 @@ $(document).ready(function () {
       height: 350
     },
     colors: themeColors,
-    labels: ['Consumers', 'Companies'],
-    series: [75, 25],
+    labels: ['Expenses', 'Profit', 'Vat'],
+    series: [60, 30, 10],
     legend: {
       itemMargin: {
-        horizontal: 2
+        horizontal: 3
       },
     },
     responsive: [{
@@ -823,8 +823,8 @@ $(document).ready(function () {
       height: 350
     },
     colors: themeColors,
-       labels: ['New', 'Reached', 'Refused', 'Court'],
-    series: [20, 40, 45, 15],
+       labels: ['Twiiter', 'Snapchat', 'Tiktok', 'Instagram' , 'Youtube' , 'Google Ads', 'Facebook' , 'linkedin'],
+    series: [50, 10, 20, 25, 20, 15, 5, 10],
     legend: {
       itemMargin: {
         horizontal: 2

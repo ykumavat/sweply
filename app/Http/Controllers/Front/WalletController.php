@@ -234,8 +234,8 @@ class WalletController extends Controller{
                 }
                 $transactionDate="";
                 $transactionDate = date('d/m/Y',strtotime($data->created_at));
-
-                $build_result->data[$key]->id  = $data->id;                
+                $i = $key+1;    
+                $build_result->data[$key]->id  = $i;                
                 $build_result->data[$key]->business_name  = $business_name;                
                 $build_result->data[$key]->user_name  = $user_name;    
                 $build_result->data[$key]->campaign_name  = $campaign_name; 

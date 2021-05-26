@@ -58,6 +58,7 @@ class AuthController extends Controller{
             if($obj_authentication){
                 $request->session()->put('LoggedUser', $obj_user->id);
                 $request->session()->put('BUSINESSID', $obj_user->business_id);
+                $request->session()->put('SHOW-POPUP','1');
                 return redirect('user/dashboard');
             }else{
                 return back()->with('fail','We do not recognize your email address');
@@ -105,6 +106,7 @@ class AuthController extends Controller{
         $arr_data['website']               = trim($request->website);
         $arr_data['commercial_number']     = trim($request->commercial_number);
         $arr_data['vat_number']            = trim($request->vat_number);
+        $arr_data['contry_code']           = trim($request->code);
         $arr_data['isTandc']               = 1;
         $arr_data['role_id']               = 1;
 
@@ -119,6 +121,7 @@ class AuthController extends Controller{
                 $credentials = ['email' =>$obj_user->email,'password'  => 'Admin@123'];
                 $obj_authentication = Sentinel::authenticate($credentials);
                 $businessArr = [];
+                $uniqueBusinessID = mt_rand(10000000,99999999);
                 if($request->selector=="commercial"){
 
                     $requestData = array(
@@ -126,7 +129,8 @@ class AuthController extends Controller{
                                         "website_url"=>trim($request->website),
                                         "contact_number"=>trim($request->contact_number),
                                         "vat_number"=>trim($request->vat_number),
-                                        "user_id"=>$obj_user->id
+                                        "user_id"=>$obj_user->id,
+                                        "business_id"=>$uniqueBusinessID
                                         );
                     $business_type = 1;
                     $this->createBusiness($requestData,$obj_user->id,$business_type);
@@ -135,11 +139,12 @@ class AuthController extends Controller{
                     // Create dummy business for personal user
                     $business_type = 0;
                     $requestData = array(
-                                        "business_name"=>"NA - ".$request->name.' '.$request->last_name,
+                                        "business_name"=>"NA - ",
                                         "website_url"=>"NA",
                                         "contact_number"=>trim($request->contact_number),
                                         "vat_number"=>"12345",
-                                        "user_id"=>$obj_user->id
+                                        "user_id"=>$obj_user->id,
+                                        "business_id"=>$uniqueBusinessID
                                         );
                     $this->createBusiness($requestData,$obj_user->id,$business_type);
 
@@ -147,6 +152,7 @@ class AuthController extends Controller{
                 if($obj_authentication && $obj_authentication->inRole('user')){
                     $request->session()->put('LoggedUser', $obj_user->id);
                     $request->session()->put('BUSINESSID', $obj_user->business_id);
+                    $request->session()->put('SHOW-POPUP','1');
                     return redirect('user/dashboard');
                 }else{
                     return back()->with('fail','We do not recognize your email address');
@@ -224,7 +230,6 @@ class AuthController extends Controller{
         }else{
             $sessionData = Session::all();
             $userID = Session::get('LoggedUser');
-           
         }  
        
         
@@ -288,12 +293,12 @@ class AuthController extends Controller{
 
 
         $create  	= $this->BaseModel->where('id',$userID)->update($arr_data);
-        $businesArr = array();
-        $businesArr['business_name']         = trim($arr_data['company_name']);
-        $businesArr['website_url']           = trim($arr_data['website_url']);
-        $businesArr['contact_number']        = trim($arr_data['commercial_number']);
-        $businesArr['vat_number']            = trim($arr_data['vat_number']);
-        $businessArr = Business::where('id',$arr_data['business_id'])->where('user_id',$userID)->update($businesArr);
+        // $businesArr = array();
+        // $businesArr['business_name']         = trim($arr_data['company_name']);
+        // $businesArr['website_url']           = trim($arr_data['website_url']);
+        // $businesArr['contact_number']        = trim($arr_data['commercial_number']);
+        // $businesArr['vat_number']            = trim($arr_data['vat_number']);
+        // $businessArr = Business::where('id',$arr_data['business_id'])->where('user_id',$userID)->update($businesArr);
 
         if($create){
             

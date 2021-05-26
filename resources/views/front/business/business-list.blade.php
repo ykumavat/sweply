@@ -52,6 +52,9 @@
 									<th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
 										<div>Business</div>
 									</th>
+									<th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
+										<div>Business ID</div>
+									</th>
 									<th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
 										<div>Website</div>
 									</th>
@@ -101,7 +104,7 @@
 						<input type="text" name="website_url" placeholder="Website" class="form-control">
 					</div>
 					<div class="form-group">
-						<label>Commercial Numbe: </label>					
+						<label>Commercial Number: </label>					
 						<input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
 					</div>	
 					<div class="form-group">
@@ -143,6 +146,7 @@
 	        columns: [
 	            {data: 'id', name: 'id'},
 	            {data: 'business_name', name: 'business_name'},
+	            {data: 'business_id', name: 'business_id'},
 	            {data: 'website_url', name: 'website_url'},
 	            {data: 'business_status', name: 'business_status'},
 	            {data: 'built_action_btns', name: 'built_action_btns'},
@@ -173,10 +177,10 @@
         $('.validate-frm').click(function(){
         	$('.err-msg').remove();
         	var flag = 0;
-        	if($('input[name="business_name"]').val()=="" || $('input[name="business_name"]').val()=="undefined"){
-        		flag = 1;
-        		$('input[name="business_name"]').parent().append('<span class="err-msg">Please enter business name</span>');
-        	}
+        	// if($('input[name="business_name"]').val()=="" || $('input[name="business_name"]').val()=="undefined"){
+        	// 	flag = 1;
+        	// 	$('input[name="business_name"]').parent().append('<span class="err-msg">Please enter business name</span>');
+        	// }
         	if(flag==0){
         		$('#businessFrm').submit();
         	}

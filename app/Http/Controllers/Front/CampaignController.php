@@ -164,7 +164,8 @@ class CampaignController extends Controller{
             } 
             
         }
-          //  dd( $arr_data); 
+        //print_r($arr_data);
+        //dd($request->input('location')); 
         //$arr_data['website'] = $arr_data['website_url'];
         $start_date = $arr_data['start_date'];
         //$start_date = date('Y-m-d',strtotime($start_date));
@@ -180,7 +181,6 @@ class CampaignController extends Controller{
             $file = $this->campaign_image_base_img_path.$screenshot_name ;  
             $success = file_put_contents($file, $data);  
             $arr_data['screen_shot'] =   $screenshot_name;
-
         }
         //End Screenshot upload
 
@@ -242,6 +242,8 @@ class CampaignController extends Controller{
         }
         //$arr_data['post_image']         =   $post_image;
         //$arr_data['screen_shot']        =   $screenshot_name;
+        //unset($arr_data['campaign_target_area%5B%5D']);
+
         $arr_data['start_date']         =   $start_date;
         $arr_data['end_date']           =   $end_date;
         $arr_data['estimated_reach']    =   $arr_data['estimated_reach'];
@@ -251,6 +253,7 @@ class CampaignController extends Controller{
         $arr_data['target_audience']    =   $request->input('target_audience', 0);
         $arr_data['gender']             =   $request->input('gender', 0);
         $arr_data['age']                =   $request->input('age', 0);
+        $arr_data['campaign_target_area']                =   $request->input('location','');
         $arr_data['campaign_budget_type'] = $request->input('campaign_budget_type', 1);
         $scall_from = '';
         if($campaign_id  != ''  && $campaign_id  != 'undefined' && $campaign_id  != null){
@@ -440,7 +443,7 @@ class CampaignController extends Controller{
                 $invoiceHtml = '<a href="'.$this->module_url_path."/campaign-details/".base64_encode($data->id).'"><i class="feather icon-download-cloud"></i> (Download)</a>';
                                                                       
                 $i = $key+1;    
-                $build_result->data[$key]->id                   = $data->id;
+                $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_name        = $businessName;
                 $build_result->data[$key]->user_name        = $userName;
                 $build_result->data[$key]->channel_name        = "Snapchat";

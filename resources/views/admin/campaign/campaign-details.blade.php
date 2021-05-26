@@ -193,18 +193,7 @@
 											</div>
 											<div class="clearfix"></div>
 										</div>
-									</div>
-									<div class="col-sm-6 col-md-6 col-lg-6">
-										<div class="info-main-section">
-											<div class="info-main-header">
-												Caption
-											</div>
-											<div class="info-main-content">
-												<?php echo isset($data['caption'])? $data['caption']: '-'; ?>
-											</div>
-											<div class="clearfix"></div>
-										</div>
-									</div>
+									</div>									
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
@@ -248,18 +237,7 @@
 											</div>
 											<div class="clearfix"></div>
 										</div>
-									</div>
-									<div class="col-sm-6 col-md-6 col-lg-6">
-										<div class="info-main-section">
-											<div class="info-main-header">
-												Note
-											</div>
-											<div class="info-main-content">
-												<?php echo isset($data['note'])? $data['note']: '-'; ?>	
-											</div>
-											<div class="clearfix"></div>
-										</div>
-									</div>
+									</div>									
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
@@ -301,12 +279,36 @@
 											<div class="info-main-content">
 												<?php $campaign_budget_type =  isset($data['campaign_budget_type'])? $data['campaign_budget_type']: '-'; 
 												if($campaign_budget_type == '1'){
-													echo "Everyday";
+													echo "Daily";
 												}else{
 													echo "Lifetime";
 												}
 												
 												?> 
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row textarea-content-section">
+									<div class="col-sm-6 col-md-6 col-lg-6">
+										<div class="info-main-section">
+											<div class="info-main-header">
+												Caption
+											</div>
+											<div class="info-main-content">
+												<?php echo isset($data['caption'])? $data['caption']: '-'; ?>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-6 col-lg-6">
+										<div class="info-main-section">
+											<div class="info-main-header">
+												Note
+											</div>
+											<div class="info-main-content">
+												<?php echo isset($data['note'])? $data['note']: '-'; ?>	
 											</div>
 											<div class="clearfix"></div>
 										</div>
