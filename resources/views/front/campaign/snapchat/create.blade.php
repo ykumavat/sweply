@@ -98,6 +98,7 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="inputGroupFile01" accept="image/*" />
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+
                                     </div>
                                 </div>  
                                 <div class="form-group image-input uploaded-img-section" style="display:none;">
@@ -113,7 +114,7 @@
                                 <div class="form-group video-input" style="display:none;">
                                     <label for="image">Upload video <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Supported type - mp4</span></span> </label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input file_multi_video" id="videofile" accept="video/mp4,video/x-m4v,video/mov" />
+                                        <input type="file" class="custom-file-input file_multi_video" id="videofile" accept="video/mp4,video/mov" />
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                 </div>  
@@ -176,6 +177,7 @@
                                 <div class="form-group call_to_action" >
                                     <label for="call_to_action">Choose call to action Tap</label>
                                     <select class="form-control" name="call_to_action" id="call_to_action">
+                                        <option value="">Select Button</option>
                                         <option value="Apply Now">Apply Now</option>
                                         <option value="Book Now">Book Now</option>
                                         <option value="Buy Ticket">Buy Ticket</option>
@@ -200,12 +202,14 @@
                                                         <input type="file" id="upload1" value="Choose a file" accept="image/*" />
                                                     </a>
                                                 </div>
+                                                
                                                 <div class="row">
                                                     <div class="upload-msg">
                                                         Upload a file to start cropping
                                                     </div>
                                                     <div class="upload-demo-wrap">
                                                         <div id="upload-demo"></div>
+                                                        <div id="upload-demo-icon"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -277,7 +281,7 @@
                                         </select>
                                     </div>
                                     <script type="text/javascript">
-                                        $('.select2').select2();
+                                        setTimeout(function(){  $('.select2').select2();  }, 4000);
                                     </script>
                                 </div>
                                 <?php /* Area of target with map 
@@ -412,8 +416,8 @@
                 <div class="add-img-video-section"> 
                     <img src="{{url('/')}}/public/assets/images/logo/mobile-priview-img.jpg" alt="" id="ad_image"/>
                     <video id="ad_video" style="background-color:black; display:none;object-fit: cover;" loop playsinline muted autoplay>
-                        <source src="mov_bbb.mp4" id="video_here" type="video/mp4">
-                        <source src="movie.ogg" type="video/ogg">
+                        <source src="#" id="video_here" type="video/mp4">
+                        <source src="#" type="video/ogg">
                     </video>                
                 </div>
                 <div class="caption-txt-section-block" style="display:none;">
@@ -539,13 +543,31 @@
             });
         });
         $(document).on("change", ".file_multi_video", function(evt) {
-            var $source = $('#video_here');
-            $source[0].src = URL.createObjectURL(this.files[0]);
-            $source.parent()[0].load();
-            $(this).next('.err-msg').remove();
-            var filename_video =  this.files[0].name;
-            jQuery("label[for='inputGroupFile01']").text(filename_video);
+            var fileSize = $(this)[0].files[0].size;
+            if(fileSize<1073741824){
+                var $source = $('#video_here');
+                $source[0].src = URL.createObjectURL(this.files[0]);
+
+                var video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = function(){
+                    window.URL.revokeObjectURL(video.src);
+                    if(parseFloat(video.duration)<=180){
+                        $source.parent()[0].load();
+                        $(this).next('.err-msg').remove();
+                        var filename_video =  this.files[0].name;
+                        jQuery("label[for='inputGroupFile01']").text(filename_video);
+                    }else{
+                        $('.file_multi_video').parent().append('<label class="err-msg">Video duration should be less than 180 seconds </label>');
+                    }
+                }
+                video.src = URL.createObjectURL(this.files[0]);
+            }else{
+                $('.file_multi_video').parent().append('<label class="err-msg">file size should be less than 1 GB</label>');
+            }
         });
+
+
         $('#campaign_name').keyup(function(){
             $('#campaign_name').next('.err-msg').remove();
         });
@@ -711,14 +733,14 @@
                             $('#end_date').trigger('change');
                             $('#campaign_budget').trigger('change');
                         <?php } 
-                        if($key == 'campaign_target_area'){ /* ?>
+                        if($key == 'campaign_target_area'){  ?>
                             $('#campaign_target_area_edit').val('<?php print_r($value); ?>');
                             var locations = $('#campaign_target_area_edit').val().split(",");
                             $(".campaign_target_area").select2({
                                 multiple: true,
                             });
                             $('.campaign_target_area').val(locations).trigger('change');
-                        <?php */ } ?>
+                        <?php  } ?>
 
                         <?php if($key == 'upload_type'){ 
                                 if($value == 'video'){ ?>
@@ -822,23 +844,27 @@
        $('#start_date').change(function(){
             $('#start_date').parents().find('.err-msg').remove();
        });
-        function readURL(input) {
+        function readURL(input,$uploadCrop){
+            $('#app_icon').next('.err-msg').remove();
+            $('#app-ico').attr('src'," ");
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#app-ico').attr('src', e.target.result);
+                var fileSize = input.files[0].size;
+                if(fileSize<5242880){
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#app-ico').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                    var app_icon_name =  input.files[0].name;
+                    jQuery('label[for="app_icon"]').text(app_icon_name);
+                }else{
+                    $('#app_icon').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
                 }
-                reader.readAsDataURL(input.files[0]);
-                var app_icon_name =  input.files[0].name;
-                jQuery('label[for="app_icon"]').text(app_icon_name);
             }
         }
+
         $("#app_icon").change(function(){
             readURL(this);
-            var width = $(this).width();
-            var height = $(this).height();
-            var fileSize = $(this)[0].files[0].size;
-            alert(width+'X'+height+' - '+bytesToSize(fileSize));
         });
         $('.steps-li li').click(function(){
             if(validateStep1()==1){
@@ -925,31 +951,8 @@
         $('#campaign_budget').on("keyup change blur",function(){
             calculateSummary();
         });
-	var $uploadCrop;
-		function readFile(input) {
- 			if (input.files && input.files[0]) {
-	            var reader = new FileReader();
-
-	            reader.onload = function (e) {
-
-					$('.upload-demo').addClass('ready');
-	            	$uploadCrop.croppie('bind', {
-	            		url: e.target.result
-	            	}).then(function(){
-                        jQuery("#original_file_display").attr("src", e.target.result);  
-	            		console.log('jQuery bind complete');
-	            	});
-	            	 $('.upload-demo').addClass('ready');
-	            }
-
-	            reader.readAsDataURL(input.files[0]);
-                var filename1 =  input.files[0].name;
-                jQuery('label[for="inputGroupFile01"]').text(filename1);
-	        }
-	        else {
-		        alert("Sorry - you're browser doesn't support the FileReader API");
-		    }
-		}
+	    var $uploadCrop;
+		
 		$uploadCrop = $('#upload-demo').croppie({
 			viewport: {
 				width: 400,
@@ -959,10 +962,58 @@
 			enableExif: true
 		});
 		$('#inputGroupFile01').on('change', function () { 
-			$('.upload-demo').removeClass('hide');
-			readFile(this); 
-            $(this).next('.err-msg').remove();
+             var fileSize = $(this)[0].files[0].size;
+             //console.log(bytesToSize(fileSize));
+            if(fileSize<5242880){
+                var u = URL.createObjectURL(this.files[0]);
+                var img = new Image;
+                var input = this;
+                img.onload = function() {
+                    //alert(img.width+"-----"+img.height);
+                    $('#inputGroupFile01').attr('rel-height',img.height);
+                    $('#inputGroupFile01').attr('rel-width',img.width);
+                };
+                img.src = u;
+                setTimeout(function(){ 
+                    var height = $('#inputGroupFile01').attr('rel-height');
+                    var width  = $('#inputGroupFile01').attr('rel-width');     
+                    console.log(height+"---"+width);
+                    if(parseInt(height)<1900 && parseInt(width)<1000 ){
+                        $('#inputGroupFile01').parent().append('<label class="err-msg">Minimum image size should be : 1080 x 1920px </label>');
+                    }else{
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                if(parseInt(height)>1920 && parseInt(width)>1080 ){
+                                    $('.upload-demo').removeClass('hide');
+                                    $('.upload-demo').addClass('ready');
+                                    $uploadCrop.croppie('bind', {
+                                        url: e.target.result
+                                    }).then(function(){
+                                        jQuery("#original_file_display").attr("src",e.target.result);
+                                    });
+                                    $('.upload-demo').addClass('ready');
+                                }else{
+                                    $("#ad_image").attr("src",e.target.result);
+                                    $("#original_file_display").attr("src",e.target.result);  
+                                    $('.uploaded-img-section').show();
+                                }
+                            }
+                            reader.readAsDataURL(input.files[0]);
+                            var filename1 =  input.files[0].name;
+                            jQuery('label[for="inputGroupFile01"]').text(filename1);
+                        }else{
+                            alert("Sorry - you're browser doesn't support the FileReader API");
+                        }
+                    
+                    }
+                }, 1000);
+                $('#inputGroupFile01').next('.err-msg').remove();
+            }else{
+                $('#inputGroupFile01').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
+            }
         });
+
 		$('#upload1').on('click', function (ev) {
             ev.preventDefault();
 			$uploadCrop.croppie('result', {
@@ -970,14 +1021,14 @@
 				size: 'viewport',
 				format: 'png', 
 			}).then(function (resp) {
-				 html = '<img src="' + resp + '" />';
-                 $('.upload-demo').addClass('hide');
+				html = '<img src="' + resp + '" />';
+                $('.upload-demo').addClass('hide');
                 $("#ad_image").attr("src",resp);
                 jQuery("#original_file_display").attr("src", resp);  
                 $('.uploaded-img-section').show();
-   				 $("#upload-success").html("Images cropped and uploaded successfully.");
-  				  $("#upload-success").show();
-				 var token                   = "{{csrf_token()}}"; 
+   				$("#upload-success").html("Images cropped and uploaded successfully.");
+  				$("#upload-success").show();
+				var token                   = "{{csrf_token()}}"; 
 			});
 		});
         $('.close-img').click(function(){
@@ -1231,12 +1282,40 @@
         if (!container.is(e.target) && container.has(e.target).length === 0){
             container.hide();
         }
-    }); 
+    });
+
+    function bytesToSize(bytes) {
+       var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+       if (bytes == 0) return '0 Byte';
+       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+       return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    } 
 </script>
 <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/bootstrap-datepicker.min.css">
 <script src="{{url('/')}}/public/assets/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script>
     /*
+    function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.upload-demo').addClass('ready');
+                    $uploadCrop.croppie('bind', {
+                        url: e.target.result
+                    }).then(function(){
+                        jQuery("#original_file_display").attr("src", e.target.result);  
+                        console.log('jQuery bind complete');
+                    });
+                     $('.upload-demo').addClass('ready');
+                }
+                reader.readAsDataURL(input.files[0]);
+                var filename1 =  input.files[0].name;
+                jQuery('label[for="inputGroupFile01"]').text(filename1);
+            }
+            else {
+                alert("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
     var map;
         function initialize() {
           var input = document.getElementById('address');

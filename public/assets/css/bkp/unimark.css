@@ -199,7 +199,7 @@ input:-ms-input-placeholder {color: #A1A1A1 !important;}
 .number-flag-id img{width: 30px;margin-right: 3px;}
 /* .number-flag-id span{display: inline-block;vertical-align: middle;line-height: 0;} */
 .number-flag-id .dropdown button:focus{box-shadow: none;}
-.number-flag-id .dropdown button:after{content: none}
+.number-flag-id .dropdown button:after{vertical-align: 0;}
 .login-form-main input.form-control{padding-left: 111px;padding-top: 0;padding-bottom: 0;}
 .mobile-number-section input.form-control{/*padding: 7px .75rem .375rem 114px;line-height: 42px;*/padding-left: 116px;}
 .mobile-number-section input.form-control:focus{color: #000000;}

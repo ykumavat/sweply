@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\CampaignModel;
 use App\Models\WalletMasterModel;
 use App\Models\WalletModel;
-
+use App\Models\Channel;
 
 
 use DataTables;
@@ -68,7 +68,10 @@ class CampaignController extends Controller{
             $this->arr_view_data['user'] = $userID;
              $obj_user  = User::where('id',$userID)
                                    ->first();
-            $this->arr_view_data['userData']  = $obj_user;              
+            $this->arr_view_data['userData']  = $obj_user;  
+            $channelsArr = [];
+            $channelsArr = Channel::where('status','1')->get();  
+            $this->arr_view_data['channel_list']  = $channelsArr;  
             return view($this->module_view_folder.'.create-ads',$this->arr_view_data);
         }
     }

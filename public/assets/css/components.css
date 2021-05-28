@@ -407,7 +407,7 @@ body.fixed-footer footer.footer-dark {
   background: linear-gradient(#FFFFFF 41%, rgba(255, 255, 255, 0.11) 95%, rgba(255, 255, 255, 0));
 }
 .left-menu-section-main .main-menu-content {
-  height: calc(100% - 6.5rem) !important;
+  height: calc(100% - 10.5rem) !important;
   position: relative;
   overflow: auto;
 }

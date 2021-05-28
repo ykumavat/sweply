@@ -18,6 +18,19 @@
 
                         <div class="all-social-box-width">
 
+                            <?php
+                            /*if(isset($channel_list)){
+                                foreach($channel_list as $channel){
+                                    echo '<div class="select-ads-type">
+                                        <a href="'.url('/').'/user/snapchat"  channel-id="'.$channel->id.'">
+                                            <img src="'.url('/').'/uploads/channel_image/'.$channel->channel_image.'" alt="" />
+                                            <h2>'.$channel->channel_name.'</h2>
+                                        </a>
+                                    </div>'; 
+                                }
+                            }*/
+                            ?>
+
                             <div class="select-ads-type">
                                 <a href="{{url('/')}}/user/snapchat">
                                     <img src="{{url('/')}}/public/assets/images/logo/ads-6-snapchat.svg" alt="" />

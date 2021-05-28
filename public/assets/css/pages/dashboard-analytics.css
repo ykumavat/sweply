@@ -16,8 +16,8 @@
 }
 
 #dashboard-analytics .bg-analytics {
-  background : -webkit-linear-gradient(332deg, #ffffff, rgba(255, 255, 255, 1));
-  background :         linear-gradient(118deg, #ffffff, rgba(255, 255, 255, 1));
+  background : -webkit-linear-gradient(332deg, #ffffff, rgba(255, 255, 255, 1)) !important;
+  background :         linear-gradient(118deg, #ffffff, rgba(255, 255, 255, 1)) !important;
   color: #000000 !important;
 }
 
@@ -58,10 +58,27 @@
   }
   #dashboard-analytics .bg-analytics .avatar {
     margin-bottom: 1.2rem;
+    display: none;
   }
+
+  #dashboard-analytics .dash-name-section p{margin-bottom: 0;}
+  #dashboard-analytics .bg-analytics .text-white{font-size: 22px;}
+
   .card{height: auto !important;}
-  .card.wallet-bx .wallet-sub-bx img {
+  .wallet-sub-bx .sar-amt-img img {
     max-width: 80px;
+    height: 54px;
+  }
+  .wallet-balance-bx .wallet-sub-bx{height: auto;}
+  .wallet-balance-bx .btn-primary{margin-top: 7px !important;padding: 13px 0;}
+  .wallet-icon-bx{float: left;margin: 14px;}
+  .wallet-amt {margin-top: 7px;}
+  .sar-amt-img {
+    float: left;
+  }
+  .sar-amt-main {
+    text-align: left;
+    margin-left: 80px;
   }
   .card.wallet-bx .wallet-balance-bx .wallet-sub-bx {
     height: auto;

@@ -63,10 +63,10 @@
                 <div class="navbar-wrapper">
                     <div class="navbar-container content">
                         <div class="navbar-collapse" id="navbar-mobile">
-                            <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center hide-for-mobile">
+                            <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                                 <ul class="nav navbar-nav">
                                     <li class="nav-item mobile-menu d-xl-none mr-auto">
-                                        <a class="nav-link-icon-menu" href="#" onclick="addBodyClass();">
+                                        <a class="nav-link-icon-menu" href="#">
                                             <i class="ficon feather icon-menu"></i>
                                         </a>
                                     </li>
@@ -105,10 +105,10 @@
                                                     <span class="business-head-title">Business :</span>
                                                     <div class="dropdown">
                                                         <button class="business-popup btn btn-warning dropdown-toggle mr-1 waves-effect waves-light" type="button" aria-expanded="false"   data-toggle="modal"  data-target="#multi-business-select">
-                                                            <span><?php if(Session::has('BUSINESSID')){ 
+                                                            <?php if(Session::has('BUSINESSID')){ 
                                                                 echo $businessArr['business_name'];
                                                              }else{ echo "Switch Business"; }
-                                                            ?></span>
+                                                            ?>
                                                         </button>
 
                                                         <!-- id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" 
@@ -129,17 +129,17 @@
 
                                 ?>
                                 
-                                <li class="dropdown dropdown-notification nav-item responsive-float-right">
-                                    <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
-                                        <i class="ficon feather icon-bell"></i>
-                                        <span class="badge badge-pill badge-primary badge-up">{{$notificationArr['count']}}</span>
-                                    </a>
+                                <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#"
+                                        data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span
+                                            class="badge badge-pill badge-primary badge-up">{{$notificationArr['count']}}</span></a>
                                     <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                         <li class="dropdown-menu-header">
                                             <div class="dropdown-header m-0 p-2">
-                                                <h3 class="white">{{$notificationArr['count']}} New</h3><span class="notification-title">App Notifications</span>                                                    
+                                                <h3 class="white">{{$notificationArr['count']}} New</h3><span class="notification-title">App Notifications</span>
+                                                    
                                             </div>
                                         </li>
+
                                         <?php if(count($notificationArr['data'])>0){ 
                                             foreach($notificationArr['data'] as $notification){
 
@@ -172,8 +172,8 @@
                                                 href="javascript:void(0)">View all notifications</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown dropdown-user nav-item hide-for-mobile">
-                                    <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <li class="dropdown dropdown-user nav-item"><a
+                                        class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                         <div class="user-nav d-sm-flex d-none"><span class="user-name">
                                            <?php echo $userData["name"]; ?>
                                             </span><span class="user-status">Available</span></div><span>
@@ -199,7 +199,17 @@
                 </div>
         </nav>
     </div>     
-        
+    
+    <script>
+        $(".nav-link-icon-menu").on("click", function(){
+            $("body").addClass("sidebar-open");
+        });
+        $(".black-bg-section").on("click", function(){
+            $("body").removeClass("sidebar-open");
+        });
+              
+    </script> 
+
     <div class="modal fade text-left defaultSize-modal modal-padding-change" id="upgrade-account" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -242,11 +252,11 @@
 
         <ul>
 
-            <li><a href="{{url('/')}}/user/dashboard/"><span><i class="fal fa-home"></i></span>Home</a></li>
+            <li><a href="https://www.wingdemo.in/sboba/"><span><i class="fal fa-home"></i></span>Home</a></li>
 
-            <li class="responsive-search"><a href="{{url('/')}}/user/wallet-list/"><span><i class="fal fa-wallet"></i></span>Wallet</a></li>
+            <li class="responsive-search"><a href="javascript:void(0);"><span><i class="fal fa-wallet"></i></span>Wallet</a></li>
             <li class="add-ads-btn">
-                <a href="{{url('/')}}/user/create-ads/">
+                <a href="javascript:void(0);">
                     <span class="gradient-circle">
                         <span>
                             <i class="far fa-plus"></i>
@@ -256,7 +266,7 @@
                 </a>
             </li>
             <li class="respo-cart-menu">                
-                <a class="head-cart-box" href="{{url('/')}}/user/campaign/">
+                <a class="head-cart-box" href="javascript:void(0);" data-toggle="modal" data-target="#cartModal">
                     <span class="mobile-crt-menu-main">
                         <span>
                             <i class="fal fa-bullhorn"></i>
@@ -265,9 +275,7 @@
                     Campagns 
                 </a>
             </li>
-            <li class="mobile-nav-link" onclick="addBodyClass();">
-                <a href="javascript:void(0);"><span><i class="fal fa-bars"></i></span>More</a>
-            </li>
+            <li><a href="javascript:void(0);" onclick="openNav()"><span><i class="fal fa-bars"></i></span>More</a></li>
 
         </ul>
         
@@ -275,12 +283,6 @@
 
     </div>
 <script type="text/javascript">
-    function addBodyClass(){     
-        $('body').addClass('sidebar-open'); 
-    }
-    $(".black-bg-section").on("click", function(){
-        $("body").removeClass("sidebar-open");
-    });              
     $(document).ready(function(){
         $('.validate-frm-upgrade').click(function(){
             $('.err-msg').remove();

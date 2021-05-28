@@ -356,7 +356,7 @@ body.fixed-footer footer.footer-dark {
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-.left-menu-section-main {z-index : 99999;  
+.left-menu-section-main {z-index : 99;  
   display : table-cell;
   height : 100%;
   overflow : hidden;
@@ -441,12 +441,22 @@ body.fixed-footer footer.footer-dark {
   position: relative;
   top: 1px;
 }
-.left-menu-section-main .navigation > li > a > i {
+.left-menu-section-main .navigation li a i {
   font-size: 1.2rem;
   margin-right: 1rem;
   float: left;
   width: 20px;
 }
+
+li.nav-item.language-leftbar-section a{display: flex;align-items: center;}
+.language-txt{margin-left: auto;}
+li.nav-item.language-leftbar-section {
+  position: fixed;
+  width: 260px;
+  bottom: 10px;
+  background: #ffffff;
+}
+li.nav-item.language-leftbar-section img{width: 25px;height: 25px;border-radius: 50%;margin-right: 5px;}
 
 .left-menu-section-main .menu-content{display: none;}
 .left-menu-section-main .navigation li.has-sub > a:not(.mm-next):after {
@@ -472,8 +482,9 @@ body.fixed-footer footer.footer-dark {
 
 @media (max-width:1199px) {
   .left-menu-section-main{width: 0;}
+  body.sidebar-open{overflow: hidden;}
   .sidebar-open .left-menu-section-main{width: 260px;}
-  .black-bg-section{height: 100%;width: 100%;position: fixed;top: 0;left: 0;background-color: rgba(0,0,0,0.5);z-index: 99999;display: none;}
+  .black-bg-section{height: 100%;width: 100%;position: fixed;top: 0;left: 0;background-color: rgba(0,0,0,0.5);z-index: 99;display: none;}
   .sidebar-open .black-bg-section{display: block;}
   .left-menu-section-main .navigation li.has-sub > a.inner-menu-open:after{
     -webkit-transform: rotate(90deg);
@@ -516,6 +527,14 @@ body.fixed-footer footer.footer-dark {
   font-size : 0.8rem;
   margin-right : 1.38rem;
 }
+
+.left-menu-section-main .navigation li .menu-content li a i{
+  font-size: 12px;
+  width: auto;
+  padding-top: 3px;
+  padding-left: 10px;
+}
+
 .navigation li.disabled a {
   cursor : not-allowed;
 }
@@ -3136,6 +3155,7 @@ input[type='date'].form-control, input[type='time'].form-control, input[type='da
 .select2-container--classic.select2-container--focus, .select2-container--default.select2-container--focus {
   outline : 0;
 }
+.select2-container{width: 100% !important;}
 .select2-container--classic.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
   border-color : #EE364E !important;
   outline : 0;
@@ -3322,6 +3342,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination li a {
 tr.group {
   background-color : #EDEDED;
 }
+.nav-item.language-for-mobile{display: none;}
 
 @media only screen and (max-width: 768px) {
   div.dataTables_wrapper div.dataTables_paginate ul.pagination {
@@ -3329,7 +3350,12 @@ tr.group {
     -webkit-justify-content : center;
     -ms-flex-pack : center;
             justify-content : center;
-  }
+  }  
+}
+
+@media (max-width: 1199px) {
+  li.nav-item.language-leftbar-section{display: none;}
+  .nav-item.language-for-mobile{display: block;}
 }
 
 /*new changes by yogesh khairnar*/

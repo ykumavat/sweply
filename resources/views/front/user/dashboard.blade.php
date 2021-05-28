@@ -50,10 +50,14 @@
                                     <?php
                                     $walletData = array();
                                     $walletData['balance'] = 0;
-                                    $walletData = getUserWalletBalance($userData["id"]); ?>                       
-                                        <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt="">                           
-                                        <div class="wallet-amt">SAR <?php echo number_format($walletData['balance'],2); ?></div>
-                                        <p class="mb-0">Wallet Balance</p>
+                                    $walletData = getUserWalletBalance($userData["id"]); ?>    
+                                        <div class="sar-amt-img">                   
+                                            <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt="">                           
+                                        </div>
+                                        <div class="sar-amt-main">
+                                            <div class="wallet-amt">SAR <?php echo number_format($walletData['balance'],2); ?></div>
+                                            <p class="mb-0">Wallet Balance</p>
+                                        </div>
                                     </div>                       
                                 </div>                                
                             </div>
@@ -63,12 +67,14 @@
                                 <div class="wallet-sub-bx manager-information">
                                     <div class="wallet-icon-bx">
                                        <img src="{{url('/')}}/public/assets/images/logo/avatar-s-1-old.jpg" alt=""/>
-                                    </div>                                    
-                                    <div class="wallet-amt">Nikhil Pawar</div>
-                                    <div class="wallet-name">Account Manager</div>
-                                    <p class="">
-                                        <a href="tel:+966 555154580">+966 555154580</a>
-                                    </p>
+                                    </div>  
+                                    <div class="sar-amt-main">                                  
+                                        <div class="wallet-amt">Nikhil Pawar</div>
+                                        <div class="wallet-name">Account Manager</div>
+                                        <p class="">
+                                            <a href="tel:+966 555154580">+966 555154580</a>
+                                        </p>
+                                    </div>
                                 </div>
                                 <div class="help-btn-bx">
                                     <a style="width: 100%;" href="#"

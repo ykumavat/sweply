@@ -49,8 +49,9 @@
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="contact_number"> Mobile Number </label>
-                                    <input style="padding-left: 55px;" type="text" placeholder="Enter  Mobile Number " class="form-control" id="contact_number" name="contact_number" value="{{$userData->contact_number}}">
+                                    <input style="padding-left: 40px;" type="text" placeholder="Enter  Mobile Number " class="form-control" id="contact_number" name="contact_number" value="{{$userData->contact_number}}">
                                     <span class="mobile-no-pro">{{$userData->contry_code}}</span>
+                                    <button class="mobile-change-btn">Change</button>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">

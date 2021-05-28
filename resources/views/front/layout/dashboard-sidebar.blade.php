@@ -82,8 +82,8 @@
                         </ul>
                     </li>      
                     <li class=" nav-item language-for-mobile">
-                        <a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-briefcase"></i><span class="menu-title " data-i18n="User"   data-toggle="modal"  data-target="#multi-business-select" >Select Business</span></a>
-                        <ul class="menu-content">
+                        <a href="javascript:void(0);" class="nav-item-link select-business-menu"><i class="fal fa-briefcase"></i><span class="menu-title"data-i18n="User"   data-toggle="modal"  data-target="#multi-business-select" >Select Business</span></a>
+                        <!-- <ul class="menu-content">
                             <?php 
                             if($userData['business_type']==1){ // commercial 
                                 $businessArr = [];
@@ -95,8 +95,9 @@
                                 }
                                 //echo  getActiveBusinessList()['mobileDD'];
                             } ?>  
-                        </ul>
-                    </li>                    
+                        </ul> -->
+                    </li>    
+                    <li class=" nav-item"><a href="{{url('/')}}/logout"><i class="fal fa-sign-out-alt"></i><span class="menu-title" >Logout</span></a></li>                
                     <li class="nav-item language-leftbar-section">
                         <a href="javascript:void(0);">
                             <div class="language-word">
@@ -109,12 +110,10 @@
                             <div class="clearfix"></div>
                         </a>
                     </li>                    
-                </ul>
-                            
+                </ul>                            
             </div>
         </div>
         <!-- END: Main Menu-->
-
         <script>
             $(document).ready(function(){
                 $(".nav-item-link").on("click", function(){                
@@ -124,6 +123,11 @@
                     $(this).parent().siblings().find(".nav-item-link").removeClass("inner-menu-open");
                 });    
             });
+            $(document).ready(function(){
+                $(".select-business-menu").on("click", function(){   
+                    $("body").removeClass("sidebar-open"); 
+                });    
+            });            
         </script>
     </div>  
 

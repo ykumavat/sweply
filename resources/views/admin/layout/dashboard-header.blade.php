@@ -130,7 +130,7 @@
                                                 href="javascript:void(0)">View all notifications</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown dropdown-user nav-item"><a
+                                <!-- <li class="dropdown dropdown-user nav-item"><a
                                         class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                         <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">
                                             
@@ -147,7 +147,7 @@
                                         <div class="dropdown-divider"></div><a class="dropdown-item" href="{{url('/')}}/admin/logout"><i
                                                 class="feather icon-power"></i> Logout</a>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>

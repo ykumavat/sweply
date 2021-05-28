@@ -9,10 +9,14 @@
             <div class="content-body">         
                 <div class="wallet-main-width">                
                     <div class="wallet-balance-bx">
-                        <div class="wallet-sub-bx">                       
-                            <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt=""/>                           
-                            <div class="wallet-amt">SAR {{number_format($walletData['balance'],2)}}</div>
-                            <p class="mb-0">Wallet Balance</p>
+                        <div class="wallet-sub-bx">   
+                            <div class="sar-amt-img">                    
+                                <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt=""/>
+                            </div>
+                            <div class="sar-amt-main">
+                                <div class="wallet-amt">SAR {{number_format($walletData['balance'],2)}}</div>
+                                <p class="mb-0">Wallet Balance</p>
+                            </div>
                         </div>                       
                     </div>
 
@@ -21,17 +25,20 @@
                             <!-- <div class="wallet-icon-bx">
                                 <i class="fal fa-charging-station"></i>
                             </div>                             -->
-
-                            <img src="{{url('/')}}/public/assets/images/logo/wallet-img.svg" alt=""/>
-                            <a href="{{url('/')}}/user/payment/" style="width: 100%; color: #fff;"  class="btn btn-primary shadow waves-effect waves-light mt-2">Charge you wallet </a>    
-                            <!--data-toggle="modal" data-target="#exampleModalCenter"-->                        
+                            <div class="sar-amt-img">
+                                <img src="{{url('/')}}/public/assets/images/logo/wallet-img.svg" alt=""/>
+                            </div>
+                            <div class="sar-amt-main">
+                                <a href="{{url('/')}}/user/payment/" style="width: 100%; color: #fff;"  class="btn btn-primary shadow waves-effect waves-light mt-2">Charge you wallet </a>    
+                                <!--data-toggle="modal" data-target="#exampleModalCenter"-->                        
+                            </div>
                         </div>
                        
                     </div>
                     <div class="clearfix"></div>
                 </div>
 
-                <div class="card mb-0 padding-left-right">	
+                <div class="card mb-0 padding-left-right no-add-button">	
                 <div class="m-2">
 						<div class="row">
 							<div class="users-list-filter col-6">
@@ -96,7 +103,7 @@
                                     <thead>
                                         <tr>
                                             <th> ID</th>
-                                            <!-- <th>Business</th> -->
+                                            <th>Business</th>
                                             
                                             <th> Type</th>
                                             <th>Amount</th>
@@ -170,10 +177,10 @@
             "bLengthChange": false,
             "paging": true,
             "bPaginate": false,
-              "pageLength": 15,
+              "pageLength": 5,
             columns: [
                 {data: 'id', name: 'transaction_id'},
-                //{data: 'business_name', name: 'business_name'},
+                {data: 'business_name', name: 'business_name'},
                
                 {data: 'transaction_type', name: 'transaction_type'},
                 {data: 'amount', name: 'amount'},
