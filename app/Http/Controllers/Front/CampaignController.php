@@ -70,7 +70,7 @@ class CampaignController extends Controller{
                                    ->first();
             $this->arr_view_data['userData']  = $obj_user;  
             $channelsArr = [];
-            $channelsArr = Channel::where('status','1')->get();  
+            $channelsArr = Channel::where('status','1')->orderByRaw('display_order ASC')->get();  
             $this->arr_view_data['channel_list']  = $channelsArr;  
             return view($this->module_view_folder.'.create-ads',$this->arr_view_data);
         }
@@ -488,6 +488,9 @@ class CampaignController extends Controller{
             $arr_data['original_image'] = $this->campaign_image_public_img_path.$arr_data['original_image'];
             $arr_data['post_image'] = $this->campaign_image_public_img_path.$arr_data['post_image'];
             $arr_data['screen_shot'] = $this->campaign_image_public_img_path.$arr_data['screen_shot'];
+            if($arr_data['app_icon']!=""){
+                $arr_data['app_icon'] = $this->campaign_image_public_img_path.$arr_data['app_icon'];
+            }
             
             $this->arr_view_data['userData']  = $obj_user;              
             $this->arr_view_data['data']  = $arr_data;              

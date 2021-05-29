@@ -406,7 +406,95 @@
 					</div>
 					<div class="col-sm-4 col-md-4 col-lg-4">
 						<div class="ad-prive-bx preview-ads-mobile" id="preview-section-bx">  
-							<img src="<?php echo $data['screen_shot']; ?>" alt="" />
+
+		<!-------------------------------------------------------------->
+		<?php //if(isset($_REQUEST['debug'])){ ?>
+                <div class="mobile-black-bg"></div>
+                <div class="mobile-top-time-icons-strip">
+                    <div class="mobile-top-time"> 17:24 </div>
+                    <div class="mobile-top-icons">
+                        <span><i class="fas fa-wifi"></i></span>                        
+                        <span><i class="fas fa-signal-alt"></i></span>
+                        <span><i class="fal fa-battery-three-quarters"></i></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img">
+                <div class="brand-name-section-main">                    
+                    <div class="brand-name-section">
+                        <span><?php echo isset($data['brand_name'])? $data['brand_name']: '-'; ?></span>
+                    </div>
+                    <div class="clearfix"></div>
+                     <div class="heading-section">
+                        <span><?php echo isset($data['heading'])? $data['heading']: '-'; ?></span>
+                    </div> 
+                    <div class="menu-dots-section">
+                        <span><i class="fal fa-ellipsis-v"></i></span>
+                    </div>                  
+                </div>   
+                <div class="add-img-video-section"> 
+                	<?php if($data['upload_type']=="image"){ ?>
+                    <img src="<?php echo $data['post_image']; ?>" alt="" id="ad_image">
+                <?php }else{ ?>
+                    <video id="ad_video" style="background-color: black; object-fit: cover; height:570px; width:296px;" loop="" playsinline="" muted="" autoplay="">
+                        <source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
+                        <source src="#" type="video/ogg">
+                    </video> 
+                <?php } ?>               
+                </div>
+                <?php if($data['caption']!=""){ ?>
+	                <div class="caption-txt-section-block"  >
+	                   <?php echo isset($data['caption'])? $data['caption']: '-'; ?>
+	                </div>
+                <?php } ?>
+                <?php if(($data['campaign_target']!="App install" ||  $data['campaign_target']!="App visit") &&  $data['call_to_action']!=""){ ?>
+                <div class="add-prive-btn website-sec-preview" >
+                    <span class="btn-add-prive"><?php echo isset($data['call_to_action'])? $data['call_to_action']: '-'; ?></span>
+                </div> 
+            	<?php } ?>
+
+            <?php if($data['app_name']!="" && $data['app_icon']!=""){ ?>
+                <!------App Section ------>
+                <div class="app-add-prive-main app-sec-preview" >
+                    <div class="app-add-prive-btn">
+                        <?php echo isset($data['call_to_action'])? $data['call_to_action']: '-'; ?>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="app-add-prive">
+                        <div class="app-add-icon-txt">
+                            <div class="app-add-icon">
+                                <img src="<?php echo $data['app_icon']; ?>" id="app-ico">
+                            </div>
+                            <div class="app-add-icon-txt-section">
+                                <div class="app-add-icon-txt-head">
+									<?php echo isset($data['app_name'])? $data['app_name']: '-'; ?>
+								</div>
+                                <div class="app-add-icon-txt-headline">
+                                    <?php echo isset($data['heading'])? $data['heading']: '-'; ?>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="app-add-install-btn">
+                            <?php echo ($data['campaign_target']=="App install")? 'Install':'Visit'; ?>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            <?php }
+
+        	/*}else{ ?>
+				<img src="<?php echo $data['screen_shot']; ?>" alt="" />
+            <?php }*/ ?>
+<!-------------------------------------------------------------->
+
+
+
+
+
+
+
+
 						</div>
 					</div>
 				</div>

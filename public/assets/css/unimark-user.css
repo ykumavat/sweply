@@ -215,7 +215,7 @@ textarea.form-control { padding: 15px 15px 0;}
 .uploaded-img-download{height: 30px;width: 30px;border-radius: 50%;background-color: #ffffff;position: absolute;top: 0;right: 0;bottom: 0;left: 0;margin: auto;text-align: center;font-size: 14px;}
 .cirtificate-download{text-align: right;color: #e40421 !important;}
 .info-main-content .uploaded-img-main{display: inline-block;vertical-align: top;text-align: center;font-size: 11px;}
-.ad-prive-details-bx-main .ad-prive-bx.preview-ads-mobile{height: 517px;padding: 0;position: unset;top: 0;margin: 0;}
+.ad-prive-details-bx-main .ad-prive-bx.preview-ads-mobile{margin: 0;}
 
 .details-uploaded-section .info-main-content{height: auto;background-color: transparent;line-height: normal;padding: 0;font-size: 14px;}
 .details-uploaded-section .uploaded-img{width: 200px;height: 352px;margin-right: 10px;}

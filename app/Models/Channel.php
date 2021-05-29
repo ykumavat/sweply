@@ -20,6 +20,9 @@ class Channel extends Authenticatable
     protected $fillable = [
         'channel_name',
         'channel_image',
+        'display_order',
+        'url_slug',
+        'status'
     ];
 
     /**

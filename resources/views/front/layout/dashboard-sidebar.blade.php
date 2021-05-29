@@ -42,14 +42,26 @@
 
                     <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-video-plus"></i><span class="menu-title" data-i18n="User">Create Ads</span> <!-- <i class="fal fa-angle-down"></i> --></a>                    
                         <ul class="menu-content">
-                            <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Twitter</span></a></li>
+
+                            <?php
+
+                            $channelsArr = [];
+                            $channelsArr = DB::table('channel')->where('status','1')->orderByRaw('display_order ASC')->get(); 
+                            if(isset($channelsArr)){
+                                foreach($channelsArr as $channel){
+                                    echo '<li><a href="'.url('/').'/user/'.$channel->url_slug.'" channel-id="'.$channel->id.'" ><i class="feather icon-circle"></i><span class="menu-item">'.$channel->channel_name.'</span></a></li>';
+                                }
+                            }
+                            ?>
+
+                            <!-- <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Twitter</span></a></li>
                             <li><a href="{{url('/')}}/user/snapchat"><i class="feather icon-circle"></i><span class="menu-item">Snapchat</span></a></li>
                             <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Instagram</span></a></li>
                             <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Facebook</span></a></li>
                             <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">linkedin</span></a></li>
                             <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Tiktok</span></a></li>
                             <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Google Ads</span></a></li>
-                            <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Youtube</span></a></li>
+                            <li><a href="{{url('/')}}/user/create-ads"><i class="feather icon-circle"></i><span class="menu-item">Youtube</span></a></li> -->
                         </ul>
                     </li>
 

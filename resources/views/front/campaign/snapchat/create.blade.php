@@ -209,7 +209,6 @@
                                                     </div>
                                                     <div class="upload-demo-wrap">
                                                         <div id="upload-demo"></div>
-                                                        <div id="upload-demo-icon"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -218,8 +217,33 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                    <div class="demo-wrap upload-demo-icon hide">
+                                        <div class="container">
+                                            <div class="grid"> 
+                                                <div class="actions-close-modal" onclick="jQuery('.upload-demo-icon').addClass('hide');jQuery('.app-icon').html('Choose file');">
+                                                    <a href="javascript:void(0);">&times;</a>
+                                                </div>                              
+                                                <div class="actions">
+                                                    <a href="javascript(0);"class="btn file-btn btn-primary">
+                                                        <span>Upload</span>
+                                                        <input type="file" id="upload2" value="Choose a file" accept="image/*" />
+                                                    </a>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="upload-demo-wrap">
+                                                        <div id="upload-demo-icon"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div id="preview-crop-image_icon" style="background:#9d9d9d;width:450px;padding:50px 50px;height:450px;" class="hide"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>                   
                         </div>
                     </fieldset>
@@ -652,7 +676,7 @@
     <script src="{{url('/')}}/public/assets/js/scripts/forms/number-input.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="{{url('/')}}/public/assets/croppie/croppie.js"></script>
+    <script type="text/javascript" src="{{url('/')}}/public/assets/croppie/croppie.js" defer></script>
 	<script type="text/javascript" src="{{url('/')}}/public/assets/croppie/demo.js"></script>
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/htmltocanvas.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
@@ -766,6 +790,7 @@
                                     var tempVal = '<?php print_r($value); ?>';
                                     setTimeout(function(){ 
                                         $('#campaign_target').val(tempVal).trigger('change');
+
                                      }, 8000);
                             <?php }else{ ?>
                                     var tempVal = '<?php print_r($value); ?>';
@@ -775,9 +800,15 @@
                            <?php }
                         }  ?>
 
-
-
-               <?php }
+               <?php } ?>
+               <?php if($key == 'app_icon'){ ?>
+                            var appIcon = '<?php print_r($value); ?>';
+                            console.log(appIcon);
+                            setTimeout(function(){ 
+                                $('#app-ico').attr('src',appIcon);
+                            }, 9000);
+                <?php } ?>
+               <?php
            } ?>  
 <?php }  ?> 
          $('#end_date,#start_date').change(function(){
@@ -844,7 +875,7 @@
        $('#start_date').change(function(){
             $('#start_date').parents().find('.err-msg').remove();
        });
-        function readURL(input,$uploadCrop){
+        function readURL(input){
             $('#app_icon').next('.err-msg').remove();
             $('#app-ico').attr('src'," ");
             if (input.files && input.files[0]) {
@@ -863,9 +894,7 @@
             }
         }
 
-        $("#app_icon").change(function(){
-            readURL(this);
-        });
+
         $('.steps-li li').click(function(){
             if(validateStep1()==1){
                 return false;
@@ -931,9 +960,11 @@
              $('.heading-section').html('<span>'+this.value+'</span>');
         });
         $('#call_to_action').on("keyup change blur",function(){
-             $('.website-sec-preview').show();
-             $('.btn-add-prive').html(this.value);
-             $('.app-add-prive-btn').html(this.value);
+            if(this.value!=""){
+                 $('.website-sec-preview').show();
+                 $('.btn-add-prive').html(this.value);
+                 $('.app-add-prive-btn').html(this.value);
+             }
         });
         $('#heading').on("keyup change blur",function(){
            $('.brand-name-section').html('<span>'+this.value+'</span>');
@@ -951,8 +982,8 @@
         $('#campaign_budget').on("keyup change blur",function(){
             calculateSummary();
         });
+
 	    var $uploadCrop;
-		
 		$uploadCrop = $('#upload-demo').croppie({
 			viewport: {
 				width: 400,
@@ -962,6 +993,17 @@
 			enableExif: true
 		});
 		$('#inputGroupFile01').on('change', function () { 
+            if($('#upload-demo-icon').hasClass('croppie-container')){
+                $('#upload-demo-icon').croppie('destroy');
+                $uploadCrop = $('#upload-demo').croppie({
+                    viewport: {
+                        width: 400,
+                        height: 700,
+                        type: 'Square'
+                    },
+                    enableExif: true
+                });
+            }
              var fileSize = $(this)[0].files[0].size;
              //console.log(bytesToSize(fileSize));
             if(fileSize<5242880){
@@ -1037,6 +1079,67 @@
             $('.uploaded-img-section').hide();
             $('#ad_image').removeAttr('src');
         });
+
+
+
+/*--------- App Icon crop -------- */
+var $uploadCropIcon; 
+$("#app_icon").change(function(){
+    var input = this;
+    //readURL(this);
+    cropIcon(this,$uploadCropIcon);
+
+});
+
+function cropIcon(input,$uploadCropIcon){
+    $('#upload-demo').croppie('destroy');
+    if($('#upload-demo-icon').hasClass('croppie-container')){
+        $('#upload-demo-icon').croppie('destroy');
+    }
+    $uploadCropIcon = $('#upload-demo-icon').croppie({
+        viewport: {
+            width: 250,
+            height: 250,
+            type: 'Square'
+        },
+        enableExif: true
+    });
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.upload-demo-icon').removeClass('hide');
+            $('.upload-demo-icon').addClass('ready');
+            $uploadCropIcon.croppie('bind', {
+                url: e.target.result
+            }).then(function(){
+                //$('#app-ico').attr('src', e.target.result);
+            });
+            $('.upload-demo-icon').addClass('ready');
+        }
+        reader.readAsDataURL(input.files[0]);
+        var filename1 =  input.files[0].name;
+        jQuery('label[for="app_icon"]').text(filename1);
+    }
+
+    $('#upload2').on('click', function (ev) {
+        ev.preventDefault();
+        $uploadCropIcon.croppie('result', {
+            type: 'canvas',
+            size: 'viewport',
+            format: 'png', 
+        }).then(function (resp) {
+            html = '<img src="' + resp + '" />';
+            $('.upload-demo-icon').addClass('hide');
+            $("#app-ico").attr("src",resp);
+            $('.uploaded-img-section').show();
+            $("#upload-success").show();
+            var token = "{{csrf_token()}}"; 
+        });
+    });
+    //$('#upload-demo-icon').croppie('destroy');
+}
+/*----------------- END ------------------*/
+
         /*Price Range slider Start*/
         $(function() {
             $("#slider-price-range").slider({
