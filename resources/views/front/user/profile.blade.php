@@ -47,7 +47,7 @@
                             }
                             ?>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group change-btn-form-group">
                                     <label for="contact_number"> Mobile Number </label>
                                     <input style="padding-left: 40px;" type="text" placeholder="Enter  Mobile Number " class="form-control" id="contact_number" name="contact_number" value="{{$userData->contact_number}}">
                                     <span class="mobile-no-pro">{{$userData->contry_code}}</span>
@@ -55,9 +55,10 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
+                                <div class="form-group change-btn-form-group">
+                                    <label for="email">Email <span class="verofy-txt-section"><i class="fas fa-shield-check"></i> Verified</span></label>
                                     <input type="text" placeholder="Enter Email" class="form-control" id="email" name="email" value="{{$userData->email}}">
+                                    <button class="mobile-change-btn">Change</button>
                                 </div>
                             </div>
                             <?php /*

@@ -404,6 +404,7 @@
                                 <div class="reach-click total_amount"> SAR 0.00</div>
                                 <input type="hidden" name="total_budget" value="0" />
                                 <div class="clearfix"></div>
+                                <input type="hidden" class="payment-method" name="payment_method" value="BANKTRANSFER" />
                             </div>
                         </div>
                     </fieldset>             
@@ -720,6 +721,16 @@
             $('input[name="sub_budget"]').val(budget);
             $('input[name="vat_amount"]').val(vat_amount);
             $('input[name="total_budget"]').val(total);
+
+
+            $('.campaign-budget').text(total);
+            var walletAmount  = parseFloat($('#wallet_amount').val());
+            var paymentAmount = total;
+            if(walletAmount > 0 ){
+                paymentAmount = paymentAmount-walletAmount;
+            }
+            $('.payment-amount').text(paymentAmount);
+
         }
     $(document).ready(function(){        
         <?php 
@@ -1189,7 +1200,10 @@ function cropIcon(input,$uploadCropIcon){
                 return false;
             }else{
                 if(parseFloat($('#wallet_amount').val())<parseFloat($('input[name="total_budget"]').val())){
-                    swal({
+
+                    $('.balance-popup').trigger('click');
+                    
+                    /*swal({
                         title: "Insufficient wallet balance",
                         text: "Do you want to charge your Wallet?", 
                         icon: "warning",
@@ -1201,15 +1215,22 @@ function cropIcon(input,$uploadCropIcon){
                         }else{
                             swal("Please change budget to continue. Your wallet balance is : SAR "+$('#wallet_amount').val());
                         }
-                    });
+                    });*/
                 }else{
                     saveCampaignData();
                 }
             }
         return true;
     }
+    function confirmToPay(){
+        saveCampaignData();
+    }
+    function cancelToPay(){
+        swal("Please change budget to continue. Your wallet balance is : SAR "+$('#wallet_amount').val());
+    }
      // Validation 
      $(document).ready(function(){
+
         $('#brand_name').keyup(function(e){
             var brand_name  = $(this).val();
             $(this).next('.err-msg').remove();
@@ -1379,6 +1400,9 @@ function cropIcon(input,$uploadCropIcon){
             //codeAddress(); 
             $('#address').trigger('change');
 
+            $('.payment-options').change(function(){
+                $('.payment-method').val($(this).val());
+            });
        });
     $(document).mouseup(function(e){
         var container = $("#target_audience");
@@ -1452,4 +1476,66 @@ function cropIcon(input,$uploadCropIcon){
     </script>
     <!-- <script type="text/javascript" src="{{url('/')}}/public/assets/js/map.js"> 
          </script> -->
+
+
+
+<!-----$('.balance-popup').trigger('click');----->
+<button  style="display:none;" type="button" class=" balance-popup btn btn-primary add-form-btn btn-add-bussiness waves-effect waves-light" data-toggle="modal" data-target="#paymentMethodForm">
+    <span class="text-nowrap"><span class="table-add-txt">Pay Balance</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
+</button>
+<div class="modal fade text-left defaultSize-modal modal-padding-change balance-modal-section" id="paymentMethodForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Select Payment Method</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- <form action="{{url('/')}}/user/create-business" method="POST" id="businessFrm"> -->
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Amount to pay</label>                    
+                        <div class="amount-to-pay-section">
+                            <div class="amount-to-pay-left">
+                                <div class="campaign-budget">00</div>
+                                <span>Campaign value</span>
+                            </div>
+                            <div class="amount-to-pay-left  amount-to-pay-right">
+                                <div class="payment-amount">00</div>
+                                <span>Need to pay</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose payment method</label>    
+                        <div class="payment-method-section">
+                            <div class="radio-btns">  
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
+                                    <label for="f-option"><span><i class="fal fa-university"></i></span>Bank transfer</label>
+                                    <div class="check"></div>
+                                </div>
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="s-option" name="payment-method" value="ONLINE">
+                                    <label for="s-option"><span><i class="fal fa-credit-card"></i></span>Online payment</label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                    <button type="button" class="btn btn-primary confirm-payment" onclick="confirmToPay();">Submit</button>
+                    <button type="button" class="btn btn-primary cancel-payment" data-dismiss="modal" onclick="cancelToPay();">Close</button>
+                    
+                </div>
+            <!-- </form> -->
+        </div>
+    </div>
+</div>
+
+
     @endsection

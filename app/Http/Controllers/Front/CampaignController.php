@@ -155,18 +155,24 @@ class CampaignController extends Controller{
         $campaign_id =0;
 	
         $arr_data = $arr_rules = [];   
+        $paymentMethod = "";
         $form_data_arr = explode('&',$request->input('form_data'));
         foreach($form_data_arr as $data){
             $data_arr = explode('=',$data);
             if($data_arr[0] == 'campaign_id' ){
                 $campaign_id =   urldecode($data_arr[1]);
             }else{
-                if($data_arr[0] != 'wallet_amount' && $data_arr[0] != 'campaign_target_area' ){
+                if($data_arr[0] == 'payment_method'){
+                    $paymentMethod = urldecode($data_arr[1]);
+                }
+                if($data_arr[0] != 'wallet_amount' && $data_arr[0] != 'campaign_target_area' && $data_arr[0] != 'payment_method' ){
                     $arr_data[$data_arr[0]] =   urldecode($data_arr[1]);
                 }
+
             } 
             
         }
+
         //print_r($arr_data);
         //dd($request->input('location')); 
         //$arr_data['website'] = $arr_data['website_url'];
@@ -312,7 +318,8 @@ class CampaignController extends Controller{
             $walletArr = [];
             $walletArr = WalletMasterModel::where('business_id',$arr_data['business_id'])->first();
             $wallet_status = '';
-            
+
+
             if($walletArr){
                 if($walletArr['balance_amount']>=$arr_data['total_budget']){
                     
@@ -346,6 +353,15 @@ class CampaignController extends Controller{
                     }
                     //$wallet_status = "success";
                 }else{
+                    $amountToPay   = 0;
+                    $amountToPay   = $totalBudget   = $arr_data['total_budget'];
+                    $walletAmount  = $walletArr['balance_amount'];
+
+                    if($walletAmount>0){
+                        $amountToPay = $amountToPay-$walletAmount;
+                    }
+                    $request->session()->put('AMOUNTTOPAY',$amountToPay);
+                    $request->session()->put('PAYMENT-METHOD',$paymentMethod);
                     $wallet_status = "warning";
                 }
             } 

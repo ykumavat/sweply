@@ -1,4 +1,4 @@
-   <div class="loader-section-main" style="display:none;">
+   <div class="loader-section-main" >
         <div class="lds-default">
             <div></div>
             <div></div>
@@ -60,13 +60,6 @@
         } 
 
         //document.addEventListener("DOMContentLoaded", showLoader());
-        $(window).load(function(){
-            hideLoader();
-        });
-        $(document).ready(function(){
-           // showLoader();
-        });
-
 
         function scrollToTop() {
           //window.scrollTo({top: 0, behavior: 'smooth'});
@@ -74,6 +67,13 @@
           document.documentElement.scrollTop = 0;
         }
 
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function(){ 
+                $('.loader-section-main').fadeOut('slow');
+             }, 1000);
+        });
     </script>
 
 </body>

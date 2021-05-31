@@ -9,7 +9,24 @@
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
 
-            <div class="content-body">        
+            <div class="content-body">  
+                     <?php 
+                     $amountToPay = $paymentMethod = "";
+                     if(Session::get('AMOUNTTOPAY')){
+                        $amountToPay   = Session::get('AMOUNTTOPAY'); 
+                     }
+                    if(Session::get('PAYMENT-METHOD')){
+                        $paymentMethod = Session::get('PAYMENT-METHOD'); 
+                     }
+
+                    if(\Request::has('payment_amount') && \Request::has('payment-method')){ 
+                        Session::put('AMOUNTTOPAY',\Request::get('payment_amount'));
+                        Session::put('PAYMENT-METHOD',\Request::get('payment-method'));
+                        $amountToPay = \Request::get('payment_amount');
+                        $paymentMethod = \Request::get('payment-method');
+                    }
+                    ?>       
+
                     <div class="wallet-main-width online-payment-bx">
                     <div class="wallet-balance-bx">
                         <a href="#">
@@ -28,10 +45,10 @@
                     </a>                      
                     </div>
                     <div class="wallet-balance-bx">
-                        <a data-toggle="modal" data-target="#exampleModalCenter">
+                        <a data-toggle="modal" data-target="#exampleModalCenter" class="bank-transfer">
                         <div class="wallet-sub-bx">                       
                             <img src="{{url('/')}}/public/assets/images/logo/bank-transfer.svg" alt=""/>                           
-                            <div class="wallet-amt">Bank Transfer Details</div>                            
+                            <div class="wallet-amt">Bank Transfer Details</div>
                         </div> 
                     </a>                             
                     </div>                    
@@ -156,6 +173,10 @@
                     jQuery('div.loader-section-main').show();
                  });
 
+                <?php if($amountToPay != "" && $paymentMethod=="BANKTRANSFER"){ ?>
+                        $('.bank-transfer').trigger('click');
+                        $('#amount').val('<?php echo $amountToPay ?>');
+                <?php } ?>
 
             });
 
@@ -216,4 +237,8 @@
               $('.custom-file-label').text(name.files.item(0).name);
         }
  </script>
+<?php
+//Session::put('AMOUNTTOPAY',"0");
+Session::put('PAYMENT-METHOD',"");
+?>
     @endsection

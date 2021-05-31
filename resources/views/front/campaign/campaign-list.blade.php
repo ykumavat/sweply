@@ -162,6 +162,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
+        /* $('.payment-options').change(function(){
+             $('.payment-method').val($(this).val());
+         });*/
         var table = $('.data-table').DataTable({
             "bDestroy": true,
             processing: true,
@@ -217,6 +220,10 @@
 
 	/****** Pay Now  -  Prashant - 15-05-2021 ******/
      function pay_now(budget,wallet_amount,campaign_name,id){
+        <?php 
+            Session::put('AMOUNTTOPAY','0');
+            Session::put('PAYMENT-METHOD','0');
+        ?>
          
 		if(budget < wallet_amount){
             jQuery('#payment_status #campaign_id').val(id);
@@ -228,12 +235,25 @@
             jQuery('input[name="campaign_name"]').val(campaign_name);
            $('#payment_model').modal('show');
 		}else{
-                swal("Oops !", "Wallet Balance is Low", "error")
-                    .then((value) => {
-                          //  location.href = "{{url('/')}}/admin/wallet-list/";
-                    }); 
+            $('.balance-popup').trigger('click');
+            jQuery('#campaign_cid').val(id);
+            jQuery('input[name="budget"]').val(budget);
+            jQuery('input[name="wallet_amount"]').val(wallet_amount);
+            jQuery('input[name="campaign_name"]').val(campaign_name);
+            $('.campaign-budget').text(budget);
+            var paymentAmount = budget;
+            if(wallet_amount > 0 ){
+                paymentAmount = paymentAmount-wallet_amount;
+            }
+            $('.payment-amount').text(paymentAmount);
+            $('#amountToPay').val(paymentAmount);
+            /*swal("Oops !", "Wallet Balance is Low", "error")
+            .then((value) => {
+                      //  location.href = "{{url('/')}}/admin/wallet-list/";
+            }); */
         }
 	}
+
     
        /****** Update payment Status  -  Prashant - 15-05-2021 ******/
     function update_payment_status(status){
@@ -265,5 +285,65 @@
 	}
 
 </script>
+
+
+<!-----$('.balance-popup').trigger('click');----->
+<button type="button" style="display:none;" class=" balance-popup btn btn-primary add-form-btn btn-add-bussiness waves-effect waves-light" data-toggle="modal" data-target="#paymentMethodForm">
+    <span class="text-nowrap"><span class="table-add-txt">Pay Balance</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
+</button>
+<div class="modal fade text-left defaultSize-modal modal-padding-change balance-modal-section" id="paymentMethodForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Select Payment Method</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('/')}}/user/payment/" method="GET" id="payment_confirm_popup">
+                <input type="hidden" id="campaign_cid" name="campaign_id" />
+                <!-- @csrf -->
+                <input type="hidden" name="payment_amount" id="amountToPay" class="form-control" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Amount to pay</label>                    
+                        <div class="amount-to-pay-section">
+                            <div class="amount-to-pay-left">
+                                <div class="campaign-budget">00</div>
+                                <span>Campaign value</span>
+                            </div>
+                            <div class="amount-to-pay-left  amount-to-pay-right">
+                                <div class="payment-amount">00</div>
+                                <span>Need to pay</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose payment method</label>    
+                        <div class="payment-method-section">
+                            <div class="radio-btns">  
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
+                                    <label for="f-option"><span><i class="fal fa-university"></i></span>Bank transfer</label>
+                                    <div class="check"></div>
+                                </div>
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="s-option" name="payment-method" value="ONLINE">
+                                    <label for="s-option"><span><i class="fal fa-credit-card"></i></span>Online payment</label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <input type="hidden" class="payment-method" name="payment_method" value="BANKTRANSFER" /> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary confirm-payment" >Submit</button>
+                    <button type="button" class="btn btn-primary cancel-payment" data-dismiss="modal" >Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection

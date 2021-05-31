@@ -195,7 +195,7 @@ Route::group(['prefix' =>'/','middleware' => ['Front','web']], function ()
 	$module_controller = "App\Http\Controllers\Front\WalletController@";
 	Route::get('/user/wallet', [ 'as'=>'', 'uses'=>$module_controller.'index']);
 	Route::get('/user/wallet-list', [ 'as'=>'', 'uses'=>$module_controller.'load_wallet_page']);
-	Route::get('/user/payment', [ 'as'=>'', 'uses'=>$module_controller.'get_payment_methods']);
+	Route::any('/user/payment', [ 'as'=>'', 'uses'=>$module_controller.'get_payment_methods']);
 	Route::get('/user/payment-cards', [ 'as'=>'', 'uses'=>$module_controller.'get_cards']);
 	Route::get('/user/load-wallet-data', [ 'as'=>'', 'uses'=>$module_controller.'loadWalletData']);
 	Route::post('/user/payment_by_bank', [ 'as'=>'', 'uses'=>$module_controller.'payment_by_bank']);
