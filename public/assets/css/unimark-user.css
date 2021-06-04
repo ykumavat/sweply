@@ -43,6 +43,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{font-family: 'Poppins', san
 .website-vist-section { background-color: #fff;  border-radius: 0.5rem;  text-align: left; margin: 30px 20px; display: none;}
 .website-vist-section .form-control { margin-bottom: 14px;}
 .form-control {padding:0 15px; position: relative; color: #000; border-radius: 3px; border: none;height: 40px;background-color: #f7f8f9;font-size: 14px;}
+.change-btn-form-group input{padding-right: 85px;}
 div.form-control{line-height: 40px;}
 .website-vist-section h2 { font-size: 18px; font-weight: 600; margin-bottom: 30px;}
 .form-group { text-align: left; position: relative;}
@@ -277,7 +278,7 @@ textarea.form-control { padding: 15px 15px 0;}
 
 
 .snapchat-main-width.twitter-width .select-ads-type{display: inline-block;width: auto;float: none;padding: 0;}
-.snapchat-main-width.twitter-width .select-ads-type a {width: 200px;box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);border: none;padding: 40px;}
+.snapchat-main-width.twitter-width .select-ads-type a {width: 200px;box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);border: none;padding: 40px 20px;}
 .twitter-step-section { margin-top: 30px;}
 .app-content .wizard > .content > .body { padding: 0 0;}
 .app-content .wizard > .actions{padding: 20px 0;}
@@ -421,6 +422,7 @@ textarea.form-control { padding: 15px 15px 0;}
 .profile-setting-warp {max-width: 680px;margin: 0 auto;background-color: #fff; padding: 60px 30px; border-radius: 0.5rem;box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);}
 .mobile-no-pro { position: absolute;  top: 33px;    left: 13px;}
 button.mobile-change-btn {position: absolute;bottom: 0;right: 0;height: 40px;border: none;font-size: 13px;padding: 0 10px;background-color: #ffe8eb;border-radius: 0 3px 3px 0;}
+span.verofy-txt-section {color: green;margin-left: 5px;}
 .bank-name-title { float: left;}
 .bank-name-proper {margin-left: 110px;}
 .bank-name-deatils-bx { margin: 10px 0;}

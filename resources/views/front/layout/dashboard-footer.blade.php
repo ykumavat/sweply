@@ -1,4 +1,5 @@
-   <div class="loader-section-main" >
+   <div class="loader-section-main" >        
+        <!-- <img src="{{url('/')}}/public/assets/images/logo/loader.gif" alt=""/> -->
         <div class="lds-default">
             <div></div>
             <div></div>
@@ -14,6 +15,17 @@
             <div></div>
         </div>
     </div>
+
+    <!--Share Button 3 Start Here-->
+    <div class="theme-color-change-main">
+        <div class='float-circle' id='twitter-color' rel="twitter-color"   onclick="setSessionAttribute('THEMEUI','twitter-color')" ></div>
+        <div class='float-circle' id='youtube-color'   rel="youtube-color" onclick="setSessionAttribute('THEMEUI','youtube-color')"></div>
+        <div class='float-circle' id='snapchat-color'  rel="snapchat-color" onclick="setSessionAttribute('THEMEUI','snapchat-color')" ></div>
+        <div class='main-button share' id="draggable">
+            <div class='fa fa-cog fa-2x'></div>
+        </div>
+    </div>
+    <!--Share Button 3 End Here-->
 
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/pages/dashboard-analytics.css">
@@ -52,6 +64,17 @@
              });
 
         }  
+        function setSessionAttribute(attribute,sessionValue){
+            var token    = "{{csrf_token()}}";
+            $.ajax({
+                url: "{{url('/')}}/set_session_attribute",
+                type: 'post',
+                data: {attribute:attribute,sessionValue:sessionValue,_token:token},
+                success: function(data){
+                   //location.reload();
+                }
+            });
+        } 
         function showLoader(){
             $('.loader-section-main').show();
         }  
@@ -72,9 +95,30 @@
         $(document).ready(function () {
             setTimeout(function(){ 
                 $('.loader-section-main').fadeOut('slow');
-             }, 1000);
+             }, 500);
         });
     </script>
+  
+
+    <script>
+        $('.share').on('click', function(e){
+            $(".float-circle").removeClass("no-animation");
+            $(".float-circle").toggleClass("open");
+        });
+        $('.float-circle').click(function(){
+            var relClass = $(this).attr('rel');
+            $('body').removeClass('twitter-color');
+            $('body').removeClass('youtube-color');
+            $('body').removeClass('snapchat-color');
+            $('body').addClass(relClass);
+            //setTimeout(function(){ location.reload }, 3000);
+        });
+          // $(function() {  
+          //   $( "#draggable" ).draggable();  
+          // }); 
+    </script>
+    <!-- <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>   -->
+
 
 </body>
 <!-- END: Body-->

@@ -8,7 +8,7 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-                <div class="card mb-0">					
+                <div class="card mb-0 padding-left-right">					
 					<div class="m-2">
 						<div class="row">
 							<div class="users-list-filter col-6">

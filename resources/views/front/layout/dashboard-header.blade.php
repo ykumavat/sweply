@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/pages/dashboard-analytics.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/fontawesome-v5.7.2-pro.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/unimark-user.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/sweply-user.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="{{url('/')}}/public/assets/vendors/js/vendors.min.js"></script>
     <script src="{{url('/')}}/public/assets/vendors/js/charts/apexcharts.min.js"></script>    
@@ -51,8 +51,15 @@
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
+<?php
+$THEMEUI = "youtube-color";
+$THEMEUI = Session::get('THEMEUI');
+if($THEMEUI==""){
+    $THEMEUI = "youtube-color";
+}
+?>
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static <?php echo $THEMEUI; ?> " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" >
     <?php 
     $userData = [];
     $userData = getLoggedUserData(); 

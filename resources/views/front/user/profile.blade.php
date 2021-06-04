@@ -1,5 +1,4 @@
 @extends('front.layout.dashboard-master')    
-
 @section('main_content')
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -12,111 +11,113 @@
                     <div class="profile-setting-warp">
                         <div class="from-tab-section">
                             <form id="user_profile" name="user_profile" >
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-12">
-                                    <div class="form-group">
-                                       <!-- <div class="profile-pic-bx">
-                                           <img src="{{url('/')}}/public/assets/images/logo/avatar-s-1.png" alt=""/>
-                                       </div> -->
-                                    
-                                        <div style="position: relative;" class="profile-img-block">
-                                            <div class="pro-img"><img src="{{$userData->profile_photo}}" class="img-responsive img-preview" alt=""/></div>
-                                            <div class="update-pic-btns">
-                                                <button href="#" class="up-btn"><i class="fal fa-user-edit"></i></button>
-                                                <input style="height: 100%; width: 100%; z-index: 99;" id="logo_id" name="logo"  type="file" class="attachment_upload">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 col-lg-12">
+                                        <div class="form-group">                       
+                                            <div style="position: relative;" class="profile-img-block">
+                                                <div class="pro-img"><img src="{{$userData->profile_photo}}" class="img-responsive img-preview" alt=""/></div>
+                                                <div class="update-pic-btns">
+                                                    <button href="#" class="up-btn"><i class="fal fa-user-edit"></i></button>
+                                                    <input style="height: 100%; width: 100%; z-index: 99;" id="logo_id" name="logo"  type="file" class="attachment_upload">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" placeholder="Enter First Name" class="form-control" id="first_name" name="first_name" value="{{$userData->first_name}}">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" placeholder="Enter Last Name" class="form-control" id="last_name" name="last_name" value="{{$userData->last_name}}">
-                                </div>
-                            </div>
-                            <?php
-
-                            if($userData->contry_code==""){
-                                $userData->contry_code = "+91";
-                            }
-                            ?>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group change-btn-form-group">
-                                    <label for="contact_number"> Mobile Number </label>
-                                    <input style="padding-left: 40px;" type="text" placeholder="Enter  Mobile Number " class="form-control" id="contact_number" name="contact_number" value="{{$userData->contact_number}}">
-                                    <span class="mobile-no-pro">{{$userData->contry_code}}</span>
-                                    <button class="mobile-change-btn">Change</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group change-btn-form-group">
-                                    <label for="email">Email <span class="verofy-txt-section"><i class="fas fa-shield-check"></i> Verified</span></label>
-                                    <input type="text" placeholder="Enter Email" class="form-control" id="email" name="email" value="{{$userData->email}}">
-                                    <button class="mobile-change-btn">Change</button>
-                                </div>
-                            </div>
-                            <?php /*
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="company_name"> Company Name </label>
-                                    <input type="text" placeholder="Enter  Company Name " class="form-control" id="company_name" name="company_name" value="{{$businessData->business_name}}">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="type">Type</label>
-                                    <input type="text" placeholder="Enter Type" class="form-control" id="type" name="type"  value="{{$userData->type}}">
-                                </div>
-                            </div>
-                            <input type="hidden" name="business_id" value="{{$businessData->id}}" />
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="website_url">Website</label>
-                                    <input type="text" placeholder="Enter Website" class="form-control" id="website_url" name="website_url"  value="{{$businessData->website_url}}" >
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="commercial_number"> Commercial Number </label>
-                                    <input type="text" placeholder="Enter Commercial Numbe" class="form-control" id="commercial_number" name="commercial_number" value="{{$businessData->contact_number}}">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="vat_number">  Vat Number </label>
-                                    <input type="text" placeholder="Enter Vat Number" class="form-control" id="vat_number" name="vat_number" value="{{$businessData->vat_number}}">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="emailAddress1">Upload Vat & Cr Certificate</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="vat_cr_certificate" name="vat_cr_certificate"  value="{{$userData->vat_cr_certificate}}">
-                                        <label class="custom-file-label" for="vat_cr_certificate">Choose Certificate file</label>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="first_name">First Name</label>
+                                            <input type="text" placeholder="Enter First Name" class="form-control" id="first_name" name="first_name" value="{{$userData->first_name}}">
+                                        </div>
                                     </div>
-                                    
-                                </div>
-                                <div class="form-group">
-                                    <?php if(isset($userData->vat_cr_certificate) && $userData->vat_cr_certificate!="" ){ ?>
-                                        <label><a style="width:100%;" href="<?php echo url('/').'/uploads/user_image/'.$userData->vat_cr_certificate; ?>"  class="uploaded-img-download cirtificate-download"  download><i class="fal fa-download"></i>&nbsp;Download/View certificate</a></label>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            */ ?>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="last_name">Last Name</label>
+                                            <input type="text" placeholder="Enter Last Name" class="form-control" id="last_name" name="last_name" value="{{$userData->last_name}}">
+                                        </div>
+                                    </div>
+                                    <?php
 
+                                    if($userData->contry_code==""){
+                                        $userData->contry_code = "+91";
+                                    }
+                                    ?>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group change-btn-form-group">
+                                            <label for="contact_number"> Mobile Number </label>
+                                            <input style="padding-left: 40px;" type="text" placeholder="Enter  Mobile Number " class="form-control" id="contact_number" name="contact_number" value="{{$userData->contact_number}}">
+                                            <span class="mobile-no-pro">{{$userData->contry_code}}</span>
+                                            <button class="mobile-change-btn">Change</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group change-btn-form-group">
+                                            <label for="email">Email <span class="verofy-txt-section"><i class="fas fa-shield-check"></i> Verified</span></label>
+                                            <input type="text" placeholder="Enter Email" class="form-control" id="email" name="email" value="{{$userData->email}}">
+                                            <button class="mobile-change-btn">Change</button>
+                                        </div>
+                                    </div>
+
+
+
+                                    <?php
+                                    /********************* Yogesh Added **********************/
+                                        $cityArr = DB::table('city')->where('country_id','1')->get();
+                                        $optionStr = "";
+                                        if($cityArr){
+                                            foreach($cityArr as $city){
+                                                $selected = ""; 
+                                                if($userData->city == $city->city_name){
+                                                    $selected = "selected";
+                                                }
+                                                $optionStr .= '<option '.$selected.' value="'.$city->city_name.'">'.$city->city_name.'</option>';
+                                            }
+                                        }
+                                    ?>
+
+                                    <div class=" col-sm-12 col-md-6 col-lg-6 form-group">
+                                        <label for="account_access">City</label>
+                                        <select class="form-control" name="city" id="city">
+                                            <option>Select City</option>
+                                            <?php echo $optionStr; ?>
+                                        </select>
+                                    </div>
+                                    <div class=" col-sm-12 col-md-6 col-lg-6 form-group">
+                                        <label for="account_access">Gender</label>
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="Male" <?php if($userData->gender=="Male"){ echo "selected"; } ?> >Male</option>
+                                            <option value="Female" <?php if($userData->gender=="Female"){ echo "selected"; } ?>>Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="occupation"> Profession </label>
+                                            <select class="form-control" name="occupation" id="occupation">
+                                                <option value="Student">Student</option>
+                                                <option value="Employee">Employee</option>
+                                            </select>
+                                            <!-- <input type="text" placeholder="Enter  Occupation Name " class="form-control" id="occupation" name="occupation" value="{{$userData->occupation}}"> -->
+                                        </div>
+                                    </div>      
+
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="age"> Age </label>
+                                            <input type="text" placeholder="Enter Age" class="form-control" id="age" name="age" value="{{$userData->age}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label>Date Of Birth <span style="color: red">*</span></label>
+                                            <input name="DOB" placeholder="Select date of birth" type='text' class="form-control datepicker" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <a style="width: 100%;" href="javascript:void(0);" onclick="update_profile();" class="btn btn-primary shadow waves-effect waves-light mt-2">Update</a>
+                            </form>
                         </div>
-                        <a style="width: 100%;" href="javascript:void(0);" onclick="update_profile();" class="btn btn-primary shadow waves-effect waves-light mt-2">Update</a>
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
     <!-- END: Content-->
@@ -191,10 +192,18 @@
             });  
             //hideLoader();
         }
-
-     
-    
-    
+            
+    </script> 
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/bootstrap-datepicker.min.css">
+    <script src="{{url('/')}}/public/assets/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script>
+        $(function() {
+            $( ".datepicker" ).datepicker({
+                todayHighlight: true,
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                startDate: new Date()
+            });
+        });       
     </script>   
-
     @endsection

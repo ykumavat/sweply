@@ -63,7 +63,8 @@
     </script>
 
 
-<div class="loader-section-main" style="display:none;">
+<div class="loader-section-main" style="display:none;">    
+    <!-- <img src="{{url('/')}}/public/assets/images/logo/loader.gif" alt=""/> -->
     <div class="lds-default">
         <div></div>
         <div></div>

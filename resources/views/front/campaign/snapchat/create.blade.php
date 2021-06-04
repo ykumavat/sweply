@@ -1,7 +1,7 @@
 <?php 
     $userData = [];
     $userData = getLoggedUserData(); 
-    ?>
+?>
 @extends('front.layout.dashboard-master')    
 @section('main_content')
 <style>
@@ -17,9 +17,7 @@
 <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/croppie/croppie.css" />
 <link rel="Stylesheet" type="text/css" href="{{url('/')}}/public/assets/croppie/prism.css" />
 <link rel="Stylesheet" type="text/css" href="{{url('/')}}/public/assets/croppie/demo.css" />
-<!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyB9s91K1zHQ4zz0v9oCVPnNingRJt2SGGc&libraries=geometry,places"></script>  -->
-
-<!-- BEGIN: Content-->
+<!-- BEGIN: Content | Code By Yogesh Kumavat | 02 JUN 2021 -->
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
@@ -39,9 +37,18 @@
             <div class="ad-prive-bx">
                 <form action="{{url('/')}}/user/snapchat_store" class="number-tab-steps wizard-circle" id="snapchat_creat" name='snapchat_creat' enctype="multipart/form-data">
                     <!-- Step 1 -->
+                    <?php 
+                            $channel_id = $channel_category_id = 0;
+                            $channel_id = Session::get('channel_id');
+                            $channel_category_id = Session::get('channel_category_id'); 
+
+                            if($channel_category_id==""){
+                                $channel_category_id = 1;
+                            }
+                    ?>
                     <input type="hidden" id="campaign_id" name="campaign_id"  value=""/>    
-                    <input type="hidden" id="channel_id" name="channel_id"  value="1"/>    
-                    <input type="hidden" id="channel_category_id" name="channel_category_id"  value="1"/> 
+                    <input type="hidden" id="channel_id" name="channel_id"  value="{{$channel_id}}"/>    
+                    <input type="hidden" id="channel_category_id" name="channel_category_id"  value="{{$channel_category_id}}"/> 
                     <?php 
                         if(Session::has('BUSINESSID')){
                             $businessID = Session::get('BUSINESSID');
@@ -308,34 +315,6 @@
                                         setTimeout(function(){  $('.select2').select2();  }, 4000);
                                     </script>
                                 </div>
-                                <?php /* Area of target with map 
-                                <div class="form-group area-target-drop-main">
-                                    <label for="target_audience">Area of target audience</label>
-                                    <div class="target-audience bud-sar-padding">
-                                        <input type="text" placeholder="Select area of target audience" class="form-control" id="address" name="campaign_target_area" value=""  autocomplete="off" />
-                                        <input type="hidden" id="city2" name="city2" />
-                                         <input type="hidden" id="cityLat" name="cityLat" />
-                                         <input type="hidden" id="cityLng" name="cityLng" />
-                                         <input id="radius" type="hidden" value="10">
-                                    </div>
-                                    <div class="area-target-drop-section" id="target_audience" >
-                                        <button class="map-close-btn" type="button">&times;</button>
-                                            <table border="1" style="width:100%"> 
-                                               <tr>
-                                                <td style="display: flex;"> 
-                                              </tr> 
-                                              <tr> 
-                                                <td> 
-                                                   <div id="map_canvas" style="width: 100%; height: 350px"></div> 
-                                                </td> 
-                                                <td valign="top" style="display:none;" > 
-                                                   <div id="side_bar" style="width:300px;height:450px; text-decoration: underline; color: #4444ff; overflow:auto;"></div> 
-                                                </td> 
-                                              </tr> 
-                                            </table>
-                                    </div>
-                                </div>
-                                 */ ?>
                                 <div class="form-group">
                                     <label for="note">Add Note</label>
                                     <textarea class="form-control" id="note" name="note" rows="2" placeholder="Enter Note" maxlength="100" /></textarea>
@@ -680,11 +659,12 @@
     <script type="text/javascript" src="{{url('/')}}/public/assets/croppie/croppie.js" defer></script>
 	<script type="text/javascript" src="{{url('/')}}/public/assets/croppie/demo.js"></script>
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/htmltocanvas.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
-
-
     <script>
         function calculateSummary(){
+            var budget = 0;
+            var vat_amount = 0;
+            var total = 0;
+            var service_charges = 0;
             var start = $('#start_date').val();
             var end = $('#end_date').val();
             start = start.split("/");
@@ -693,20 +673,13 @@
             var endDay = new Date(end[2]+'-'+end[1]+'-'+end[0]);
             var diff = new Date(endDay - startDay);
             var days = diff/1000/60/60/24;
-           /*   var startDay = new Date( start[2], start[1] - 1, start[0]);
-                var endDay = new Date( end[2], end[1] - 1, end[0]);
-                var millisecondsPerDay = 1000 * 60 * 60 * 24;
-                var millisBetween = endDay.getTime() - startDay.getTime();
-                var days = millisBetween / millisecondsPerDay;
-                days =Math.floor(days); 
-            */
-            console.log('Days '+days)     
-
+            days = days.toFixed();
             var budget = $('#campaign_budget').val();
             var budget_duartion = $('#budget_duartion').val();
             if(budget_duartion == 'Daily'){
                 budget = budget * days;
             }
+            console.log(days);
             var vat_amount = parseInt(budget) * 0.15; 
             var total = parseInt(budget) + parseInt(vat_amount);
             var service_charges = 10;
@@ -721,29 +694,26 @@
             $('input[name="sub_budget"]').val(budget);
             $('input[name="vat_amount"]').val(vat_amount);
             $('input[name="total_budget"]').val(total);
-
-
             $('.campaign-budget').text(total);
+            $('.campaign-total-budget').text(total);
             var walletAmount  = parseFloat($('#wallet_amount').val());
             var paymentAmount = total;
             if(walletAmount > 0 ){
                 paymentAmount = paymentAmount-walletAmount;
             }
             $('.payment-amount').text(paymentAmount);
-
+            $('.wallet-amount').text(paymentAmount);
         }
     $(document).ready(function(){        
         <?php 
             if(isset($data)){
                  foreach($data as $key =>$value){
-
                     if($key != 'get_user' && $key != 'get_business' && $key != 'app_icon'){ ?>
                         console.log('<?php print_r($key); ?>'+'======>'+'<?php print_r($value); ?>');
                          $("#<?php echo $key; ?>").val('<?php print_r($value); ?>');
                          $('#heading').trigger('change');
                          $('#brand_name').trigger('change');
                          $('#caption').trigger('change');
-
                          calculateSummary();
                         <?php 
                          if($key == 'post_image'){ ?>
@@ -776,7 +746,6 @@
                             });
                             $('.campaign_target_area').val(locations).trigger('change');
                         <?php  } ?>
-
                         <?php if($key == 'upload_type'){ 
                                 if($value == 'video'){ ?>
                                     $('#ad_image').hide();
@@ -786,10 +755,6 @@
                                     $('#ad_video').hide();
                                 <?php } ?>
                         <?php }  ?>
-
-
-                        
-
                         <?php if($key == 'call_to_action'){ ?>
                                 var optVal = '<?php print_r($value); ?>';
                                 setTimeout(function(){ 
@@ -801,7 +766,6 @@
                                     var tempVal = '<?php print_r($value); ?>';
                                     setTimeout(function(){ 
                                         $('#campaign_target').val(tempVal).trigger('change');
-
                                      }, 8000);
                             <?php }else{ ?>
                                     var tempVal = '<?php print_r($value); ?>';
@@ -810,7 +774,6 @@
                                     }, 8000);
                            <?php }
                         }  ?>
-
                <?php } ?>
                <?php if($key == 'app_icon'){ ?>
                             var appIcon = '<?php print_r($value); ?>';
@@ -825,12 +788,17 @@
          $('#end_date,#start_date').change(function(){
                 var start = $('#start_date').val();
                 var end = $('#end_date').val();
+                if(end==""){
+                    end = '<?php echo date('d/m/y'); ?>';
+                }
+                console.log(end);
                 start = start.split("/");
                 end = end.split("/");
                 var startDay = new Date(start[2]+'-'+start[1]+'-'+(start[0]-1));
                 var endDay = new Date(end[2]+'-'+end[1]+'-'+end[0]);
                 var diff = new Date(endDay - startDay);
                 var days = diff/1000/60/60/24;
+                days = days.toFixed();
                 $('#end_date').parents().find('.err-msg').remove();
                 $('.date-err-msg').remove();
                 if(days>0 && Math.sign(days)===1){
@@ -904,7 +872,6 @@
                 }
             }
         }
-
 
         $('.steps-li li').click(function(){
             if(validateStep1()==1){
@@ -1016,13 +983,11 @@
                 });
             }
              var fileSize = $(this)[0].files[0].size;
-             //console.log(bytesToSize(fileSize));
             if(fileSize<5242880){
                 var u = URL.createObjectURL(this.files[0]);
                 var img = new Image;
                 var input = this;
                 img.onload = function() {
-                    //alert(img.width+"-----"+img.height);
                     $('#inputGroupFile01').attr('rel-height',img.height);
                     $('#inputGroupFile01').attr('rel-width',img.width);
                 };
@@ -1031,7 +996,9 @@
                     var height = $('#inputGroupFile01').attr('rel-height');
                     var width  = $('#inputGroupFile01').attr('rel-width');     
                     console.log(height+"---"+width);
-                    if(parseInt(height)<1900 && parseInt(width)<1000 ){
+                    if(parseInt(height)<1900){
+                        $('#inputGroupFile01').parent().append('<label class="err-msg">Minimum image size should be : 1080 x 1920px </label>');
+                    }else if(parseInt(width)<1000){
                         $('#inputGroupFile01').parent().append('<label class="err-msg">Minimum image size should be : 1080 x 1920px </label>');
                     }else{
                         if (input.files && input.files[0]) {
@@ -1058,7 +1025,6 @@
                         }else{
                             alert("Sorry - you're browser doesn't support the FileReader API");
                         }
-                    
                     }
                 }, 1000);
                 $('#inputGroupFile01').next('.err-msg').remove();
@@ -1089,9 +1055,8 @@
             $('label[for="inputGroupFile01"]').text(' ');
             $('.uploaded-img-section').hide();
             $('#ad_image').removeAttr('src');
+            $('#ad_image').attr('src',"{{url('/')}}/public/assets/images/logo/mobile-priview-img.jpg");
         });
-
-
 
 /*--------- App Icon crop -------- */
 var $uploadCropIcon; 
@@ -1099,9 +1064,7 @@ $("#app_icon").change(function(){
     var input = this;
     //readURL(this);
     cropIcon(this,$uploadCropIcon);
-
 });
-
 function cropIcon(input,$uploadCropIcon){
     $('#upload-demo').croppie('destroy');
     if($('#upload-demo-icon').hasClass('croppie-container')){
@@ -1123,7 +1086,6 @@ function cropIcon(input,$uploadCropIcon){
             $uploadCropIcon.croppie('bind', {
                 url: e.target.result
             }).then(function(){
-                //$('#app-ico').attr('src', e.target.result);
             });
             $('.upload-demo-icon').addClass('ready');
         }
@@ -1147,7 +1109,6 @@ function cropIcon(input,$uploadCropIcon){
             var token = "{{csrf_token()}}"; 
         });
     });
-    //$('#upload-demo-icon').croppie('destroy');
 }
 /*----------------- END ------------------*/
 
@@ -1162,8 +1123,6 @@ function cropIcon(input,$uploadCropIcon){
                     $("#slider_price_range_txt").html("<span class='slider_price_min'> " + e.values[0] + " - </span>  <span class='slider_price_max'>  " + e.values[1] + " </span>")
                 }
             }), $("#slider_price_range_txt").html("<span class='slider_price_min'> " + $("#slider-price-range").slider("values", 0) + " - </span>  <span class='slider_price_max'> " + $("#slider-price-range").slider("values", 1) + "  </span>")
-
-
         });
         /*Price Range Slider End*/
 
@@ -1200,9 +1159,7 @@ function cropIcon(input,$uploadCropIcon){
                 return false;
             }else{
                 if(parseFloat($('#wallet_amount').val())<parseFloat($('input[name="total_budget"]').val())){
-
                     $('.balance-popup').trigger('click');
-                    
                     /*swal({
                         title: "Insufficient wallet balance",
                         text: "Do you want to charge your Wallet?", 
@@ -1230,7 +1187,6 @@ function cropIcon(input,$uploadCropIcon){
     }
      // Validation 
      $(document).ready(function(){
-
         $('#brand_name').keyup(function(e){
             var brand_name  = $(this).val();
             $(this).next('.err-msg').remove();
@@ -1343,13 +1299,7 @@ function cropIcon(input,$uploadCropIcon){
                                          location.href = "{{url('/')}}/user/campaign/";
                                 });
                             }else if($.trim(data)=='warning'){
-                                //$('#wallet_amount').val();
                                 location.href = "{{url('/')}}/user/payment/";
-                              /*  swal("Thank You!", "Campaign stored successfully!", "success")
-                                    .then((value) => {
-                                        $('.loader-section-main').show();
-                                         location.href = "{{url('/')}}/user/payment/";
-                                }); */
                             }else{
                                 swal("Oops !", "Something went Wrong", "error")
                                 .then((value) => {
@@ -1397,9 +1347,7 @@ function cropIcon(input,$uploadCropIcon){
            $('.map-close-btn').click(function(){
                 $('#target_audience').hide();
            });
-            //codeAddress(); 
             $('#address').trigger('change');
-
             $('.payment-options').change(function(){
                 $('.payment-method').val($(this).val());
             });
@@ -1420,67 +1368,8 @@ function cropIcon(input,$uploadCropIcon){
 </script>
 <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/bootstrap-datepicker.min.css">
 <script src="{{url('/')}}/public/assets/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-<script>
-    /*
-    function readFile(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('.upload-demo').addClass('ready');
-                    $uploadCrop.croppie('bind', {
-                        url: e.target.result
-                    }).then(function(){
-                        jQuery("#original_file_display").attr("src", e.target.result);  
-                        console.log('jQuery bind complete');
-                    });
-                     $('.upload-demo').addClass('ready');
-                }
-                reader.readAsDataURL(input.files[0]);
-                var filename1 =  input.files[0].name;
-                jQuery('label[for="inputGroupFile01"]').text(filename1);
-            }
-            else {
-                alert("Sorry - you're browser doesn't support the FileReader API");
-            }
-        }
-    var map;
-        function initialize() {
-          var input = document.getElementById('address');
-           var options = {
-              types: ['(cities)'],
-              componentRestrictions: {country: "sa"}
-            };
-          var autocomplete = new google.maps.places.Autocomplete(input,options);
-            google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                var place = autocomplete.getPlace();
-                document.getElementById('city2').value = place.name;
-                document.getElementById('cityLat').value = place.geometry.location.lat();
-                document.getElementById('cityLng').value = place.geometry.location.lng();
-                geocoder = new google.maps.Geocoder();
-                var latlng = new google.maps.LatLng(place.geometry.location.lat(),place.geometry.location.lng());
-                var mapOptions = {
-                  zoom: 8,
-                  center: latlng
-                }
-                map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-                new google.maps.Marker({
-                    position: latlng,
-                    map,
-                    title: place.name,
-                });
-                $(".area-target-drop-section").slideToggle("slow");
-            });
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-        */
-    </script>
-    <!-- <script type="text/javascript" src="{{url('/')}}/public/assets/js/map.js"> 
-         </script> -->
 
-
-
-<!-----$('.balance-popup').trigger('click');----->
-<button  style="display:none;" type="button" class=" balance-popup btn btn-primary add-form-btn btn-add-bussiness waves-effect waves-light" data-toggle="modal" data-target="#paymentMethodForm">
+<button type="button" class=" balance-popup btn btn-primary add-form-btn btn-add-bussiness waves-effect waves-light" data-toggle="modal" data-target="#paymentMethodForm">
     <span class="text-nowrap"><span class="table-add-txt">Pay Balance</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
 </button>
 <div class="modal fade text-left defaultSize-modal modal-padding-change balance-modal-section" id="paymentMethodForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -1495,7 +1384,7 @@ function cropIcon(input,$uploadCropIcon){
             <!-- <form action="{{url('/')}}/user/create-business" method="POST" id="businessFrm"> -->
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Amount to pay</label>                    
                         <div class="amount-to-pay-section">
                             <div class="amount-to-pay-left">
@@ -1507,10 +1396,34 @@ function cropIcon(input,$uploadCropIcon){
                                 <span>Need to pay</span>
                             </div>
                         </div>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label>Amount to pay : <span class="campaign-budget " style="font-weight: 600;color:#399dd6;">00</span></label>  
+                    </div>
+                    <div style="display:none;">
+                        <div class="campaign-total-budget">00</div>
+                        <div class="payment-amount">00</div>
                     </div>
                     <div class="form-group">
                         <label>Choose payment method</label>    
                         <div class="payment-method-section">
+                            <?php if($walletBalance>0){ ?>
+                            <div class="audience-gender-bx payment-method-wallet">
+                                <div class="gender-chk-bx">
+                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                        <input type="checkbox" id="wallet_payment"  value="WALLET">
+                                        <span class="vs-checkbox">
+                                            <span class="vs-checkbox--check">
+                                                <i class="vs-icon feather icon-check"></i>
+                                            </span>
+                                        </span>
+                                        <span class=""><span class="checkbox-span"><i class="fal fa-wallet"></i></span> Wallet Balance :<i class="wallet_amount_opt" style="font-weight: 600;color:#399dd6; " >{{$walletBalance}}</i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+
                             <div class="radio-btns">  
                                 <div class="radio-btn">
                                     <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
@@ -1528,7 +1441,7 @@ function cropIcon(input,$uploadCropIcon){
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                    <button type="button" class="btn btn-primary confirm-payment" onclick="confirmToPay();">Submit</button>
+                    <button type="button" class="btn btn-primary confirm-payment" onclick="confirmToPay();">Pay Now</button>
                     <button type="button" class="btn btn-primary cancel-payment" data-dismiss="modal" onclick="cancelToPay();">Close</button>
                     
                 </div>
@@ -1536,6 +1449,19 @@ function cropIcon(input,$uploadCropIcon){
         </div>
     </div>
 </div>
-
-
-    @endsection
+<script>
+    $(document).ready(function(){
+        $("#wallet_payment").change(function() {
+            var wallet_amount = parseFloat(jQuery('#wallet_amount').val());
+            var amountToPay = parseFloat($('input[name="total_budget"]').val());
+            if(wallet_amount<amountToPay){
+                if(this.checked){
+                    $('.campaign-budget').text($('.payment-amount').text());
+                }else{
+                    $('.campaign-budget').text($('.campaign-total-budget').text());
+                }
+            }
+        });
+    });
+</script>
+@endsection

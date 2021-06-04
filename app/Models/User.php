@@ -26,6 +26,10 @@ class User extends Authenticatable
         'role_id',
         'parent_id',
         'contry_code',
+        'gender',
+        'age',
+        'city',
+        'occupation'
     ];
 
     /**

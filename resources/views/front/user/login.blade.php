@@ -63,7 +63,9 @@
                             <?php if($errors->first('contact_number')){ echo '<label for="contact_number" class="error err-msg">'.$errors->first("contact_number").'</label>';} ?>
 
 
-                                    <div id="recaptcha-container"></div>
+                                    <div class="recaptcha-div">
+                                        <div id="recaptcha-container"></div>
+                                    </div>
                                     <div class="form-group otp-fld" style="display:none;">
                                         <label>Verification Code</label>
                                         <input type="text" id="verificationcode" class="form-control" name="otp" placeholder="Enter OTP ">
@@ -132,7 +134,7 @@
                         var mobile_number = code+''+contact_number;
                      }else{
                          var mobile_number = code+''+contact_number;
-                    }
+                     }
                      console.log(mobile_number);
                     firebase.auth().signInWithPhoneNumber(mobile_number, window.recaptchaVerifier).then(function(confirmationResult) { 
                             window.confirmationResult = confirmationResult; 

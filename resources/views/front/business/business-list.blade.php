@@ -95,28 +95,79 @@
 			<form action="{{url('/')}}/user/create-business" method="POST" id="businessFrm">
 				@csrf
 				<div class="modal-body">
-					<div class="form-group">
-						<label>Company Name: </label>					
-						<input type="text" name="business_name" placeholder="Company Name" class="form-control" required />
+					<div class="row">
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Company Name </label>					
+								<input type="text" name="business_name" placeholder="Company Name" class="form-control" required />
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Website </label>					
+								<input type="text" name="website_url" placeholder="Website" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Commercial Number </label>					
+								<input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Vat Number </label>					
+								<input type="text" placeholder="Vat Number" name="vat_number" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group image-input">
+								<label for="image">VAT Certificate  <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="vat_certificate" accept="image/*" name="vat_certificate" />
+									<label class="custom-file-label" for="vat_certificate">Choose file</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group image-input">
+								<label for="image">CI Certificate  <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" name="ci_certificate" id="ci_certificate" accept="image/*" />
+									<label class="custom-file-label" for="ci_certificate">Choose file</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Twitter Url </label>					
+								<input type="text" placeholder="Twitter Url" name="twitter_url" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Facebook Url </label>					
+								<input type="text" placeholder="Facebook Url" name="facebook_url" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Snapchat Url </label>					
+								<input type="text" placeholder="Snapchat Url" name="snapchat_url" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label>Instagram Url </label>					
+								<input type="text" placeholder="Instagram Url" name="instagram_url" class="form-control">
+							</div>
+						</div>						
 					</div>
-					<div class="form-group">
-						<label>Website: </label>					
-						<input type="text" name="website_url" placeholder="Website" class="form-control">
-					</div>
-					<div class="form-group">
-						<label>Commercial Number: </label>					
-						<input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
-					</div>	
-					<div class="form-group">
-						<label>Vat Number: </label>					
-						<input type="text" placeholder="Vat Number" name="vat_number" class="form-control">
-					</div>					
 				</div>
 				<div class="modal-footer">
 					<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
 					<button type="button" class="btn btn-primary validate-frm">Submit</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-					
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>					
 				</div>
 			</form>
 		</div>
@@ -205,6 +256,13 @@
 		            	$('input[name="vat_number"]').val(data.vat_number);
 		            	$('#businessFrm').append('<input type="hidden" name="id" value="'+btoa(data.id)+'" />');
 		            	$('#businessFrm').attr('action','{{url("/")}}/user/update-business');
+
+		            	$('input[name="ci_certificate"]').val(data.ci_certificate);
+		            	$('input[name="vat_certificate"]').val(data.vat_certificate);
+		            	$('input[name="twitter_url"]').val(data.twitter_url);
+		            	$('input[name="facebook_url"]').val(data.facebook_url);
+		                $('input[name="snapchat_url"]').val(data.snapchat_url);
+		            	$('input[name="instagram_url"]').val(data.instagram_url);
 
 		            }
 	            	console.log(data);

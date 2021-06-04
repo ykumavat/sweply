@@ -49,6 +49,8 @@ Route::group(array('prefix' => '/','middleware' => ['web']), function(){
 	Route::get('',						['as' => $route_slug.'index',	'uses' => $module_controller.'index']);
 	Route::post('change_language',		['as' => 'change_language', 'uses' => 	$module_controller.'change_language']);
 	Route::post('set_business_dashboard',		['as' => 'set_business_dashboard', 'uses' => 	$module_controller.'setBusinessDashboard']);
+	Route::post('set_session_attribute',		['as' => 'set_session_attribute', 'uses' => 	$module_controller.'setSessionAttribute']);
+
 });
 //include(base_path().'/routes/admin.php');
 //include_once(base_path().'/routes/front.php');
@@ -81,6 +83,9 @@ Route::group(['prefix' =>'/admin','middleware' => ['Admin','web']], function ()
 	Route::get('/campaign/campaign-details/{id}', [ 'as'=>'', 'uses'=>$module_controller.'loadCampaignDetails']);
 	Route::post('/campaign/campaign_status', [ 'as'=>'', 'uses'=>$module_controller.'campaign_status']);
 	Route::post('/campaign/campaign_payment_status', [ 'as'=>'', 'uses'=>$module_controller.'campaign_payment_status']);
+	Route::get('/snapchat/snapchat-details/{id}', [ 'as'=>'', 'uses'=>$module_controller.'loadCampaignDetails']); 
+	Route::get('/twitter/twitter-details/{id}', [ 'as'=>'', 'uses'=>$module_controller.'loadCampaignDetails']); 
+	
 
 	/******************************* BUSINESS CONTROLLER  ************************************************/
 	$route_slug = 'admin';
@@ -187,6 +192,14 @@ Route::group(['prefix' =>'/','middleware' => ['Front','web']], function ()
     Route::get('/user/campaign-details/{id}', [ 'as'=>'', 'uses'=>$module_controller.'loadCampaignDetails']);
 	Route::post('/user/campaign_payment_status', [ 'as'=>'', 'uses'=>$module_controller.'campaign_payment_status']);
 	Route::get('/user/snapchat-create-ads/{id}', [ 'as'=>'', 'uses'=>$module_controller.'load_campaign_data']);
+
+	/******************* Twitter ****************/
+	Route::get('/user/twitter',['as'=>'', 'uses'=>$module_controller.'twitter_create_first_step']);
+	Route::get('/user/twitter-create-ads', [ 'as'=>'', 'uses'=>$module_controller.'twitter_create_second_step']);
+	Route::post('/user/twitter_store',[ 'uses'=>$module_controller.'store_twitter_data']);
+	Route::get('/user/twitter-create-ads/{id}',[ 'as'=>'', 'uses'=>$module_controller.'load_twitter_data']);
+
+
 	/******************************* PAGE CONTROLLER  ***************************************************/
 	$module_controller = "App\Http\Controllers\Front\PageController@";
 	Route::get('/user/contact', [ 'as'=>'', 'uses'=>$module_controller.'contact_load']);

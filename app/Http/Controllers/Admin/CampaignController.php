@@ -222,7 +222,7 @@ class CampaignController extends Controller{
             echo "";
 		} 
     } 
-
+    /*
     public function loadCampaignData(Request $request){   
         $build_status_btn       = '';
         $arr_data               = [];
@@ -262,8 +262,20 @@ class CampaignController extends Controller{
                 $action_button_html = '<div class="dropdown table-drop-action">
                                             <button class="btn-icon btn btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$svg.'</button>
                                             <div class="dropdown-menu dropdown-menu-right">';
-                $action_button_html .='<a class="dropdown-item edit-btn" title="Edit"  onclick="edit('."'".base64_encode($data->id)."'".')" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Status</a>';
-                $action_button_html .='<a class="dropdown-item edit-btn" title="Edit"   href="'.$campaign_link_url.'" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">View</a>';
+                //$action_button_html .='<a class="dropdown-item edit-btn" title="Edit"  onclick="edit('."'".base64_encode($data->id)."'".')" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Status</a>';
+                if($data->payment_status == 'PAID' &&  $data->status == 'PENDING'){
+                   
+                    $action_button_html .= '<a class="dropdown-item edit-btn" title="Edit"  onclick="update_status('."'CONFIRM','".base64_encode($data->id)."'".');" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Confirm</a>';    
+                }
+               if($data->payment_status == 'PAID' &&  $data->status == 'CONFIRM'){
+                   
+                    $action_button_html .= '<a class="dropdown-item edit-btn" title="Edit"  onclick="update_status('."'START','".base64_encode($data->id)."'".');" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Start</a>';    
+                }
+                 if($data->payment_status == 'PAID' &&  $data->status == 'START'){
+                   
+                    $action_button_html .= '<a class="dropdown-item edit-btn" title="Edit"  onclick="update_status('."'END','".base64_encode($data->id)."'".');" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">End</a>';    
+                }
+		$action_button_html .='<a class="dropdown-item edit-btn" title="Edit"   href="'.$campaign_link_url.'" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">View</a>';
 
                 $action_button_html .='</div>
                                        </div>'; 
@@ -310,7 +322,7 @@ class CampaignController extends Controller{
                 $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_name        = $businessName;
                 $build_result->data[$key]->user_name            = $userName;
-                $build_result->data[$key]->channel_name         = "Snapchat";
+                $build_result->data[$key]->channel_name         = $channelName;
 		$build_result->data[$key]->payment_status               = $pay_now;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
                 $build_result->data[$key]->status               = $status;
@@ -323,9 +335,141 @@ class CampaignController extends Controller{
         {
             return response()->json($build_result);
         }
+    }*/
+    /**Added BY Pash**/
+
+     public function loadCampaignData(Request $request){   
+        //dd($request);
+        $build_status_btn       = '';
+        $arr_data               = [];
+        $arr_search_column      = $request->input('column_filter');
+        $userID = Session::get('LoggedAdmin');
+       $search = $request->get('search');
+
+        $obj_request_data = $this->BaseModel;
+        $obj_request_data = $obj_request_data->orderBy('created_at','DESC')->with(array('get_business' => function($query) use($search) {
+                                                $query->select('id','business_name');
+                                                
+                                            }))->with(array('get_user' => function($query) {
+                                                 $query->select('id','name');
+                                            }))->with(array('get_channel' => function($query) {
+                                                 $query->select('id','channel_name','url_slug');
+                                            }))->latest();
+
+        $json_result    = DataTables::of($obj_request_data)->filter(function ($instance) use ($request) {
+                            if (!empty($request->get('search'))) {
+                                 $instance->where(function($w) use($request){
+                                    $search = $request->get('search');
+                                    $w->orWhere('campaign_name', 'LIKE', "%$search%")
+                                        ->orWhere('heading', 'LIKE', "%$search%");
+                                       // ->orWhere('get_business', 'LIKE', "%$search%");
+                                    
+                                });
+                            }
+                        })->make(true);
+           /// print_r($json_result);            
+        $build_result   = $json_result->getData();
+
+        if(isset($build_result->data) && sizeof($build_result->data)>0)
+        {
+            foreach ($build_result->data as $key => $data) 
+            {
+                $channelName = $urlSlug = "";
+                if(isset($data->get_channel)){                       
+                    $channelName = $data->get_channel->channel_name;
+                    $urlSlug = $data->get_channel->url_slug;
+                }
+
+                $settings_link_url    = $this->module_url_path."/customer/edit_staff/".base64_encode($data->id);
+                //$edit_link_url    = $this->module_url_path."/".$urlSlug."-create-ads/".base64_encode($data->id);
+                $view_link_url    = $this->module_url_path."/".$urlSlug."/".$urlSlug."-details/".base64_encode($data->id);
+                $svg='<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-body feather feather-more-vertical">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                    </svg>';
+                $action_button_html = '<div class="dropdown table-drop-action">
+                                            <button class="btn-icon btn btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$svg.'</button>
+                                            <div class="dropdown-menu dropdown-menu-right">';
+               if($data->payment_status == 'PAID' &&  $data->status == 'PENDING'){
+                   
+                    $action_button_html .= '<a class="dropdown-item edit-btn" title="Edit"  onclick="update_status('."'CONFIRM','".base64_encode($data->id)."'".');" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Confirm</a>';    
+                }
+               if($data->payment_status == 'PAID' &&  $data->status == 'CONFIRM'){
+                   
+                    $action_button_html .= '<a class="dropdown-item edit-btn" title="Edit"  onclick="update_status('."'START','".base64_encode($data->id)."'".');" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">Start</a>';    
+                }
+                 if($data->payment_status == 'PAID' &&  $data->status == 'START'){
+                   
+                    $action_button_html .= '<a class="dropdown-item edit-btn" title="Edit"  onclick="update_status('."'END','".base64_encode($data->id)."'".');" Record" href="javascript:void(0);" data-original-title="Edit" data-id="'.$data->id.'" id="open_edit_staff_modal">End</a>';    
+                }                
+                $action_button_html .='<a class="dropdown-item edit-btn" title="Show"   href="'.$view_link_url.'" data-original-title="Show" data-id="'.$data->id.'" id="open_edit_staff_modal">View</a>';
+
+                $action_button_html .='</div>
+                                       </div>'; 
+
+		        $balance_amount = 0;
+                $businessName = $userName =  "";
+                if(isset($data->get_business)){                       
+                    $businessName = $data->get_business->business_name;
+		            $bussiness_id = $data->get_business->id;
+                    $walletArr = WalletMasterModel::where('business_id',$bussiness_id)->first();
+                    $balance_amount = isset($walletArr['balance_amount'])? $walletArr['balance_amount']: 0;
+                }
+                if(isset($data->get_user)){                       
+                    $userName = $data->get_user->name;
+                }
+                
+		        $total_amount = $data->total_budget;
+                $campaign_name = $data->campaign_name;
+                $enc_id = base64_encode($data->id);
+
+                $status = $data->status;
+                if($data->status=='PENDING' || $data->status=='REJECT'){
+                    $status = '<div class="badge badge-pill badge-warning">'.$data->status.'</div>';
+                }else{
+                    $status = '<div class="badge badge-pill badge-success">'.$data->status.'</div>';
+                }
+                if($data->status=='PENDING' && $data->payment_status == 'PAID'){
+                     $status = '<div class="badge badge-pill badge-success">'.$data->payment_status.'</div>';
+                }
+                if($data->payment_status == 'PENDING'){
+                   $status =  $pay_now = '<a href="#" class="table-pay-now-btn"  onclick="pay_now('.$total_amount.','.$balance_amount.",'$campaign_name','$enc_id '".')"> Pay Now</a>';
+                    //$status = '<div class="badge badge-pill badge-danger">'.$pay_now.'</div>';
+                }
+
+                /*else{
+                   $pay_now = $data->payment_status;
+                }*/
+
+                
+
+
+
+                $invoiceHtml = '<a href="'.$this->module_url_path."/".$urlSlug."/".$urlSlug."-details/".base64_encode($data->id).'"><i class="feather icon-download-cloud"></i> (Download)</a>';
+
+                $date = "";
+                $date = date("d M Y",strtotime(str_replace("/","-",$data->start_date)))." - ".date("d M Y",strtotime(str_replace("/","-",$data->end_date)));
+                                                                      
+                $i = $key+1;    
+                $build_result->data[$key]->id                   = $i;
+                $build_result->data[$key]->business_name        = $businessName;
+                $build_result->data[$key]->user_name            = $userName;
+                $build_result->data[$key]->channel_name         = $channelName;
+                $build_result->data[$key]->payment_status       = $pay_now;
+                $build_result->data[$key]->built_action_btns    = $action_button_html;
+                $build_result->data[$key]->status               = $status;
+                $build_result->data[$key]->date                 = $date;
+
+                
+            }
+            return response()->json($build_result);
+        }
+        else
+        {
+            return response()->json($build_result);
+        }
     }
-
-
 
     // Post::with(array('user'=>function($query){
     //     $query->select('id','username');
@@ -352,8 +496,15 @@ class CampaignController extends Controller{
             $this->arr_view_data['user'] = $userID;
             $obj_user  = User::where('id',$userID)
                                    ->first();
-            $obj_responce_data = $this->BaseModel->with('get_user','get_business')->where('id',$id)->first();
+                                            
+            $obj_responce_data = $this->BaseModel->with('get_user','get_business','get_channel')->where('id',$id)->first();
             
+            
+            $channelName = $urlSlug = "";
+            if(isset($obj_responce_data->get_channel)){                       
+                $channelName = $obj_responce_data->get_channel->channel_name;
+                $urlSlug = $obj_responce_data->get_channel->url_slug;
+            }
             $arr_data = $obj_responce_data->toArray();
             
             $arr_data['original_image'] = $this->campaign_image_public_img_path.$arr_data['original_image'];
@@ -362,7 +513,7 @@ class CampaignController extends Controller{
             
             $this->arr_view_data['userData']  = $obj_user;              
             $this->arr_view_data['data']  = $arr_data;              
-            return view($this->module_view_folder.'.campaign-details',$this->arr_view_data);
+            return view($this->module_view_folder."/".$urlSlug."/".$urlSlug.'-details',$this->arr_view_data);
         }
     }
     

@@ -38,4 +38,17 @@ class Controller extends BaseController
 		return "success";
 
 	}
+	public function setSessionAttribute(Request $request){
+		$user = [];
+		$userID = $businessID = 0;
+		$user = Sentinel::check();
+		$userID = Session::get('LoggedUser');
+		$attribute = $request->input('attribute');
+		$sessionValue = $request->input('sessionValue');
+		\Session::put($attribute,"");
+		if($sessionValue!="" && $userID>0){
+		    \Session::put($attribute,$sessionValue);
+		}
+		return "success";
+	}
 }

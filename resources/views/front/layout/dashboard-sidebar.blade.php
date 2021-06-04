@@ -28,17 +28,13 @@
                         </ul>
                     </li>
 
-
-                    <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-user-cog"></i><span class="menu-title" data-i18n="User">Permissions</span></a>
+                    <!-- <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-user-cog"></i><span class="menu-title" data-i18n="User">Permissions</span></a>
                         <ul class="menu-content">
                             <li><a href="{{url('/')}}/user/role/"><i class="feather icon-circle"></i><span class="menu-item">User Role</span></a></li>
                         </ul>
-                    </li>
+                    </li> -->
 
                 <?php } ?>
-
-
-
 
                     <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-video-plus"></i><span class="menu-title" data-i18n="User">Create Ads</span> <!-- <i class="fal fa-angle-down"></i> --></a>                    
                         <ul class="menu-content">

@@ -63,32 +63,33 @@
                                 <thead role="rowgroup" class="">                                
                                     <tr role="row" class="">
                                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                                            <div>ID</div>
+                                            <div>Sr.no</div>
                                         </th>
-				    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                                            <div>Ad Channel</div>
+				                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                                            <div>Channel</div>
                                         </th>
                                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
                                             <div>Campaign</div>
                                         </th>
                                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
-                                            <div>Campaign Target</div>
+                                            <div>Target</div>
                                         </th>
-                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
-                                            <div>Heading</div>
+                                        <th role="columnheader" scope="col" aria-colindex="6" class="">
+                                            <div>Date</div>
                                         </th>
                                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="5" aria-sort="none" class="">
-                                            <div>Budget (SAR)</div>
+                                            <div>Budget</div>
                                         </th>
                                          <th role="columnheader" scope="col" aria-colindex="6" class="">
-                                            <div>Campaign Status</div>
+                                            <div>Status</div>
                                         </th>
-                                           <th role="columnheader" scope="col" aria-colindex="6" class="">
+                                        
+                                           <!-- <th role="columnheader" scope="col" aria-colindex="6" class="">
                                             <div>Payment Status</div>
-                                        </th>
+                                        </th> -->
                                        
                                         <th role="columnheader" scope="col" aria-colindex="6" class="">
-                                            <div>Invoice</div>
+                                            <div>Action</div>
                                         </th>
                                     </tr>
                                 </thead>
@@ -128,8 +129,8 @@
                             <div class="form-control" id="campaign_name">New 01</div>	
                             <input type="hidden"  name="campaign_name" />
                         </div>
-                          <div class="form-group">
-                              <div class="row">
+                        <div class="form-group">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Campaign Budget </label>					
@@ -145,16 +146,14 @@
                                     </div> 
                                 </div> 
                             </div> 
-                        </div>                  
-					
-									
+                        </div>   
 				</div>
 				<div class="modal-footer">
 					<!-- <button type="submit" class="btn btn-primary">Submit</button> 
 					<button type="button" class="btn btn-primary validate-frm">Submit</button>
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>-->
                     <button type="button" class="btn btn-primary  " onclick="update_payment_status('active');">Confirm</button>
-                    <button type="button" class="btn btn-primary "onclick="update_payment_status('reject');" >Reject</button>					
+                    <!-- <button type="button" class="btn btn-primary "onclick="update_payment_status('reject');" >Reject</button> -->				
 				</div>
 			</form>
 		</div>
@@ -185,16 +184,15 @@
              "pageLength": 15,
             columns: [
                 {data: 'id', name: 'id'},
-	        {data: 'channel_name', name: 'channel_name'},
+	            {data: 'channel_name', name: 'channel_name'},
                 {data: 'campaign_name', name: 'campaign_name'},
                 {data: 'campaign_target', name: 'campaign_target'},
-                {data: 'heading', name: 'heading'},
+                //{data: 'heading', name: 'heading'},
+                {data: 'date', name: 'date'},
                 {data: 'total_budget', name: 'total_budget'},
-		{data: 'status', name: 'status'},
-                {data: 'payment_status', name: 'payment_status'},
-                
+                {data: 'status', name: 'status',className: 'text-align-center'},
+                //{data: 'payment_status', name: 'payment_status'},
                 {data: 'built_action_btns', name: 'built_action_btns'},
-
             ]
         });
         
@@ -225,7 +223,7 @@
             Session::put('PAYMENT-METHOD','0');
         ?>
          
-		if(budget < wallet_amount){
+		/* if(budget < wallet_amount){
             jQuery('#payment_status #campaign_id').val(id);
             jQuery('#payment_status #budget').text(budget);
             jQuery('#payment_status #wallet_amount').text(wallet_amount);
@@ -234,30 +232,39 @@
             jQuery('input[name="wallet_amount"]').val(wallet_amount);
             jQuery('input[name="campaign_name"]').val(campaign_name);
            $('#payment_model').modal('show');
-		}else{
+		}else{ */
             $('.balance-popup').trigger('click');
-            jQuery('#campaign_cid').val(id);
+            jQuery('#campaign_id').val(id);
             jQuery('input[name="budget"]').val(budget);
             jQuery('input[name="wallet_amount"]').val(wallet_amount);
             jQuery('input[name="campaign_name"]').val(campaign_name);
             $('.campaign-budget').text(budget);
             var paymentAmount = budget;
+            var paymentAmountInclWallet = budget;
             if(wallet_amount > 0 ){
-                paymentAmount = paymentAmount-wallet_amount;
+                paymentAmountInclWallet = paymentAmountInclWallet-wallet_amount;
+            }else{
+                $('.payment-method-wallet').hide();
             }
             $('.payment-amount').text(paymentAmount);
+            $('.payment-amount-incl-wallet').text(paymentAmountInclWallet);
             $('#amountToPay').val(paymentAmount);
-            /*swal("Oops !", "Wallet Balance is Low", "error")
-            .then((value) => {
-                      //  location.href = "{{url('/')}}/admin/wallet-list/";
-            }); */
-        }
+            $('.wallet_amount_opt').text(wallet_amount);
+
+            if(wallet_amount >= paymentAmount ){
+                $('button.confirm-payment').hide();
+                $('button.direct-payment').show();
+                $('.payment-method-sec').hide();
+            }else{
+                $('button.confirm-payment').show();
+                $('button.direct-payment').hide();
+            }
 	}
 
     
        /****** Update payment Status  -  Prashant - 15-05-2021 ******/
     function update_payment_status(status){
-        $('#payment_model').modal('hide');
+        $('#balance-modal-section').modal('hide');
         var recordID = jQuery('#payment_status #campaign_id').val();
         
 		if(recordID){
@@ -301,15 +308,19 @@
                 </button>
             </div>
             <form action="{{url('/')}}/user/payment/" method="GET" id="payment_confirm_popup">
-                <input type="hidden" id="campaign_cid" name="campaign_id" />
+                <input type="hidden" id="campaign_id" name="campaign_id" />
                 <!-- @csrf -->
                 <input type="hidden" name="payment_amount" id="amountToPay" class="form-control" />
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Amount to pay</label>                    
-                        <div class="amount-to-pay-section">
+                        <label>
+                            Amount to pay : <span class="campaign-budget" style="font-weight: 600;color:#399dd6;">00</span>
+                        </label>                    
+                        <div class="amount-to-pay-section" style="display:none;">
                             <div class="amount-to-pay-left">
                                 <div class="campaign-budget">00</div>
+                                <div class="payment-amount-incl-wallet">00</div>
+
                                 <span>Campaign value</span>
                             </div>
                             <div class="amount-to-pay-left  amount-to-pay-right">
@@ -321,7 +332,20 @@
                     <div class="form-group">
                         <label>Choose payment method</label>    
                         <div class="payment-method-section">
-                            <div class="radio-btns">  
+                            <div class="audience-gender-bx payment-method-wallet">
+                                <div class="gender-chk-bx">
+                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                        <input type="checkbox" id="wallet_payment"  value="WALLET">
+                                        <span class="vs-checkbox">
+                                            <span class="vs-checkbox--check">
+                                                <i class="vs-icon feather icon-check"></i>
+                                            </span>
+                                        </span>
+                                        <span class=""><span class="checkbox-span"><i class="fal fa-wallet"></i></span> Wallet Balance :<i class="wallet_amount_opt" style="font-weight: 600;color:#399dd6; " >  00</i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="radio-btns payment-method-sec">                                  
                                 <div class="radio-btn">
                                     <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
                                     <label for="f-option"><span><i class="fal fa-university"></i></span>Bank transfer</label>
@@ -338,12 +362,34 @@
                     <!-- <input type="hidden" class="payment-method" name="payment_method" value="BANKTRANSFER" /> -->
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary confirm-payment" >Submit</button>
-                    <button type="button" class="btn btn-primary cancel-payment" data-dismiss="modal" >Close</button>
+                    <button type="submit" class="btn btn-primary confirm-payment" >Pay Now</button>
+                    <button type="button" class="btn btn-primary direct-payment " onclick="update_payment_status('active');">Confirm</button>
+                    <button type="button" class="btn btn-primary cancel-payment" data-dismiss="modal" >Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#wallet_payment").change(function() {
+            var wallet_amount = parseFloat(jQuery('input[name="wallet_amount"]').val());
+            var amountToPay = parseFloat($('.payment-amount').text());
+            var amountToPayInclWallet = parseFloat($('.payment-amount-incl-wallet').text());
+            if(wallet_amount<amountToPay){
+                if(this.checked){
+                    $('#amountToPay').val(amountToPayInclWallet);
+                    $('.campaign-budget').text(amountToPayInclWallet);
+                }else{
+                    $('#amountToPay').val(amountToPay);
+                    $('.campaign-budget').text(amountToPay);
+                }
+            }else{
+                $('.payment-method-sec').hide();
+            }
+
+        });
+    });
+</script>
 
 @endsection

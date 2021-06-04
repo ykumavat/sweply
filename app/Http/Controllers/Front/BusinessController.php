@@ -27,6 +27,8 @@ class BusinessController extends Controller{
         $this->arr_view_data['page_title']       = "login";
         $this->arr_view_data['module_title']     = "login";
         $this->arr_view_data['module_url_path']  = $this->module_url_path;  
+        $this->business_base_img_path = base_path().'/uploads/business_image/';
+
         $sessionData = [];        
         if(!session()->has('LoggedUser')){
             return redirect(url('/').'/login');
@@ -60,6 +62,43 @@ class BusinessController extends Controller{
         $requestData['user_id']           = $userID;
         $requestData['business_id']       = mt_rand(10000000,99999999);
 
+        //$requestData['ci_certificate']    = trim($request->ci_certificate);
+        $requestData['twitter_url']       = trim($request->twitter_url);
+        $requestData['facebook_url']      = trim($request->facebook_url);
+        $requestData['snapchat_url']      = trim($request->snapchat_url);
+        $requestData['instagram_url']     = trim($request->instagram_url);
+
+
+        $uploadedFile = "";
+        if($request->hasFile('vat_certificate')){
+            $file_extension = strtolower($request->file('vat_certificate')->getClientOriginalExtension());
+            if(in_array($file_extension,['png','jpg','jpeg','svg'])){
+                $file     = $request->file('vat_certificate');
+                $vat_certificate = sha1(uniqid().uniqid()) . '.' . $file->getClientOriginalExtension();
+                $path     = $this->business_base_img_path . $vat_certificate;
+                $isUpload = $file->move($this->business_base_img_path, $vat_certificate);
+                if($isUpload){
+                    $uploadedFile = $vat_certificate;
+                    $requestData['vat_certificate']   = $vat_certificate;
+                }
+            }
+        }
+
+        $uploadedFile = "";
+        if($request->hasFile('ci_certificate')){
+            $file_extension = strtolower($request->file('ci_certificate')->getClientOriginalExtension());
+            if(in_array($file_extension,['png','jpg','jpeg','svg'])){
+                $file     = $request->file('ci_certificate');
+                $ci_certificate = sha1(uniqid().uniqid()) . '.' . $file->getClientOriginalExtension();
+                $path     = $this->business_base_img_path . $ci_certificate;
+                $isUpload = $file->move($this->business_base_img_path, $ci_certificate);
+                if($isUpload){
+                    $uploadedFile = $ci_certificate;
+                    $requestData['ci_certificate']   = $ci_certificate;
+                }
+            }
+        }
+
         $queryResponse = Business::create($requestData); 
         if($queryResponse){
             $walletMasterArr = [];
@@ -91,6 +130,44 @@ class BusinessController extends Controller{
         $requestData['website_url']           = trim($request->website_url);
         $requestData['contact_number']            = trim($request->contact_number);
         $requestData['vat_number']           = trim($request->vat_number);
+
+
+        $requestData['twitter_url']       = trim($request->twitter_url);
+        $requestData['facebook_url']      = trim($request->facebook_url);
+        $requestData['snapchat_url']      = trim($request->snapchat_url);
+        $requestData['instagram_url']     = trim($request->instagram_url);
+
+
+        $uploadedFile = "";
+        if($request->hasFile('vat_certificate')){
+            $file_extension = strtolower($request->file('vat_certificate')->getClientOriginalExtension());
+            if(in_array($file_extension,['png','jpg','jpeg','svg'])){
+                $file     = $request->file('vat_certificate');
+                $vat_certificate = sha1(uniqid().uniqid()) . '.' . $file->getClientOriginalExtension();
+                $path     = $this->business_base_img_path . $vat_certificate;
+                $isUpload = $file->move($this->business_base_img_path, $vat_certificate);
+                if($isUpload){
+                    $uploadedFile = $vat_certificate;
+                    $requestData['vat_certificate']   = $vat_certificate;
+                }
+            }
+        }
+
+        $uploadedFile = "";
+        if($request->hasFile('ci_certificate')){
+            $file_extension = strtolower($request->file('ci_certificate')->getClientOriginalExtension());
+            if(in_array($file_extension,['png','jpg','jpeg','svg'])){
+                $file     = $request->file('ci_certificate');
+                $ci_certificate = sha1(uniqid().uniqid()) . '.' . $file->getClientOriginalExtension();
+                $path     = $this->business_base_img_path . $ci_certificate;
+                $isUpload = $file->move($this->business_base_img_path, $ci_certificate);
+                if($isUpload){
+                    $uploadedFile = $ci_certificate;
+                    $requestData['ci_certificate']   = $ci_certificate;
+                }
+            }
+        }
+
         $queryResponse = Business::where('id',$userData['business_id'])->update($requestData); 
         if($queryResponse){
             User::where('id',$userID)->update(array('business_type'=>1));

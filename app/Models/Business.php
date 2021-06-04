@@ -28,6 +28,12 @@ class Business extends Authenticatable
         'vat_number',
         'user_id',
         'business_id',
+        'ci_certificate',
+        'twitter_url',
+        'facebook_url',
+        'snapchat_url',
+        'instagram_url',
+        'vat_certificate'
     ];
 
     /**

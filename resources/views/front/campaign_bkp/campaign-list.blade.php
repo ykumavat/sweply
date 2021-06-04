@@ -7,7 +7,7 @@
             <div class="content-body">
                 <div>   
                 @include('flash-message')   
-                    <div class="card mb-0"> 
+                    <div class="card mb-0 padding-left-right"> 
                         <div class="m-2">
                             <div class="row">
                                 <div class="users-list-filter col-6">
@@ -49,10 +49,10 @@
                                                 </div>                                                                   
                                             </div>
                                         </div>
-                                        <div class="">
+                                        <div class="" style="margin-top: -3px;">
                                             <a href="{{url('/')}}/user/create-ads" class="btn btn-primary add-form-btn btn-add-bussiness" >
-                                                <span class="text-nowrap">Add Campaign</span>
-                                            </a>
+                                                <span class="text-nowrap"><span class="table-add-txt">Add Campaign</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
+                                            </a>                                            
                                         </div>
                                     </div>
                                 </div>
@@ -63,28 +63,36 @@
                                 <thead role="rowgroup" class="">                                
                                     <tr role="row" class="">
                                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                                            <div>ID</div>
+                                            <div>Sr.no</div>
                                         </th>
-                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+				    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                                             <div>Channel</div>
                                         </th>
                                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
                                             <div>Campaign</div>
                                         </th>
-                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
+                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
+                                            <div>Target</div>
+                                        </th>
+                                        <!-- <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
                                             <div>Heading</div>
-                                        </th>
-                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="5" aria-sort="none" class="">
-                                            <div>Budget (SAR)</div>
-                                        </th>
-                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="5" aria-sort="none" class="">
-                                            <div>User</div>
-                                        </th>
-                                            <th role="columnheader" scope="col" tabindex="0" aria-colindex="5" aria-sort="none" class="">
-                                            <div>Business</div>
-                                        </th>
+                                        </th> -->
                                         <th role="columnheader" scope="col" aria-colindex="6" class="">
-                                            <div>Invoice</div>
+                                            <div>Date</div>
+                                        </th>
+                                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="5" aria-sort="none" class="">
+                                            <div>Budget</div>
+                                        </th>
+                                         <th role="columnheader" scope="col" aria-colindex="6" class="">
+                                            <div>Status</div>
+                                        </th>
+                                        
+                                           <!-- <th role="columnheader" scope="col" aria-colindex="6" class="">
+                                            <div>Payment Status</div>
+                                        </th> -->
+                                       
+                                        <th role="columnheader" scope="col" aria-colindex="6" class="">
+                                            <div>Action</div>
                                         </th>
                                     </tr>
                                 </thead>
@@ -105,8 +113,62 @@
     </div>
 
 
+<div class="modal fade text-left defaultSize-modal modal-padding-change" id="payment_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel33">Confirm Payment</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="#" method="POST" id="payment_status">
+                <input type="hidden" id="campaign_id" name="campaign_id" />
+				@csrf
+				<div class="modal-body">
+					
+                        <div class="form-group">
+                            <label>Campaign Name </label>	
+                            <div class="form-control" id="campaign_name">New 01</div>	
+                            <input type="hidden"  name="campaign_name" />
+                        </div>
+                          <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Campaign Budget </label>					
+                                        <div class="form-control" id="budget">32000</div>	
+                                        <input type="hidden"  name="budget" placeholder=" Campaign Budget" class="form-control">
+                                    </div>   
+                                </div>  
+                                <div class="col-md-6">                                      
+                                     <div class="form-group">
+                                        <label>Wallet Amount </label>
+                                        <div class="form-control" id="wallet_amount">5000</div>	
+                                         <input type="hidden"   name="wallet_amount" placeholder=" wallet_amount" class="form-control">
+                                    </div> 
+                                </div> 
+                            </div> 
+                        </div>                  
+					
+									
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="submit" class="btn btn-primary">Submit</button> 
+					<button type="button" class="btn btn-primary validate-frm">Submit</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>-->
+                    <button type="button" class="btn btn-primary  " onclick="update_payment_status('active');">Confirm</button>
+                    <button type="button" class="btn btn-primary "onclick="update_payment_status('reject');" >Reject</button>					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
+        /* $('.payment-options').change(function(){
+             $('.payment-method').val($(this).val());
+         });*/
         var table = $('.data-table').DataTable({
             "bDestroy": true,
             processing: true,
@@ -124,15 +186,19 @@
              "bLengthChange": false,
              "paging": true,
              "bPaginate": false,
-             "pageLength": 5,
+             "pageLength": 15,
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'channel_name', name: 'channel_name'},
+	        {data: 'channel_name', name: 'channel_name'},
                 {data: 'campaign_name', name: 'campaign_name'},
-                {data: 'heading', name: 'heading'},
-                {data: 'campaign_budget', name: 'campaign_budget'},
-                {data: 'user_name', name: 'user_name'},
-                {data: 'business_name', name: 'business_name'},
+                {data: 'campaign_target', name: 'campaign_target'},
+                //{data: 'heading', name: 'heading'},
+                        {data: 'date', name: 'date'},
+
+                {data: 'total_budget', name: 'total_budget'},
+        {data: 'status', name: 'status',className: 'text-align-center'},
+                //{data: 'payment_status', name: 'payment_status'},
+                
                 {data: 'built_action_btns', name: 'built_action_btns'},
 
             ]
@@ -158,7 +224,137 @@
         });
     });
 
+	/****** Pay Now  -  Prashant - 15-05-2021 ******/
+     function pay_now(budget,wallet_amount,campaign_name,id){
+        <?php 
+            Session::put('AMOUNTTOPAY','0');
+            Session::put('PAYMENT-METHOD','0');
+        ?>
+         
+		if(budget < wallet_amount){
+            jQuery('#payment_status #campaign_id').val(id);
+            jQuery('#payment_status #budget').text(budget);
+            jQuery('#payment_status #wallet_amount').text(wallet_amount);
+            jQuery('#payment_status #campaign_name').text(campaign_name);
+            jQuery('input[name="budget"]').val(budget);
+            jQuery('input[name="wallet_amount"]').val(wallet_amount);
+            jQuery('input[name="campaign_name"]').val(campaign_name);
+           $('#payment_model').modal('show');
+		}else{
+            $('.balance-popup').trigger('click');
+            jQuery('#campaign_cid').val(id);
+            jQuery('input[name="budget"]').val(budget);
+            jQuery('input[name="wallet_amount"]').val(wallet_amount);
+            jQuery('input[name="campaign_name"]').val(campaign_name);
+            $('.campaign-budget').text(budget);
+            var paymentAmount = budget;
+            if(wallet_amount > 0 ){
+                paymentAmount = paymentAmount-wallet_amount;
+            }
+            $('.payment-amount').text(paymentAmount);
+            $('#amountToPay').val(paymentAmount);
+            /*swal("Oops !", "Wallet Balance is Low", "error")
+            .then((value) => {
+                      //  location.href = "{{url('/')}}/admin/wallet-list/";
+            }); */
+        }
+	}
+
+    
+       /****** Update payment Status  -  Prashant - 15-05-2021 ******/
+    function update_payment_status(status){
+        $('#payment_model').modal('hide');
+        var recordID = jQuery('#payment_status #campaign_id').val();
+        
+		if(recordID){
+            //alert(recordID);
+			$.ajax({
+	            url:'{{url("/")}}/user/campaign_payment_status',
+	            type :'post',
+	            data :{ 'id': recordID,'status':status,'_token':'<?php echo csrf_token();?>'},
+	            success:function(data)
+	            {
+	            	if(data != ''){
+                    swal("Thank You!", "Campaign Payment Done Successfully!", "success")
+                        .then((value) => {
+                            location.href = "{{url('/')}}/user/campaign/";
+                    });
+                }else{
+                        swal("Oops !", "Something went Wrong", "error")
+                    .then((value) => {
+                            //location.href = "{{url('/')}}/user/campaign/";
+                    });
+                }
+	            }
+	        });
+		}
+	}
 
 </script>
+
+
+<!-----$('.balance-popup').trigger('click');----->
+<button type="button" style="display:none;" class=" balance-popup btn btn-primary add-form-btn btn-add-bussiness waves-effect waves-light" data-toggle="modal" data-target="#paymentMethodForm">
+    <span class="text-nowrap"><span class="table-add-txt">Pay Balance</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
+</button>
+<div class="modal fade text-left defaultSize-modal modal-padding-change balance-modal-section" id="paymentMethodForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Select Payment Method</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('/')}}/user/payment/" method="GET" id="payment_confirm_popup">
+                <input type="hidden" id="campaign_cid" name="campaign_id" />
+                <!-- @csrf -->
+                <input type="hidden" name="payment_amount" id="amountToPay" class="form-control" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Amount to pay : <span class="campaign-budget" style="font-weight: 600;color:#399dd6;">00</span></label>                    
+                        <div class="amount-to-pay-section" style="display:none;">
+                            <div class="amount-to-pay-left">
+                                <div class="campaign-budget">00</div>
+                                <span>Campaign value</span>
+                            </div>
+                            <div class="amount-to-pay-left  amount-to-pay-right">
+                                <div class="payment-amount">00</div>
+                                <span>Need to pay</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose payment method</label>    
+                        <div class="payment-method-section">
+                            <div class="radio-btns">  
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="g-option" name="payment-method" value="WALLET">
+                                    <label for="g-option"><span><i class="fal fa-wallet"></i></span>Wallet Payment</label>
+                                    <div class="check"></div>
+                                </div>
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
+                                    <label for="f-option"><span><i class="fal fa-university"></i></span>Bank transfer</label>
+                                    <div class="check"></div>
+                                </div>
+                                <div class="radio-btn">
+                                    <input type="radio" class="payment-options" id="s-option" name="payment-method" value="ONLINE">
+                                    <label for="s-option"><span><i class="fal fa-credit-card"></i></span>Online payment</label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <input type="hidden" class="payment-method" name="payment_method" value="BANKTRANSFER" /> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary confirm-payment" >Pay Now</button>
+                    <button type="button" class="btn btn-primary cancel-payment" data-dismiss="modal" >Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection
