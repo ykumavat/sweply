@@ -1,6 +1,6 @@
    <div class="loader-section-main" >        
-        <!-- <img src="{{url('/')}}/public/assets/images/logo/loader.gif" alt=""/> -->
-        <div class="lds-default">
+        <img src="{{url('/')}}/public/assets/images/logo/loader.gif" alt=""/>
+        <!-- <div class="lds-default">
             <div></div>
             <div></div>
             <div></div>
@@ -13,16 +13,18 @@
             <div></div>
             <div></div>
             <div></div>
-        </div>
+        </div> -->
     </div>
 
     <!--Share Button 3 Start Here-->
-    <div class="theme-color-change-main">
-        <div class='float-circle' id='twitter-color' rel="twitter-color"   onclick="setSessionAttribute('THEMEUI','twitter-color')" ></div>
-        <div class='float-circle' id='youtube-color'   rel="youtube-color" onclick="setSessionAttribute('THEMEUI','youtube-color')"></div>
-        <div class='float-circle' id='snapchat-color'  rel="snapchat-color" onclick="setSessionAttribute('THEMEUI','snapchat-color')" ></div>
-        <div class='main-button share' id="draggable">
-            <div class='fa fa-cog fa-2x'></div>
+    <div id="draggable" >
+        <div class="theme-color-change-main" >
+            <div class='float-circle' id='twitter-color' rel="twitter-color"   onclick="setSessionAttribute('THEMEUI','twitter-color')" ></div>
+            <div class='float-circle' id='youtube-color'   rel="youtube-color" onclick="setSessionAttribute('THEMEUI','youtube-color')"></div>
+            <div class='float-circle' id='snapchat-color'  rel="snapchat-color" onclick="setSessionAttribute('THEMEUI','snapchat-color')" ></div>
+            <div class='main-button share'>
+                <div class='fa fa-cog fa-2x'></div>
+            </div>
         </div>
     </div>
     <!--Share Button 3 End Here-->
@@ -105,6 +107,9 @@
             $(".float-circle").removeClass("no-animation");
             $(".float-circle").toggleClass("open");
         });
+        $('.float-circle').on('click', function(e){            
+            $(".float-circle").removeClass("open");
+        });        
         $('.float-circle').click(function(){
             var relClass = $(this).attr('rel');
             $('body').removeClass('twitter-color');
@@ -113,12 +118,14 @@
             $('body').addClass(relClass);
             //setTimeout(function(){ location.reload }, 3000);
         });
-          // $(function() {  
-          //   $( "#draggable" ).draggable();  
-          // }); 
+          $(function() {  
+                $( "#draggable" ).draggable({
+                     containment: "parent"  
+                });  
+          }); 
     </script>
-    <!-- <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>   -->
-
+<!--     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+ -->
 
 </body>
 <!-- END: Body-->

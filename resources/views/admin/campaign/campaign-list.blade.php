@@ -292,10 +292,13 @@
                 $('button.confirm-payment').hide();
                 $('button.direct-payment').show();
                 $('.payment-method-sec').hide();
+		 $('#wallet_amount_message').hide();
             }else{
-                $('button.confirm-payment').show();
+               $('button.confirm-payment').hide();
                 $('button.direct-payment').hide();
-                
+                $('#wallet_amount_message').show();  
+ 		$('.payment-method-sec').hide();
+              
             }
 	}
 	/****** Change Status  -  Prashant - 14-05-2021 ******/
@@ -433,7 +436,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="radio-btns payment-method-sec">                                  
+                            <!--div class="radio-btns payment-method-sec">                                  
                                 <div class="radio-btn">
                                     <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
                                     <label for="f-option"><span><i class="fal fa-university"></i></span>Bank transfer</label>
@@ -444,7 +447,8 @@
                                     <label for="s-option"><span><i class="fal fa-credit-card"></i></span>Online payment</label>
                                     <div class="check"></div>
                                 </div>
-                            </div>
+                            </div-->
+			<span id="wallet_amount_message" style="display:none;color:#e40421;"> Wallet Amount is Less Than Amount To Pay</span>
                         </div>
                     </div>
                     <!-- <input type="hidden" class="payment-method" name="payment_method" value="BANKTRANSFER" /> -->

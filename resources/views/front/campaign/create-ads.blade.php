@@ -22,8 +22,13 @@
                             $attribute = "'channel_id'";
                             if(isset($channel_list)){
                                 foreach($channel_list as $channel){
+                                    if($channel->channel_name=="Snapchat" || $channel->channel_name=="Twitter"){
+                                        $url = url('/').'/user/'.$channel->url_slug;
+                                    }else{
+                                        $url = "javascript:void(0);";
+                                    }
                                     echo '<div class="select-ads-type">
-                                        <a href="'.url('/').'/user/'.$channel->url_slug.'"  channel-id="'.$channel->id.'"   onclick="setSessionAttribute('.$attribute.','.$channel->id.')" >
+                                        <a href="'.$url.'"  channel-id="'.$channel->id.'"   onclick="setSessionAttribute('.$attribute.','.$channel->id.')" >
                                             <img src="'.url('/').'/uploads/channel_image/'.$channel->channel_image.'" alt="" />
                                             <h2>'.$channel->channel_name.'</h2>
                                         </a>

@@ -64,6 +64,9 @@ Route::group(['prefix' =>'/admin','middleware' => ['Admin','web']], function ()
 	Route::get('/login', 			[ 'as'	=>	'',   'uses'	=>	$module_controller.'login']);
 	Route::any('/process_login', 			[ 'as'	=>	'','uses'	=>	$module_controller.'process_login']);
 	Route::get('/logout', [ 'as'=>'', 'uses'=>$module_controller.'logout']);
+	Route::get('/userlist', [ 'as'=>'', 'uses'=>$module_controller.'index']);
+	Route::get('/load-userlist', [ 'as'=>'', 'uses'=>$module_controller.'loadUserData']);
+   
 	$module_controller = "App\Http\Controllers\Admin\DashboardController@";
 	Route::get('/dashboard', [ 'as'=>'dashbaord', 'uses'=>$module_controller.'index']);
 

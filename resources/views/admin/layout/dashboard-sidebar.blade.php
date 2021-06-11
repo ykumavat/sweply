@@ -52,8 +52,8 @@
                             <li><a href="contact-us.html"><i class="feather icon-circle"></i><span class="menu-item">Contact Us</span></a></li>
                         </ul>
                     </li>
-                    <li class="nav-item hide">
-                        <a href="{{url('/')}}/admin/user" class="nav-item-link">
+                    <li class="nav-item ">
+                        <a href="{{url('/')}}/admin/userlist" class="nav-item-link">
                             <i class="fal fa-user"></i>
                             <span class="menu-title"data-i18n="User">Manage User</span> 
                         </a>                        

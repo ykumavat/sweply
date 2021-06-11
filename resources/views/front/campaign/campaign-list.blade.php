@@ -186,13 +186,13 @@
                 {data: 'id', name: 'id'},
 	            {data: 'channel_name', name: 'channel_name'},
                 {data: 'campaign_name', name: 'campaign_name'},
-                {data: 'campaign_target', name: 'campaign_target'},
+                {data: 'campaign_target', name: 'campaign_target',className: 'text-align-center'},
                 //{data: 'heading', name: 'heading'},
-                {data: 'date', name: 'date'},
-                {data: 'total_budget', name: 'total_budget'},
+                {data: 'date', name: 'date',className: 'text-align-center'},
+                {data: 'total_budget', name: 'total_budget',className: 'text-align-right'},
                 {data: 'status', name: 'status',className: 'text-align-center'},
                 //{data: 'payment_status', name: 'payment_status'},
-                {data: 'built_action_btns', name: 'built_action_btns'},
+                {data: 'built_action_btns', name: 'built_action_btns',className: 'text-align-center'},
             ]
         });
         
@@ -314,7 +314,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>
-                            Amount to pay : <span class="campaign-budget" style="font-weight: 600;color:#399dd6;">00</span>
+                            Amount to pay : <span class="campaign-budget">00</span>
                         </label>                    
                         <div class="amount-to-pay-section" style="display:none;">
                             <div class="amount-to-pay-left">

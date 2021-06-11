@@ -88,7 +88,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="services-box-section">
                         <div class="services-box-img">                           
-                             <img src="{{url('/')}}/public/assets/images/logo/services-1.svg" alt="" />
+                             <img src="{{url('/')}}/public/assets/images/logo/digital-campaign.svg" alt="" />
                         </div>
                         <div class="for-responsive-alignment">
                             <div class="services-box-head">
@@ -110,7 +110,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="services-box-section">
                         <div class="services-box-img">
-                            <img src="{{url('/')}}/public/assets/images/logo/services-2.svg" alt="" />
+                            <img src="{{url('/')}}/public/assets/images/logo/charge-your-twitter-credits.svg" alt="" />
                         </div>
                         <div class="for-responsive-alignment">
                             <div class="services-box-head">
@@ -129,7 +129,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="services-box-section">
                         <div class="services-box-img">
-                            <img src="{{url('/')}}/public/assets/images/logo/services-3.svg" alt="" />
+                            <img src="{{url('/')}}/public/assets/images/logo/accounts-analysis.svg" alt="" />
                         </div>
                         <div class="for-responsive-alignment">
                             <div class="services-box-head">
@@ -148,7 +148,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="services-box-section">
                         <div class="services-box-img">
-                            <img src="{{url('/')}}/public/assets/images/logo/services-4.svg" alt="" />
+                            <img src="{{url('/')}}/public/assets/images/logo/influencers-campaigns.svg" alt="" />
                         </div>
                         <div class="for-responsive-alignment">
                             <div class="services-box-head">
@@ -173,7 +173,7 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe> -->
 
-                <iframe src="https://www.youtube.com/embed/TP2vtUVytew" title="YouTube video player" 
+                <iframe src="https://www.youtube.com/embed/XQ4pG-lQ3yI" title="YouTube video player" 
                 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>

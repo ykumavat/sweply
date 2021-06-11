@@ -12,7 +12,7 @@
                         <div class="from-tab-section">
                             <form id="user_profile" name="user_profile" >
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-12">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="form-group">                       
                                             <div style="position: relative;" class="profile-img-block">
                                                 <div class="pro-img"><img src="{{$userData->profile_photo}}" class="img-responsive img-preview" alt=""/></div>

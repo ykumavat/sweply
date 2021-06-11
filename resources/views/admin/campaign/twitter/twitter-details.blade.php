@@ -9,8 +9,8 @@
                 <h2>Twitter Ad Details</h2>
                 <div class="brea-bx">
                     <ul>
-                        <li><a href="{{url('/')}}/admin/dashboard">Home <i class="fal fa-angle-right"></i></a></li>                        
-                        <li><a href="{{url('/')}}/admin/campaign">Twitter </a></li>                       
+                        <li><a href="{{url('/')}}/user/dashboard">Home <i class="fal fa-angle-right"></i></a></li>                        
+                        <li><a href="{{url('/')}}/user/campaign">Twitter </a></li>                       
                     </ul>                </div>
                 <div class="clearfix"></div>               
             </div>
@@ -175,18 +175,20 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
+									<?php if($data['website_url']!=""){ ?>
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
-												Brand Name
+												Website Link
 											</div>
 											<div class="info-main-content">
-												
-												<?php echo isset($data['brand_name'])? $data['brand_name']: '-'; ?>
+												<?php echo isset($data['website_url'])? $data['website_url']: '-'; ?>
 											</div>
 											<div class="clearfix"></div>
 										</div>
-									</div>									
+									</div>
+								<?php } ?>
+									<?php if($data['call_to_action']!=""){ ?>
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
@@ -198,6 +200,7 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
+									<?php } ?>
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
@@ -287,10 +290,10 @@
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
-												Caption
+												What's Happening
 											</div>
 											<div class="info-main-content">
-												<?php echo isset($data['caption'])? $data['caption']: '-'; ?>
+												<?php echo isset($data['post_message'])? $data['post_message']: '-'; ?>
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -323,14 +326,12 @@
 											<?php if($data['upload_type']=='video'){ ?>
 											<div class="uploaded-img-main">
 												<div class="uploaded-img">
-													<!-- <img id="original_file_display" src="<?php //echo $data['post_image']; ?>"> -->
-													<video id="ad_video" style="background-color:black;object-fit: cover;" loop playsinline muted autoplay>
+													<video id="ad_video" style="background-color: black; object-fit: cover;height:570px; width:296px;"  loop playsinline muted >
                         								<source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
                         								<source src="movie.ogg" type="video/ogg">
                     								</video>  
 												</div>
 												Original Video 
-												<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
 												<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
 
 											</div>
@@ -341,8 +342,7 @@
 												<div class="uploaded-img">
 													<img id="original_file_display" src="<?php echo $data['original_image']; ?>">
 												</div>
-												Original 
-												<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
+												Original
 												<a href="<?php echo $data['original_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
 											</div>
 											<div class="uploaded-img-main">
@@ -351,8 +351,6 @@
 												</div>
 												Croped 
 												<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
-
-												<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
 											</div>
 
 											<?php } ?>
@@ -361,9 +359,7 @@
 											<div class="uploaded-img-main">
 												<div class="uploaded-img">
 													<img id="original_file_display" src="<?php echo $data['app_icon']; ?>">
-													<!-- <button class="uploaded-img-download" Type="button"><i class="fal fa-download"></i></button> -->
 													App Icon <a href="<?php echo $data['app_icon']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
-
 												</div>
 												App Icon
 											</div>
@@ -404,103 +400,105 @@
 							</div>						
 						</div>
 					</div>
-					<div class="col-sm-4 col-md-4 col-lg-4">
-						<div class="ad-prive-bx preview-ads-mobile" id="preview-section-bx">  
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<div class="ad-prive-bx preview-ads-mobile twitter-preview-main" id="preview-section-bx">  
+		                <div class="mobile-black-bg"></div>
+		                <div class="mobile-top-time-icons-strip">
+		                    <div class="mobile-top-time">
+		                       17:24 
+		                    </div>
+		                    <div class="mobile-top-icons">
+		                        <span><i class="fas fa-wifi"></i></span>                        
+		                        <span><i class="fas fa-signal-alt"></i></span>
+		                        <span><i class="fal fa-battery-three-quarters"></i></span>
+		                    </div>
+		                    <div class="clearfix"></div>
+		                </div>
+		                <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img"/>
+		                <div class="company-user-details">
+		                    <div class="company-user-details-icon"></div>
+		                    <div class="company-user-details-info">
+		                        <div class="company-user-details-head">
+		                            Sweply marketing
+		                        </div>
+		                        <div class="company-user-details-content">
+		                        	<?php if($data['post_message']!=""){
+		                        		echo $data['post_message'];
+		                        	}else{ ?>
+		                            	What's Happening ?
+		                        	<?php } ?>
+		                        </div>
+		                    </div>
+		                    <div class="clearfix"></div>
+		                </div>
+		                <div class="images-video-section-main">
+		                    <div class="add-img-video-section"> 
+		                        <?php if($data['upload_type']=='video'){ ?>
+			                        <video id="ad_video" style="background-color: black; object-fit: cover;height:250px;width:100%;" loop playsinline muted autoplay>
+			                            <source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
+			                            <source src="#" type="video/ogg">
+			                        </video>
+		                        <?php }else{ ?>
+		                        	<img src="{{$data['post_image']}}" id="ad_image"/>
+		                        <?php } ?>                
+		                    </div> 
 
-		<!-------------------------------------------------------------->
-		<?php //if(isset($_REQUEST['debug'])){ ?>
-                <div class="mobile-black-bg"></div>
-                <div class="mobile-top-time-icons-strip">
-                    <div class="mobile-top-time"> 17:24 </div>
-                    <div class="mobile-top-icons">
-                        <span><i class="fas fa-wifi"></i></span>                        
-                        <span><i class="fas fa-signal-alt"></i></span>
-                        <span><i class="fal fa-battery-three-quarters"></i></span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img">
-                <div class="brand-name-section-main">                    
-                    <div class="brand-name-section">
-                        <span><?php echo isset($data['brand_name'])? $data['brand_name']: '-'; ?></span>
-                    </div>
-                    <div class="clearfix"></div>
-                     <div class="heading-section">
-                        <span><?php echo isset($data['heading'])? $data['heading']: '-'; ?></span>
-                    </div> 
-                    <div class="menu-dots-section">
-                        <span><i class="fal fa-ellipsis-v"></i></span>
-                    </div>                  
-                </div>   
-                <div class="add-img-video-section"> 
-                	<?php if($data['upload_type']=="image"){ ?>
-                    <img src="<?php echo $data['post_image']; ?>" alt="" id="ad_image">
-                <?php }else{ ?>
-                    <video id="ad_video" style="background-color: black; object-fit: cover; height:570px; width:296px;" loop="" playsinline="" muted="" autoplay="">
-                        <source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
-                        <source src="#" type="video/ogg">
-                    </video> 
-                <?php } ?>               
-                </div>
-                <?php if($data['caption']!=""){ ?>
-	                <div class="caption-txt-section-block"  >
-	                   <?php echo isset($data['caption'])? $data['caption']: '-'; ?>
-	                </div>
-                <?php } ?>
-                <?php if(($data['campaign_target']!="App install" ||  $data['campaign_target']!="App visit") &&  $data['call_to_action']!=""){ ?>
-                <div class="add-prive-btn website-sec-preview" >
-                    <span class="btn-add-prive"><?php echo isset($data['call_to_action'])? $data['call_to_action']: '-'; ?></span>
-                </div> 
-            	<?php } ?>
-
-            <?php if($data['app_name']!="" && $data['app_icon']!=""){ ?>
-                <!------App Section ------>
-                <div class="app-add-prive-main app-sec-preview" >
-                    <div class="app-add-prive-btn">
-                        <?php echo isset($data['call_to_action'])? $data['call_to_action']: '-'; ?>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="app-add-prive">
-                        <div class="app-add-icon-txt">
-                            <div class="app-add-icon">
-                                <img src="<?php echo $data['app_icon']; ?>" id="app-ico">
-                            </div>
-                            <div class="app-add-icon-txt-section">
-                                <div class="app-add-icon-txt-head">
-									<?php echo isset($data['app_name'])? $data['app_name']: '-'; ?>
-								</div>
-                                <div class="app-add-icon-txt-headline">
-                                    <?php echo isset($data['heading'])? $data['heading']: '-'; ?>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="app-add-install-btn">
-                            <?php echo ($data['campaign_target']=="App install")? 'Install':'Visit'; ?>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            <?php }
-
-        	/*}else{ ?>
-				<img src="<?php echo $data['screen_shot']; ?>" alt="" />
-            <?php }*/ ?>
-<!-------------------------------------------------------------->
-
-
-
-
-
-
-
-
-						</div>
+		                    <?php if($data['campaign_target'] != 'App install' ){ ?>
+		                    <div class="preview-bottom-heading-section">
+		                        <div class="preview-bottom-heading">
+		                            <?php echo $data['heading']; ?>
+		                        </div>
+		                        <div class="preview-bottom-heading-website">
+		                            <i class="fas fa-link"></i> <span id="weburl"><?php echo $data['website_url']; ?></span>
+		                        </div>                
+		                    </div>
+		                    <?php }else if($data['campaign_target'] == 'App install'){ ?>               
+		                    <div class="app-add-prive-main app-sec-preview">                                        
+		                        <div class="app-add-prive">
+		                            <div class="app-add-icon-txt"> 
+		                                <div class="app-add-icon">
+		                                    <img src="{{url('/')}}/public/assets/images/logo/app-icon.png" id="app-ico">
+		                                </div>                           
+		                                <div class="app-add-icon-txt-section">
+		                                    <div class="app-add-icon-txt-head">
+		                                        {{$data['app_name']}}
+		                                    </div>
+		                                    <div class="app-add-icon-txt-headline">
+		                                    <i class="fas fa-star active-star"></i>
+		                                    <i class="fas fa-star active-star"></i>
+		                                    <i class="fas fa-star active-star"></i>
+		                                    <i class="fas fa-star active-star"></i>
+		                                    <i class="fas fa-star"></i> 75.8K reviews
+		                                    </div>
+		                                    <div class="app-add-icon-txt-headline">
+		                                        Free . Finance
+		                                    </div>
+		                                </div>
+		                                <div class="clearfix"></div>
+		                            </div>
+		                            <div class="app-add-install-btn" style="text-align:center;">
+		                                {{$data['call_to_action']}}
+		                            </div>
+		                            <div class="clearfix"></div>
+		                        </div>
+		                    </div>
+		                	<?php } ?>
+		                </div>
+		            </div>
 					</div>
+
 				</div>
 			</div>			
 		</div>
 	</div>
 </div>
     @endsection
+
+
+    <script type="text/javascript">
+	$(document).ready(function(){
+		$('.company-user-details-content').html($('.company-user-details-content').html().replace(/(@\S+)/, '<span style="color: blue">$1</span>'));
+        $('.company-user-details-content').html($('.company-user-details-content').html().replace(/(#\S+)/, '<span style="color: blue">$1</span>'));
+	});
+</script>
 

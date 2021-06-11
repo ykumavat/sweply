@@ -8,50 +8,57 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
-
             <div class="content-body">  
-                     <?php 
-                     $amountToPay = $paymentMethod = "";
-                     if(Session::get('AMOUNTTOPAY')){
-                        $amountToPay   = Session::get('AMOUNTTOPAY'); 
-                     }
-                    if(Session::get('PAYMENT-METHOD')){
-                        $paymentMethod = Session::get('PAYMENT-METHOD'); 
-                     }
-
-                    if(\Request::has('payment_amount') && \Request::has('payment-method')){ 
-                        Session::put('AMOUNTTOPAY',\Request::get('payment_amount'));
-                        Session::put('PAYMENT-METHOD',\Request::get('payment-method'));
-                        $amountToPay = \Request::get('payment_amount');
-                        $paymentMethod = \Request::get('payment-method');
+                    <?php 
+                    $amountToPay = $paymentMethod = "";
+                    if(Session::get('AMOUNTTOPAY')){
+                    $amountToPay   = Session::get('AMOUNTTOPAY'); 
                     }
-                    ?>       
+                if(Session::get('PAYMENT-METHOD')){
+                    $paymentMethod = Session::get('PAYMENT-METHOD'); 
+                    }
 
-                    <div class="wallet-main-width online-payment-bx">
-                    <div class="wallet-balance-bx">
-                        <a href="#">
-                            <div class="wallet-sub-bx">                          
-                                <img src="{{url('/')}}/public/assets/images/logo/online-payment.svg" alt=""/>                           
-                                <div class="wallet-amt">Online payment </div>                            
-                            </div> 
-                        </a>                      
-                    </div>                
-                    <div class="wallet-balance-bx hide">
-                        <a href="{{url('/')}}/user/payment-cards">
-                        <div class="wallet-sub-bx">                          
-                            <img src="{{url('/')}}/public/assets/images/logo/online-payment.svg" alt=""/>                           
-                            <div class="wallet-amt">Credit Card saved</div>                            
-                        </div> 
-                    </a>                      
+                if(\Request::has('payment_amount') && \Request::has('payment-method')){ 
+                    Session::put('AMOUNTTOPAY',\Request::get('payment_amount'));
+                    Session::put('PAYMENT-METHOD',\Request::get('payment-method'));
+                    $amountToPay = \Request::get('payment_amount');
+                    $paymentMethod = \Request::get('payment-method');
+                }
+                ?>       
+
+                <div class="wallet-main-width online-payment-bx">
+                    <div class="row ml--5 mr--5">
+                        <div class="col-sm-4 col-md-4 col-lg-4 pl-5 pr-5">
+                            <div class="wallet-balance-bx">
+                                <a href="#">
+                                    <div class="wallet-sub-bx">                          
+                                        <img src="{{url('/')}}/public/assets/images/logo/online-payment.svg" alt=""/>                           
+                                        <div class="wallet-amt">Online payment </div>                            
+                                    </div> 
+                                </a>                      
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 pl-5 pr-5 hide">
+                            <div class="wallet-balance-bx">
+                                <a href="{{url('/')}}/user/payment-cards">
+                                    <div class="wallet-sub-bx">                          
+                                        <img src="{{url('/')}}/public/assets/images/logo/online-payment.svg" alt=""/>                           
+                                        <div class="wallet-amt">Credit Card saved</div>
+                                    </div> 
+                                </a>                      
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 pl-5 pr-5">
+                            <div class="wallet-balance-bx">
+                                <a data-toggle="modal" data-target="#exampleModalCenter" class="bank-transfer">
+                                    <div class="wallet-sub-bx">                       
+                                        <img src="{{url('/')}}/public/assets/images/logo/bank-transfer-details.svg" alt=""/>                           
+                                        <div class="wallet-amt">Bank Transfer Details</div>
+                                    </div> 
+                                </a>                             
+                            </div>                    
+                        </div>
                     </div>
-                    <div class="wallet-balance-bx">
-                        <a data-toggle="modal" data-target="#exampleModalCenter" class="bank-transfer">
-                        <div class="wallet-sub-bx">                       
-                            <img src="{{url('/')}}/public/assets/images/logo/bank-transfer.svg" alt=""/>                           
-                            <div class="wallet-amt">Bank Transfer Details</div>
-                        </div> 
-                    </a>                             
-                    </div>                    
                 </div>
             </div>
         </div>
@@ -120,13 +127,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Transaction No. </label>					
-                                        <input type="text" id="transaction_no"  name="transaction_no" placeholder=" Transaction Number" class="form-control">
+                                        <input type="text" id="transaction_no"  name="transaction_no" placeholder=" Transaction Number" class="form-control" required />
                                     </div>   
                                 </div>  
                                 <div class="col-md-6">                                      
                                      <div class="form-group">
                                         <label>Amount </label>					
-                                        <input type="text" id="amount"  name="amount" placeholder=" Transaction Amount" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                        <input type="text" id="amount"  name="amount" placeholder=" Transaction Amount" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"   required />
                                     </div> 
                                 </div> 
                             </div> 
@@ -152,25 +159,18 @@
             </div>
         </div>
 
-
-
-
-
-    
-
-
-<body>
-    <p>
-        <input type="file" id="fileInput" multiple onchange="showname()"/>
-    </p>    
-</body>
+        <!-- <body>
+            <p>
+                <input type="file" id="fileInput" multiple onchange="showname()"/>
+            </p>    
+        </body> -->
 
 
         <script type="text/javascript">
 
             $(document).ready(function(){
                  $(document).on('click', '.request-now', function(){ 
-                    jQuery('div.loader-section-main').show();
+                    //jQuery('div.loader-section-main').show();
                  });
 
                 <?php if($amountToPay != "" && $paymentMethod=="BANKTRANSFER"){ ?>
@@ -181,9 +181,10 @@
             });
 
             function payment_by_bank(){
-
+            $('.err-msg').remove();
             var transaction_no = $('#transaction_no').val(); 
             var amount = $('#amount').val(); 
+
             if(transaction_no != '' &&  amount != ''){
                 var file_data = $('#payment_image').prop('files')[0]; 
                 var token    = "{{csrf_token()}}";
@@ -227,15 +228,28 @@
                     }
                 });  
             }else{
-                swal("Oops !", "Something went Wrong", "error");
+                //swal("Oops !", "Something went Wrong", "error");
+                if($('#transaction_no').val()==""){
+                    $('#transaction_no').parent().append('<label class="err-msg">Please fill transaction number </label>');
+                }
+                if($('#amount').val()==""){
+                    $('#amount').parent().append('<label class="err-msg">Please fill transaction amount </label>');
+                }
+                return false;
             }
-            hideLoader();
+            //hideLoader();
+            $('.loader-section-main').hide();
+
 
         }
         function showname () {
               var name = document.getElementById('payment_image'); 
               $('.custom-file-label').text(name.files.item(0).name);
         }
+
+        $('#transaction_no,#amount').keyup(function(){
+            $('.err-msg').remove();
+        });
  </script>
 <?php
 //Session::put('AMOUNTTOPAY',"0");

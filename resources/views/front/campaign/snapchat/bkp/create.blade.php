@@ -1,10 +1,7 @@
 <?php 
     $userData = [];
     $userData = getLoggedUserData(); 
-   //print_r($data);
-   // echo  Session::get('BUSINESSID');
-    //die;
-?>
+    ?>
 @extends('front.layout.dashboard-master')    
 @section('main_content')
 <style>
@@ -20,9 +17,8 @@
 <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/croppie/croppie.css" />
 <link rel="Stylesheet" type="text/css" href="{{url('/')}}/public/assets/croppie/prism.css" />
 <link rel="Stylesheet" type="text/css" href="{{url('/')}}/public/assets/croppie/demo.css" />
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyB9s91K1zHQ4zz0v9oCVPnNingRJt2SGGc&libraries=geometry,places"></script> 
-<!-- <script type="text/javascript" src="{{url('/')}}/public/assets/js/map.js"> 
-</script> -->
+<!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyB9s91K1zHQ4zz0v9oCVPnNingRJt2SGGc&libraries=geometry,places"></script>  -->
+
 <!-- BEGIN: Content-->
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -46,21 +42,17 @@
                     <input type="hidden" id="campaign_id" name="campaign_id"  value=""/>    
                     <input type="hidden" id="channel_id" name="channel_id"  value="1"/>    
                     <input type="hidden" id="channel_category_id" name="channel_category_id"  value="1"/> 
-
                     <?php 
                         if(Session::has('BUSINESSID')){
                             $businessID = Session::get('BUSINESSID');
                         }else{
                             $businessID = $userData['business_id'];
                         }
-
                     ?>
                     <input type="hidden" id="business_id" name="business_id"  value="<?php echo $businessID;?>"/>    
                     <input type="hidden" id="user_id" name="user_id"  value="<?php echo $userData['id'];?>"/>                      
                     <h6> </h6>
-
-                <?php
-                
+                    <?php
                     $walletBalance = 0;
                     if($businessID>0){
                         $walletArr = DB::table('wallet_master')->where('business_id',$businessID)->first();
@@ -68,9 +60,9 @@
                             $walletBalance = $walletArr->balance_amount;
                         }
                     }
-                ?>
-                <input type="hidden" value="{{$walletBalance}}" name="wallet_amount" id="wallet_amount" />
-
+                    ?>
+                <!------------------------------- STEP 1-------------------------------------->
+                    <input type="hidden" value="{{$walletBalance}}" name="wallet_amount" id="wallet_amount" />
                     <fieldset id="step-1">
                         <div class="twitter-step-section">
                             <div class="creadte-ad-frm">  
@@ -78,24 +70,22 @@
                                     <label for="campaign_name">Campaign name <span style="color: red">*</span> </label>
                                     <input type="text"  placeholder="Enter Camping name" class="form-control" id="campaign_name" name="campaign_name">
                                 </div> 
-
                                 <div class="form-group">
                                     <label for="">Campaign target <span style="color: red">*</span></label>
                                      <select class="form-control" name="campaign_target" id="campaign_target">
                                         <option value="" selected> Select target</option>
                                         <option value="Visit Website" > Visit Website</option>
-                                        <option value='App install'>App install / Visit</option>                                        
+                                        <option value='App install'>App Install</option>
+                                        <option value='App visit'>App Visit</option>
                                         <option value='Awareness'>Awareness</option>     
                                         <option value='Video Views'>Video Views</option>     
                                         <option value='Call to Action'>Call & Text</option>                                       
                                     </select>
                                 </div>
-
                                 <div class="form-group website_url" style="display:none;">
                                     <label for="website_url">Website Url </label>
                                     <input type="text" placeholder="http://www.unimarkme.com" class="form-control" id="website_url" name="website_url" onchange="checkWebsiteUrl();" onfocus="websiteFocus();">
                                 </div> 
-
                                 <div class="form-group">
                                     <label for="upload_type">Upload Type</label>
                                     <select class="form-control" id="upload_type">
@@ -103,12 +93,12 @@
                                         <option value='video'>Video</option>
                                     </select>
                                 </div>
-
                                 <div class="form-group image-input">
                                     <label for="image">Upload image <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="inputGroupFile01" accept="image/*" />
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+
                                     </div>
                                 </div>  
                                 <div class="form-group image-input uploaded-img-section" style="display:none;">
@@ -124,11 +114,10 @@
                                 <div class="form-group video-input" style="display:none;">
                                     <label for="image">Upload video <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Supported type - mp4</span></span> </label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input file_multi_video" id="videofile" accept="video/mp4,video/x-m4v,video/mov" />
+                                        <input type="file" class="custom-file-input file_multi_video" id="videofile" accept="video/mp4,video/mov" />
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                 </div>  
-
                                 <div class="form-group">
                                     <label for="heading">Heading <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Heading should be maximum 34 characters </span></span> </label>
                                     <input type="text" placeholder="Enter Heading name" class="form-control" id="heading" name="heading" maxlength="34" />
@@ -141,13 +130,11 @@
                                     <label for="Caption">Caption </label>
                                     <input type="text" placeholder="Enter Caption (optional)" class="form-control" id="caption" name="caption" maxlength="100" />
                                 </div> 
-
                                 <div class="app-sec" style="display:none;">
                                     <div class="form-group">
                                         <label for="app_name">App Name </label>
                                         <input type="text" placeholder="Enter App Name" class="form-control" id="app_name" name="app_name">
                                     </div> 
-
                                     <div class="form-group ">
                                         <label for="image">Upload App Icon <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
                                         <div class="custom-file">
@@ -167,7 +154,6 @@
                                 <div class="awareness-sec" style="display:none;">
                                 </div>
                                 <div class="callntext-sec" style="display:none;">
-
                                     <div class="form-group">
                                         <label for="upload_type">Contact Method</label>
                                         <select class="form-control" name="contact_method"  id="contact-method">
@@ -191,6 +177,7 @@
                                 <div class="form-group call_to_action" >
                                     <label for="call_to_action">Choose call to action Tap</label>
                                     <select class="form-control" name="call_to_action" id="call_to_action">
+                                        <option value="">Select Button</option>
                                         <option value="Apply Now">Apply Now</option>
                                         <option value="Book Now">Book Now</option>
                                         <option value="Buy Ticket">Buy Ticket</option>
@@ -214,8 +201,8 @@
                                                         <span>Upload</span>
                                                         <input type="file" id="upload1" value="Choose a file" accept="image/*" />
                                                     </a>
-                                                    <!--button class="upload-result hide ">Result</button-->
                                                 </div>
+                                                
                                                 <div class="row">
                                                     <div class="upload-msg">
                                                         Upload a file to start cropping
@@ -230,20 +217,44 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="demo-wrap upload-demo-icon hide">
+                                        <div class="container">
+                                            <div class="grid"> 
+                                                <div class="actions-close-modal" onclick="jQuery('.upload-demo-icon').addClass('hide');jQuery('.app-icon').html('Choose file');">
+                                                    <a href="javascript:void(0);">&times;</a>
+                                                </div>                              
+                                                <div class="actions">
+                                                    <a href="javascript(0);"class="btn file-btn btn-primary">
+                                                        <span>Upload</span>
+                                                        <input type="file" id="upload2" value="Choose a file" accept="image/*" />
+                                                    </a>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="upload-demo-wrap">
+                                                        <div id="upload-demo-icon"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div id="preview-crop-image_icon" style="background:#9d9d9d;width:450px;padding:50px 50px;height:450px;" class="hide"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
-                                
                             </div>                   
                         </div>
                     </fieldset>
-
-                    <!-- Step 2 -->
+                <!-------------------------------- STEP 2-------------------------------------->
                     <h6></h6>
                     <fieldset id="step-2" style="display:none;">
                         <div class="twitter-step-section">        
                             <div class="creadte-ad-frm">
                                  <div class="audience-gender-bx">
                                     <h3>Select Gender</h3>
-                                                     
+
                                         <div class="gender-chk-bx">
                                             <div class="vs-checkbox-con vs-checkbox-primary">
                                                 <input type="checkbox" id="gender_m"  value="M">
@@ -266,7 +277,7 @@
                                                 <span class="">Female</span>
                                             </div>
                                         </div>
-                                    
+
                                 </div>                                    
                                 <div class="audience-gender-bx Age-bx">
                                     <h3>Age</h3>                               
@@ -276,31 +287,42 @@
                                     </div>                              
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label for="emailAddress1">Area of target audience </label>
+                                    <?php
+                                        $cityArr = DB::table('city')->where('country_id','1')->get();
+                                        $optionStr = "";
+                                        if($cityArr){
+                                            foreach($cityArr as $city){
+                                                $optionStr .= '<option value="'.$city->city_name.'">'.$city->city_name.'</option>';
+                                            }
+                                        }
+                                    ?>
+                                    <div class="form-group">
+                                        <input type="hidden" id="campaign_target_area_edit" />
+                                        <select class="select2 form-control campaign_target_area" multiple="multiple"  autocomplete="off">
+                                            <?php echo $optionStr; ?>
+                                        </select>
+                                    </div>
+                                    <script type="text/javascript">
+                                        setTimeout(function(){  $('.select2').select2();  }, 4000);
+                                    </script>
+                                </div>
+                                <?php /* Area of target with map 
                                 <div class="form-group area-target-drop-main">
                                     <label for="target_audience">Area of target audience</label>
                                     <div class="target-audience bud-sar-padding">
-                                        <!-- Select area of target audience -->
                                         <input type="text" placeholder="Select area of target audience" class="form-control" id="address" name="campaign_target_area" value=""  autocomplete="off" />
-                                        <!-- <input type="button" id="geocode" value="Search" onclick="codeAddress()"> -->
-
-                                        <!-- <input id="searchTextField" type="text" size="50" placeholder="Enter a location" autocomplete="on" runat="server" />  --> 
                                         <input type="hidden" id="city2" name="city2" />
                                          <input type="hidden" id="cityLat" name="cityLat" />
                                          <input type="hidden" id="cityLng" name="cityLng" />
-
-
                                          <input id="radius" type="hidden" value="10">
-                                        <!-- <button class="budget-sar reset-target" type="button">clear</button> -->
                                     </div>
                                     <div class="area-target-drop-section" id="target_audience" >
                                         <button class="map-close-btn" type="button">&times;</button>
                                             <table border="1" style="width:100%"> 
                                                <tr>
                                                 <td style="display: flex;"> 
-                                                    <!-- <input id="address" type="textbox" value="Riyadh">
-                                                    <input id="radius" type="hidden" value="25"> -->
-                                                    <!-- <input type="hidden" id="geocode" value="Search" onclick="codeAddress()"></td> -->
                                               </tr> 
                                               <tr> 
                                                 <td> 
@@ -313,46 +335,45 @@
                                             </table>
                                     </div>
                                 </div>
+                                 */ ?>
                                 <div class="form-group">
                                     <label for="note">Add Note</label>
                                     <textarea class="form-control" id="note" name="note" rows="2" placeholder="Enter Note" maxlength="100" /></textarea>
                                 </div> 
-
                                 <div class="row">
-
                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="start_date">Start Date <span style="color: red">*</span></label>
                                             <input id="start_date" name="start_date" placeholder="Select Pickup Date" type='text' class="form-control datepicker" autocomplete="off" />
                                         </div>
                                     </div>
-
                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="end_date">End Date <span style="color: red">*</span></label>
                                             <input id="end_date" name="end_date" placeholder="Select End Date " type='text' class="form-control datepicker" autocomplete="off" />
                                         </div>
                                     </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="budget_duartion">Budget - Daily / Lifetime</label>
+                                            <select class="form-control" id="budget_duartion">
+                                                <option value="Daily">Daily</option>
+                                                <option value="Lifetime">Lifetime</option>
+                                            </select>
+                                        </div>  
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="form-group bud-sar-padding">
+                                            <label for="campaign_budget">Budget <span style="color: red">*</span></label>
+                                            <input type="text" placeholder="Enter Budget" class="form-control" id="campaign_budget" name="campaign_budget" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                            <span class="budget-sar">SAR</span>
+                                        </div> 
+                                        <p class="err-msg" id="wallet_msg"></p>     
+                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="budget_duartion">Budget - Daily / Lifetime</label>
-                                    <select class="form-control" id="budget_duartion">
-                                        <option value="Daily">Daily</option>
-                                        <option value="Lifetime">Lifetime</option>
-                                    </select>
-                                </div>  
-
-                                <div class="form-group bud-sar-padding">
-                                    <label for="campaign_budget">Budget <span style="color: red">*</span></label>
-                                    <input type="text" placeholder="Enter Budget" class="form-control" id="campaign_budget" name="campaign_budget" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                                    <span class="budget-sar">SAR</span>
-                                </div> 
-                                <p class="err-msg" id="wallet_msg"></p>
-                 
+                                                                
                             </div>   
                         </div>
-
                         <div class="estamations-from-bx">
                             <div class="Estamations-left-right-bx">
                                 <div class="reach-people">Estamated Reach</div>
@@ -360,28 +381,24 @@
                                 <input type="hidden" name="estimated_reach" value="40000 - 50000" />
                                 <div class="clearfix"></div>
                             </div>
-
                             <div class="Estamations-left-right-bx">
                                 <div class="reach-people">Sub Budget </div>
                                 <div class="reach-click subtotal"> SAR 0.00</div>
                                 <input type="hidden" name="sub_budget" value="0" />
                                 <div class="clearfix"></div>
                             </div>
-
                             <div class="Estamations-left-right-bx">
                                 <div class="reach-people">Service fees </div>
                                 <div class="reach-click service_amount"> SAR 0.00</div>
                                 <input type="hidden" name="service_amount" value="0" />
                                 <div class="clearfix"></div>
                             </div>
-
                             <div class="Estamations-left-right-bx">
                                 <div class="reach-people">VAT 15%</div>
                                 <div class="reach-click vat_15"> SAR 0.00</div>
                                 <input type="hidden" name="vat_amount" value="0" />
                                 <div class="clearfix"></div>
                             </div>
-
                             <div class="Estamations-left-right-bx">
                                 <div class="reach-people">Total Budget</div>
                                 <div class="reach-click total_amount"> SAR 0.00</div>
@@ -392,6 +409,8 @@
                     </fieldset>             
                 </form>
             </div>
+
+            <!------------------------------- PREVIEW BOX -------------------------------------->
             <div class="ad-prive-bx preview-ads-mobile" id="preview-section-bx">  
                 <div class="mobile-black-bg"></div>
                 <div class="mobile-top-time-icons-strip">
@@ -421,8 +440,8 @@
                 <div class="add-img-video-section"> 
                     <img src="{{url('/')}}/public/assets/images/logo/mobile-priview-img.jpg" alt="" id="ad_image"/>
                     <video id="ad_video" style="background-color:black; display:none;object-fit: cover;" loop playsinline muted autoplay>
-                        <source src="mov_bbb.mp4" id="video_here" type="video/mp4">
-                        <source src="movie.ogg" type="video/ogg">
+                        <source src="#" id="video_here" type="video/mp4">
+                        <source src="#" type="video/ogg">
                     </video>                
                 </div>
                 <div class="caption-txt-section-block" style="display:none;">
@@ -458,13 +477,15 @@
                     </div>
                 </div>
             </div>
+            <!----------------------------- END PREVIEW BOX -------------------------------------->
+
         </div>
-
-
-    <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'  style="display:none;"><br/>
-    <img id="sample-image" />
+        <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'  style="display:none;"><br/>
+        <img id="sample-image" />
     </div>
-</div>   
+</div>
+
+<!------------------------- STEPS  ------------------------------>
 <div class="steps-sticky-section">
     <div class="step-privious-btn">
         <a href="javascript:void(0);" class="prev-btn">Previous</a>
@@ -484,16 +505,19 @@
         <a href="javascript:void(0);" class="submitfrm" onclick="submitFrm();" style="display:none;">Finish</a>
     </div>
 </div>
-    
+<!------------------------- END STEPS  ------------------------->
+
+
+
+<!------------------------------- Campaign Script Start ------------------------->
+
     <script>
         $( document ).ready(function() {
-
             $('#android_url,#ios_url').focus(function(){
                 if(!$(this).val() || $(this).val()==""){
                     $(this).val('https://');
                 }
             });
-
             $('#android_url,#ios_url').change(function(){
                if(isUrlValid($(this).val())==false){
                     $(this).parent().append('<label class="err-msg">* Invalid URL format, e.g. https://example.com</label>');
@@ -505,7 +529,6 @@
             var height = $(".mobile-bg-img").height();
                 $("#ad_video").height(height-57);
             $("#ad_video").width(width-34);
-
             $('#upload_type').change(function(){
                 var mediaType = $(this).val();
                 if(mediaType=="video"){
@@ -523,7 +546,6 @@
             $('#contact-method').change(function(){
                 var contactMethod = $(this).val();
                 $('.text_msg').hide();
-
                 if(contactMethod=="text-option"){
                     $('.btn-add-prive').text('Text Now');
                     $('.text_msg').show();
@@ -531,37 +553,51 @@
                     $('.btn-add-prive').text('Call Now');
                 }
             });
-
-        if($('#caption').val()){
-            $('.caption-txt-section-block').show();
-            $('.caption-txt-section-block').text($(this).val());
-        }
-        $('#caption').on("keyup change blur",function(){
+            if($('#caption').val()){
+                $('.caption-txt-section-block').show();
+                $('.caption-txt-section-block').text($(this).val());
+            }
+            $('#caption').on("keyup change blur",function(){
             if($(this).val()){
                 $('.caption-txt-section-block').show();
                 $('.caption-txt-section-block').text($(this).val());
             }else{
                 $('.caption-txt-section-block').hide();
             }
-        });
-
+            });
         });
         $(document).on("change", ".file_multi_video", function(evt) {
-            var $source = $('#video_here');
-            $source[0].src = URL.createObjectURL(this.files[0]);
-            $source.parent()[0].load();
-            $(this).next('.err-msg').remove();
+            var fileSize = $(this)[0].files[0].size;
+            if(fileSize<1073741824){
+                var $source = $('#video_here');
+                $source[0].src = URL.createObjectURL(this.files[0]);
 
-            var filename_video =  this.files[0].name;
-            jQuery("label[for='inputGroupFile01']").text(filename_video);
+                var video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = function(){
+                    window.URL.revokeObjectURL(video.src);
+                    if(parseFloat(video.duration)<=180){
+                        $source.parent()[0].load();
+                        $(this).next('.err-msg').remove();
+                        var filename_video =  this.files[0].name;
+                        jQuery("label[for='inputGroupFile01']").text(filename_video);
+                    }else{
+                        $('.file_multi_video').parent().append('<label class="err-msg">Video duration should be less than 180 seconds </label>');
+                    }
+                }
+                video.src = URL.createObjectURL(this.files[0]);
+            }else{
+                $('.file_multi_video').parent().append('<label class="err-msg">file size should be less than 1 GB</label>');
+            }
         });
+
+
         $('#campaign_name').keyup(function(){
             $('#campaign_name').next('.err-msg').remove();
         });
         $('#campaign_target').change(function(){
             $('#campaign_target').next('.err-msg').remove();
         });
-
         function validateStep1(){
             var err = 0;
             $('.err-msg').remove();
@@ -586,7 +622,6 @@
                 $('#brand_name').parent().append('<label class="err-msg">Please select brand. </label>');
                 err = 1;
             }
-
             <?php if(!isset($data)){ ?>
                     if($('#upload_type').val()=="image"){
                         if($('#inputGroupFile01').val()==""){
@@ -603,7 +638,6 @@
             <?php } ?>
             return err;
         }
-
         function validateStep2(){
             var err = 0;
             $('.err-msg').remove();
@@ -620,11 +654,10 @@
                 err = 1;
             }
 
-            
             return err;
         }
     </script>
-    
+
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/core/colors/palette-gradient.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/pages/dashboard-analytics.css">
@@ -634,11 +667,8 @@
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/fontawesome-v5.7.2-pro.min.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/plugins/forms/wizard.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/vendors/css/pickers/pickadate/pickadate.css">
-
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="{{url('/')}}/public/assets/vendors/js/pickers/pickadate/picker.js"></script>
-    <!-- <script src="{{url('/')}}/public/assets/vendors/js/pickers/pickadate/picker.date.js"></script>
-    <script src="{{url('/')}}/public/assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script> -->
     <script src="{{url('/')}}/public/assets/vendors/js/extensions/nouislider.min.js"></script>
     <script src="{{url('/')}}/public/assets/js/scripts/jquery-ui.js"></script>
     <script src="{{url('/')}}/public/assets/js/scripts/jquery.ui.touch-punch.min.js"></script>
@@ -646,23 +676,22 @@
     <script src="{{url('/')}}/public/assets/js/scripts/forms/number-input.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="{{url('/')}}/public/assets/croppie/croppie.js"></script>
+    <script type="text/javascript" src="{{url('/')}}/public/assets/croppie/croppie.js" defer></script>
 	<script type="text/javascript" src="{{url('/')}}/public/assets/croppie/demo.js"></script>
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/htmltocanvas.js"></script>
-   
-<script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
 
+
+    <script>
         function calculateSummary(){
             var start = $('#start_date').val();
             var end = $('#end_date').val();
-
             start = start.split("/");
             end = end.split("/");
             var startDay = new Date(start[2]+'-'+start[1]+'-'+(start[0]-1));
             var endDay = new Date(end[2]+'-'+end[1]+'-'+end[0]);
             var diff = new Date(endDay - startDay);
             var days = diff/1000/60/60/24;
-
            /*   var startDay = new Date( start[2], start[1] - 1, start[0]);
                 var endDay = new Date( end[2], end[1] - 1, end[0]);
                 var millisecondsPerDay = 1000 * 60 * 60 * 24;
@@ -671,13 +700,12 @@
                 days =Math.floor(days); 
             */
             console.log('Days '+days)     
-            
+
             var budget = $('#campaign_budget').val();
             var budget_duartion = $('#budget_duartion').val();
             if(budget_duartion == 'Daily'){
                 budget = budget * days;
             }
-
             var vat_amount = parseInt(budget) * 0.15; 
             var total = parseInt(budget) + parseInt(vat_amount);
             var service_charges = 10;
@@ -688,7 +716,6 @@
              $('.vat_15').html("SAR "+vat_amount);
              $('.total_amount').html("SAR "+total);
              $('.subtotal').html("SAR "+budget);
-
             $('input[name="service_amount"]').val(service_charges);
             $('input[name="sub_budget"]').val(budget);
             $('input[name="vat_amount"]').val(vat_amount);
@@ -698,65 +725,85 @@
         <?php 
             if(isset($data)){
                  foreach($data as $key =>$value){
-                        if($key != 'get_user' && $key != 'get_business'){
-                            ?>
-                    $("#<?php echo $key; ?>").val('<?php print_r($value); ?>');
 
-                     $('#heading').trigger('change');
-                     $('#brand_name').trigger('change');
-                     $('#caption').trigger('change');
-                     calculateSummary();
+                    if($key != 'get_user' && $key != 'get_business' && $key != 'app_icon'){ ?>
+                        console.log('<?php print_r($key); ?>'+'======>'+'<?php print_r($value); ?>');
+                         $("#<?php echo $key; ?>").val('<?php print_r($value); ?>');
+                         $('#heading').trigger('change');
+                         $('#brand_name').trigger('change');
+                         $('#caption').trigger('change');
 
-                    <?php if($key == 'post_image'){ ?>
-                        $('#ad_image').attr('src','<?php print_r($value); ?>');
-                        $('#video_here').attr('src','<?php print_r($value); ?>');
+                         calculateSummary();
+                        <?php 
+                         if($key == 'post_image'){ ?>
+                            $('#ad_image').attr('src','<?php print_r($value); ?>');
+                            $('#video_here').attr('src','<?php print_r($value); ?>');
+                            var video = document.getElementById('ad_video');
+                            var source = document.getElementById('video_here');
+                            source.setAttribute('src', '<?php print_r($value); ?>');
+                            video.load();
+                            video.play();
+                            jQuery(".custom-file-label").text($('#ad_image').attr('src').split('/').pop());
+                        <?php }  
+                        if($key == 'id'){ ?>
+                            $('#campaign_id').val('<?php print_r($value); ?>');
+                        <?php }
+                        
+                        if($key == 'start_date'){ ?>
+                            $('#start_date').val('<?php print_r($value); ?>');
+                        <?php }  
+                        if($key == 'end_date'){ ?>
+                            $('#end_date').val('<?php print_r($value); ?>');
+                            $('#end_date').trigger('change');
+                            $('#campaign_budget').trigger('change');
+                        <?php } 
+                        if($key == 'campaign_target_area'){  ?>
+                            $('#campaign_target_area_edit').val('<?php print_r($value); ?>');
+                            var locations = $('#campaign_target_area_edit').val().split(",");
+                            $(".campaign_target_area").select2({
+                                multiple: true,
+                            });
+                            $('.campaign_target_area').val(locations).trigger('change');
+                        <?php  } ?>
 
-                        //var $video = $('#video_here'),
-                        //$video[0].load();
-                        //$video[0].play();
-                        //var filename_video =  this.files[0].name;
-                        var video = document.getElementById('ad_video');
-                        var source = document.getElementById('video_here');
-                        source.setAttribute('src', '<?php print_r($value); ?>');
-                        video.load();
-                        video.play();
-                        jQuery(".custom-file-label").text($('#ad_image').attr('src').split('/').pop());
+                        <?php if($key == 'upload_type'){ 
+                                if($value == 'video'){ ?>
+                                    $('#ad_image').hide();
+                                    $('#ad_video').show();
+                                <?php }else{ ?>
+                                    $('#ad_image').show();
+                                    $('#ad_video').hide();
+                                <?php } ?>
+                        <?php }  ?>
 
-                     <?php }  
-                     if($key == 'id'){ ?>
-                        $('#campaign_id').val('<?php print_r($value); ?>');
-                     <?php }
-                     if($key == 'start_date'){ ?>
-                         $('#start_date').val('<?php print_r($value); ?>');
-                         //$('#start_date').datepicker('setDate', new Date('<?php print_r($value); ?>'));
-                         //$('#start_date').datepicker('setDate','<?php print_r($value); ?>');
-                         console.log('<?php print_r($value); ?>');
-                     <?php }  
-                     if($key == 'end_date'){ ?>
-                        $('#end_date').val('<?php print_r($value); ?>');
-                        //$('#end_date').datepicker('setDate','<?php print_r($value); ?>');
-                        $('#end_date').trigger('change');
-                        $('#campaign_budget').trigger('change');
-                     <?php }  ?>
-                     <?php if($key == 'upload_type'){ 
-                            if($value == 'video'){ ?>
-                                $('#ad_image').hide();
-                                $('#ad_video').show();
+
+                        
+
+                        <?php if($key == 'call_to_action'){ ?>
+                                var optVal = '<?php print_r($value); ?>';
+                                setTimeout(function(){ 
+                                    $('#call_to_action').val(optVal).trigger('change');
+                                }, 6000);
+                        <?php } ?>
+                        <?php if($key == 'campaign_target'){ 
+                                  if($value == 'App install' || $value == 'App visit' ){ ?>
+                                    var tempVal = '<?php print_r($value); ?>';
+                                    setTimeout(function(){ 
+                                        $('#campaign_target').val(tempVal).trigger('change');
+                                     }, 8000);
                             <?php }else{ ?>
-                                $('#ad_image').show();
-                                $('#ad_video').hide();
-                            <?php } ?>
-                            console.log('<?php echo $key; ?>'+"==="+'<?php echo $value; ?>');
-                     <?php }  ?>
+                                    var tempVal = '<?php print_r($value); ?>';
+                                    setTimeout(function(){ 
+                                        $('#campaign_target').val(tempVal).trigger('change');
+                                    }, 8000);
+                           <?php }
+                        }  ?>
+
+
+
                <?php }
            } ?>  
-            
-                    
-         <?php }  ?> 
-
-
-
-
+<?php }  ?> 
          $('#end_date,#start_date').change(function(){
                 var start = $('#start_date').val();
                 var end = $('#end_date').val();
@@ -778,30 +825,31 @@
                 }
                 console.log(days);
            });
-
        $('#campaign_target').change(function(){
             var campaignType = $(this).val();            
             $('.app-sec').hide();
             $('.app-sec-preview').hide();
-            //$('.website-sec-preview').hide();
             $('.awareness-sec').hide();
             $('.callntext-sec').hide();
             $('.video-view-sec').hide();
             $('.website_url').hide();
             $('.call_to_action').show();
             $('#upload_type').val('image').trigger('change');
+            $('.uploaded-img-section').hide();
             $('#upload_type').removeAttr('disabled');
-
-
             if(campaignType == 'App install'){
                 $('.app-sec').show();
                 $('.app-sec-preview').show();
+                $('.app-add-install-btn').text('Install');
+            }else if(campaignType == 'App visit'){
+                $('.app-sec').show();
+                $('.app-sec-preview').show();
+                $('.app-add-install-btn').text('Visit');
             }else if(campaignType == 'Visit Website'){
                 $('.website_url').show();
             }else if(campaignType == 'Awareness'){
                 $('.awareness-sec').show();
             }else if(campaignType == 'Video Views'){
-                //$('#upload_type').val('video');
                 $('#upload_type').val('video').trigger('change');
                 $('#upload_type').attr('disabled','disabled');
                 $('.video-view-sec').show();
@@ -810,40 +858,36 @@
                 $('.callntext-sec').show();
             }
        });
-
        $('#videofile').change(function(){
             $('#videofile').parents().find('.err-msg').remove();
        });
        $('#inputGroupFile01').change(function(){
             $('#inputGroupFile01').parents().find('.err-msg').remove();
        });
-       
+
        $('#start_date').change(function(){
             $('#start_date').parents().find('.err-msg').remove();
        });
-
-        function readURL(input) {
+        function readURL(input){
+            $('#app_icon').next('.err-msg').remove();
+            $('#app-ico').attr('src'," ");
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#app-ico').attr('src', e.target.result);
+                var fileSize = input.files[0].size;
+                if(fileSize<5242880){
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#app-ico').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                    var app_icon_name =  input.files[0].name;
+                    jQuery('label[for="app_icon"]').text(app_icon_name);
+                }else{
+                    $('#app_icon').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
                 }
-                reader.readAsDataURL(input.files[0]);
-                var app_icon_name =  input.files[0].name;
-                jQuery('label[for="app_icon"]').text(app_icon_name);
-
             }
         }
 
-        $("#app_icon").change(function(){
-            readURL(this);
-            var width = $(this).width();
-            var height = $(this).height();
-            var fileSize = $(this)[0].files[0].size;
-            alert(width+'X'+height+' - '+bytesToSize(fileSize));
 
-
-        });
         $('.steps-li li').click(function(){
             if(validateStep1()==1){
                 return false;
@@ -855,7 +899,6 @@
                 $(this).addClass('active');
                 $('.steps-li li').removeClass('current-tab');
                 $(this).addClass('current-tab');
-
                 currStep = currStep.split("-")[1];
                 var length = $('.steps-li li').length;
                 if(currStep==length){
@@ -867,7 +910,6 @@
                 }
                 scrollToTop();
             }
-
         });
         $('.next_and_final').click(function(){
             if(validateStep1()==1){
@@ -888,7 +930,6 @@
                 $('.steps-li').attr('current-tab','step-'+crrTab);
             }
             scrollToTop();
-
         });
         $('.prev-btn').click(function(){
             var crrTab = $('.steps-li').attr('current-tab');
@@ -901,46 +942,33 @@
                 $('.submitfrm').hide();
             }
         });
-
-
-
     });
 
-    
-
-    /*$(".target-audience").on("click", function(){
-        $(".area-target-drop-section").slideToggle("slow");
-    });*/
-    
     $(function() {
         $('#target_audience').on("click",function(){
             initialize();
         });
-       
+
         $('#brand_name').on("keyup change blur",function(){
              $('.heading-section').html('<span>'+this.value+'</span>');
         });
         $('#call_to_action').on("keyup change blur",function(){
-             $('.website-sec-preview').show();
-             $('.btn-add-prive').html(this.value);
-             $('.app-add-prive-btn').html(this.value);
+            if(this.value!=""){
+                 $('.website-sec-preview').show();
+                 $('.btn-add-prive').html(this.value);
+                 $('.app-add-prive-btn').html(this.value);
+             }
         });
-
         $('#heading').on("keyup change blur",function(){
            $('.brand-name-section').html('<span>'+this.value+'</span>');
            $('.app-add-icon-txt-headline').html(this.value);
-
         });
         $('#app_name').on("keyup change blur",function(){
            $('.app-add-icon-txt-head').html(this.value);
         });
-
 	$('.datepicker').on("change",function(){ 
-            //alert('Yes');
             $('#campaign_budget').trigger('change');
         }); 
-
-
         $('#budget_duartion').on("change",function(){ 
             $('#campaign_budget').trigger('change');
         });   
@@ -949,36 +977,8 @@
         });
 
 
-	var $uploadCrop;
-
-		function readFile(input) {
- 			if (input.files && input.files[0]) {
-	            var reader = new FileReader();
-	            
-	            reader.onload = function (e) {
-                     
-					$('.upload-demo').addClass('ready');
-	            	$uploadCrop.croppie('bind', {
-	            		url: e.target.result
-	            	}).then(function(){
-                        jQuery("#original_file_display").attr("src", e.target.result);  
-	            		console.log('jQuery bind complete');
-	            	});
-	            	 $('.upload-demo').addClass('ready');
-	            }
-	            
-	            reader.readAsDataURL(input.files[0]);
-                var filename1 =  input.files[0].name;
-                //jQuery(".custom-file-label").text(filename1);
-                jQuery('label[for="inputGroupFile01"]').text(filename1);
-
-
-	        }
-	        else {
-		        alert("Sorry - you're browser doesn't support the FileReader API");
-		    }
-		}
-
+	    var $uploadCrop;
+		
 		$uploadCrop = $('#upload-demo').croppie({
 			viewport: {
 				width: 400,
@@ -987,41 +987,151 @@
 			},
 			enableExif: true
 		});
-
 		$('#inputGroupFile01').on('change', function () { 
-			$('.upload-demo').removeClass('hide');
-			readFile(this); 
-            $(this).next('.err-msg').remove();
+            if($('#upload-demo-icon').hasClass('croppie-container')){
+                $('#upload-demo-icon').croppie('destroy');
+                $uploadCrop = $('#upload-demo').croppie({
+                    viewport: {
+                        width: 400,
+                        height: 700,
+                        type: 'Square'
+                    },
+                    enableExif: true
+                });
+            }
+             var fileSize = $(this)[0].files[0].size;
+             //console.log(bytesToSize(fileSize));
+            if(fileSize<5242880){
+                var u = URL.createObjectURL(this.files[0]);
+                var img = new Image;
+                var input = this;
+                img.onload = function() {
+                    //alert(img.width+"-----"+img.height);
+                    $('#inputGroupFile01').attr('rel-height',img.height);
+                    $('#inputGroupFile01').attr('rel-width',img.width);
+                };
+                img.src = u;
+                setTimeout(function(){ 
+                    var height = $('#inputGroupFile01').attr('rel-height');
+                    var width  = $('#inputGroupFile01').attr('rel-width');     
+                    console.log(height+"---"+width);
+                    if(parseInt(height)<1900 && parseInt(width)<1000 ){
+                        $('#inputGroupFile01').parent().append('<label class="err-msg">Minimum image size should be : 1080 x 1920px </label>');
+                    }else{
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                if(parseInt(height)>1920 && parseInt(width)>1080 ){
+                                    $('.upload-demo').removeClass('hide');
+                                    $('.upload-demo').addClass('ready');
+                                    $uploadCrop.croppie('bind', {
+                                        url: e.target.result
+                                    }).then(function(){
+                                        jQuery("#original_file_display").attr("src",e.target.result);
+                                    });
+                                    $('.upload-demo').addClass('ready');
+                                }else{
+                                    $("#ad_image").attr("src",e.target.result);
+                                    $("#original_file_display").attr("src",e.target.result);  
+                                    $('.uploaded-img-section').show();
+                                }
+                            }
+                            reader.readAsDataURL(input.files[0]);
+                            var filename1 =  input.files[0].name;
+                            jQuery('label[for="inputGroupFile01"]').text(filename1);
+                        }else{
+                            alert("Sorry - you're browser doesn't support the FileReader API");
+                        }
+                    
+                    }
+                }, 1000);
+                $('#inputGroupFile01').next('.err-msg').remove();
+            }else{
+                $('#inputGroupFile01').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
+            }
         });
+
 		$('#upload1').on('click', function (ev) {
-			//alert();
             ev.preventDefault();
 			$uploadCrop.croppie('result', {
 				type: 'canvas',
 				size: 'viewport',
 				format: 'png', 
 			}).then(function (resp) {
-				 html = '<img src="' + resp + '" />';
-                 $('.upload-demo').addClass('hide');
+				html = '<img src="' + resp + '" />';
+                $('.upload-demo').addClass('hide');
                 $("#ad_image").attr("src",resp);
                 jQuery("#original_file_display").attr("src", resp);  
-
-
                 $('.uploaded-img-section').show();
-   				 $("#upload-success").html("Images cropped and uploaded successfully.");
-  				  $("#upload-success").show();
-				 var token                   = "{{csrf_token()}}"; 
+   				$("#upload-success").html("Images cropped and uploaded successfully.");
+  				$("#upload-success").show();
+				var token                   = "{{csrf_token()}}"; 
 			});
-
 		});
-
         $('.close-img').click(function(){
             $('#inputGroupFile01').val('');
             $('label[for="inputGroupFile01"]').text(' ');
             $('.uploaded-img-section').hide();
             $('#ad_image').removeAttr('src');
-
         });
+
+
+
+/*--------- App Icon crop -------- */
+var $uploadCropIcon; 
+$("#app_icon").change(function(){
+    var input = this;
+    //readURL(this);
+    cropIcon(this,$uploadCropIcon);
+
+});
+
+function cropIcon(input,$uploadCropIcon){
+    $('#upload-demo').croppie('destroy');
+    //$('#upload-demo-icon').croppie('destroy');
+    $uploadCropIcon = $('#upload-demo-icon').croppie({
+        viewport: {
+            width: 250,
+            height: 250,
+            type: 'Square'
+        },
+        enableExif: true
+    });
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.upload-demo-icon').removeClass('hide');
+            $('.upload-demo-icon').addClass('ready');
+            $uploadCropIcon.croppie('bind', {
+                url: e.target.result
+            }).then(function(){
+                //$('#app-ico').attr('src', e.target.result);
+            });
+            $('.upload-demo-icon').addClass('ready');
+        }
+        reader.readAsDataURL(input.files[0]);
+        var filename1 =  input.files[0].name;
+        jQuery('label[for="app_icon"]').text(filename1);
+    }
+
+    $('#upload2').on('click', function (ev) {
+        ev.preventDefault();
+        $uploadCropIcon.croppie('result', {
+            type: 'canvas',
+            size: 'viewport',
+            format: 'png', 
+        }).then(function (resp) {
+            html = '<img src="' + resp + '" />';
+            $('.upload-demo-icon').addClass('hide');
+            $("#app-ico").attr("src",resp);
+            $('.uploaded-img-section').show();
+            $("#upload-success").show();
+            var token = "{{csrf_token()}}"; 
+        });
+    });
+    //$('#upload-demo-icon').croppie('destroy');
+}
+/*----------------- END ------------------*/
 
         /*Price Range slider Start*/
         $(function() {
@@ -1034,17 +1144,17 @@
                     $("#slider_price_range_txt").html("<span class='slider_price_min'> " + e.values[0] + " - </span>  <span class='slider_price_max'>  " + e.values[1] + " </span>")
                 }
             }), $("#slider_price_range_txt").html("<span class='slider_price_min'> " + $("#slider-price-range").slider("values", 0) + " - </span>  <span class='slider_price_max'> " + $("#slider-price-range").slider("values", 1) + "  </span>")
-            
-        
+
+
         });
         /*Price Range Slider End*/
-		
+
 		function popupResult(result) {
             var html;
             if (result.html) {
                 html = result.html;
             }
-            
+
             if (result.src) {
                 $("#category_image").val(result.src);
                 html = '<img src="' + result.src + '" />';
@@ -1059,16 +1169,15 @@
                 $('.sweet-alert').css('margin', function() {
                     var top = -1 * ($(this).height() / 2),
                         left = -1 * ($(this).width() / 2);
-
                     return top + 'px 0 0 ' + left + 'px';
                 });
             }, 1);
         }
-		
+
     });
-    
+
     function submitFrm(){
-            
+
             if(validateStep2()==1){
                 return false;
             }else{
@@ -1084,7 +1193,6 @@
                             saveCampaignData();
                         }else{
                             swal("Please change budget to continue. Your wallet balance is : SAR "+$('#wallet_amount').val());
-                            //swal("Please change budget to continue.", "Campaign created successfully!", "success")
                         }
                     });
                 }else{
@@ -1093,9 +1201,7 @@
             }
         return true;
     }
-
      // Validation 
-
      $(document).ready(function(){
         $('#brand_name').keyup(function(e){
             var brand_name  = $(this).val();
@@ -1127,7 +1233,6 @@
                 $(this).parent().find('.err-msg').remove();
             }
         });
-
      });
      function websiteFocus(){
         if(!$('#website_url').val() || $('#website_url').val()==""){
@@ -1145,13 +1250,11 @@
             return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
     }
     function saveCampaignData(){
-                //console.log('loader shown-'+$('.loader-section-main').show());
+                var targetAudience = $('.campaign_target_area').val().toString();
                 var screen_shot = '';
                 var age = $.trim(jQuery(".slider_price_min").html())+ ' '+ $.trim(jQuery(".slider_price_max").html());
                 html2canvas($('#preview-section-bx'),{background: '#fff'}).then(function(canvas) {
-                     //screen_shot = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');
                      var screen_shot = canvas.toDataURL();                
-                    //console.log(screen_shot);
                     var gender = jQuery("#gender_f").val();
                     if(gender == ''){
                          gender = jQuery("#gender_m").val();
@@ -1161,12 +1264,10 @@
                     var file_data = $('#inputGroupFile01').prop('files')[0]; 
                     var videofile = $('#videofile').prop('files')[0]; 
                     var appIcon = $('#app_icon').prop('files')[0]; 
-
                     var token    = "{{csrf_token()}}";
                     var call_to_action = jQuery("#call_to_action").val();
                     var upload_type = $('#upload_type').val();
                     var campaign_target = jQuery("#campaign_target").val();
-
                     var campaign_target = jQuery("#campaign_target").val();
                     var form_data = new FormData();   
                      form_data.append("form_data",$('#snapchat_creat').serialize());   
@@ -1179,10 +1280,11 @@
                     form_data.append('target_audience', campaign_target);
                     form_data.append('age', age);
                     form_data.append('gender', gender);
-                     
+                    form_data.append('location',targetAudience);
+
                     var image = $('#ad_image').attr('src');    
                     form_data.append('image', image);
-                    
+
                     jQuery.ajax({
                         url: "{{url('/')}}/user/snapchat_store",
                         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -1213,21 +1315,21 @@
                                          location.href = "{{url('/')}}/user/campaign/";
                                 });
                             }else if($.trim(data)=='warning'){
-                                swal("Thank You!", "Campaign stored successfully!", "success")
+                                //$('#wallet_amount').val();
+                                location.href = "{{url('/')}}/user/payment/";
+                              /*  swal("Thank You!", "Campaign stored successfully!", "success")
                                     .then((value) => {
                                         $('.loader-section-main').show();
                                          location.href = "{{url('/')}}/user/payment/";
-                                });
+                                }); */
                             }else{
                                 swal("Oops !", "Something went Wrong", "error")
                                 .then((value) => {
                                     $('.loader-section-main').hide();
-                                    //location.href = "{{url('/')}}/user/campaign/";
                                 });
                             }
                         }
                     }); 
-                    //console.log(hideLoader());
                 });
                 $('.loader-section-main').hide();
     }
@@ -1242,62 +1344,74 @@
         });
     });   
     $(document).ready(function(){
-
         <?php 
             if(isset($data)){ ?>
                 setTimeout(function(){ 
                     $('#heading').trigger('change');
                     $('#brand_name').trigger('change');
                     $('#caption').trigger('change');
-                     //var tempSrc = $('#ad_image').attr('src');
-                    // $('#inputGroupFile01').val(tempSrc);
-         // $('#videofile').val(tempSrc); 
                     console.log('trigger clicked');
                 }, 6000);
         <?php } ?>
-
            $('#address').keyup(function(){
                 if($('#address').val().length>3){
                     $('#geocode').trigger('click');
-                    //codeAddress();
                 }
             });
             $('#address').change(function(){
                 if($('#address').val().length>3){
                     $('#geocode').trigger('click');
-                    //codeAddress();
                 }
             });
            $('.reset-target').click(function(){
              $('#address').val(' ');
-             //codeAddress();
            });
            $('.map-close-btn').click(function(){
                 $('#target_audience').hide();
            });
-
-
             //codeAddress(); 
             $('#address').trigger('change');
 
-           
-
        });
-
     $(document).mouseup(function(e){
         var container = $("#target_audience");
         if (!container.is(e.target) && container.has(e.target).length === 0){
             container.hide();
         }
-    }); 
+    });
+
+    function bytesToSize(bytes) {
+       var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+       if (bytes == 0) return '0 Byte';
+       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+       return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    } 
 </script>
-
-
-
 <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/bootstrap-datepicker.min.css">
 <script src="{{url('/')}}/public/assets/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-
 <script>
+    /*
+    function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.upload-demo').addClass('ready');
+                    $uploadCrop.croppie('bind', {
+                        url: e.target.result
+                    }).then(function(){
+                        jQuery("#original_file_display").attr("src", e.target.result);  
+                        console.log('jQuery bind complete');
+                    });
+                     $('.upload-demo').addClass('ready');
+                }
+                reader.readAsDataURL(input.files[0]);
+                var filename1 =  input.files[0].name;
+                jQuery('label[for="inputGroupFile01"]').text(filename1);
+            }
+            else {
+                alert("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
     var map;
         function initialize() {
           var input = document.getElementById('address');
@@ -1311,14 +1425,12 @@
                 document.getElementById('city2').value = place.name;
                 document.getElementById('cityLat').value = place.geometry.location.lat();
                 document.getElementById('cityLng').value = place.geometry.location.lng();
-
                 geocoder = new google.maps.Geocoder();
                 var latlng = new google.maps.LatLng(place.geometry.location.lat(),place.geometry.location.lng());
                 var mapOptions = {
                   zoom: 8,
                   center: latlng
                 }
-
                 map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
                 new google.maps.Marker({
                     position: latlng,
@@ -1326,17 +1438,11 @@
                     title: place.name,
                 });
                 $(".area-target-drop-section").slideToggle("slow");
-
-
             });
-
-
         }
         google.maps.event.addDomListener(window, 'load', initialize);
+        */
     </script>
-@endsection
-
-
-
-    
-    
+    <!-- <script type="text/javascript" src="{{url('/')}}/public/assets/js/map.js"> 
+         </script> -->
+    @endsection

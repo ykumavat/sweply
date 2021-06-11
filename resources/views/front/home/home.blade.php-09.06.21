@@ -1,0 +1,281 @@
+@extends('front.layout.master')
+@section('main_content')
+
+<?php 
+ //    \App::setLocale('ar');
+ // echo App::getLocale();
+
+ // print_r(session::all());
+
+?>
+    <div class="swiper-container home-banner-slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="banner-content-content">
+                                <span class="banner-content-big-txt" data-wow-delay="0.1s">Start Your Digital</span>
+                                <span class="borderd-txt-section spotlight-txt" data-wow-delay="0.7s">Campaigns</span>
+                                <span class="banner-content-big-txt now-txt" data-wow-delay="0.1s"><span>in</span>
+                                    3 Minutes</span>
+                                <div class="more-services-btn animation-fadeinup">
+                                    <a href="login.html" class="btn-more-services"> {{translate('start-now')}}</a>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-img-section">
+                    <img src="{{url('/')}}/public/assets/images/logo/slider-1.png" alt="banner-img" />
+                </div>
+            </div>
+            <div class="swiper-slide banner-secound-slide-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">                       
+                            <div class="banner-content-content">
+                                <span class="banner-content-big-txt" data-wow-delay="0.1s">Book a <br>Twitter</span>
+                                <span class="borderd-txt-section spotlight-txt" data-wow-delay="0.7s">Spotlight</span>
+                                <span class="banner-content-big-txt now-txt" data-wow-delay="0.1s">Now</span>
+                                <div class="more-services-btn animation-fadeinup">
+                                    <a href="login.html" class="btn-more-services">Start Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-img-section">
+                    <img src="{{url('/')}}/public/assets/images/logo/slider-2.png" alt="banner-img" />
+                </div>
+            </div>
+            <div class="swiper-slide banner-secound-slide-content three-slide">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">                        
+                            <div class="banner-content-content">
+                                <span class="banner-content-big-txt" data-wow-delay="0.1s">Charge Your Twitter</span>
+                                <span class="borderd-txt-section spotlight-txt" data-wow-delay="0.7s">Account</span>
+                                <span class="banner-content-big-txt now-txt" data-wow-delay="0.1s">Credit</span>
+                                <div class="more-services-btn animation-fadeinup">
+                                    <a href="login.html" class="btn-more-services">Start Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-img-section">
+                    <img src="{{url('/')}}/public/assets/images/logo/slider-3.png" alt="banner-img" />
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="unimark-services-section">
+        <div class="container">
+            <div class="unimark-services-head">
+                {{translate('explore-more-title')}}
+            </div>
+            <div class="head-bottom-line">
+                <span class="head-bottom-line-small"></span>
+                <span class="head-bottom-line-big"></span>
+            </div>
+            <div class="unimark-services-txt">        
+                {{translate('explore-more-descr')}}
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <div class="services-box-section">
+                        <div class="services-box-img">                           
+                             <img src="{{url('/')}}/public/assets/images/logo/digital-campaign.svg" alt="" />
+                        </div>
+                        <div class="for-responsive-alignment">
+                            <div class="services-box-head">
+                                Start your digital campaign in all platforms
+                                {{translate('abc')}}
+
+
+                            </div>
+                            <div class="services-box-buy-now">
+                                <a href="javascript:void(0);">
+                                    <span class="txt-bye-now">Buy now</span>
+                                    <span class="arrow-bye-now"><i class="fal fa-long-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <div class="services-box-section">
+                        <div class="services-box-img">
+                            <img src="{{url('/')}}/public/assets/images/logo/charge-your-twitter-credits.svg" alt="" />
+                        </div>
+                        <div class="for-responsive-alignment">
+                            <div class="services-box-head">
+                                Charge your Twitter Credits
+                            </div>
+                            <div class="services-box-buy-now">
+                                <a href="javascript:void(0);">
+                                    <span class="txt-bye-now">Buy now</span>
+                                    <span class="arrow-bye-now"><i class="fal fa-long-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <div class="services-box-section">
+                        <div class="services-box-img">
+                            <img src="{{url('/')}}/public/assets/images/logo/accounts-analysis.svg" alt="" />
+                        </div>
+                        <div class="for-responsive-alignment">
+                            <div class="services-box-head">
+                                Accounts Analysis
+                            </div>
+                            <div class="services-box-buy-now">
+                                <a href="javascript:void(0);">
+                                    <span class="txt-bye-now">Buy now</span>
+                                    <span class="arrow-bye-now"><i class="fal fa-long-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <div class="services-box-section">
+                        <div class="services-box-img">
+                            <img src="{{url('/')}}/public/assets/images/logo/influencers-campaigns.svg" alt="" />
+                        </div>
+                        <div class="for-responsive-alignment">
+                            <div class="services-box-head">
+                                Influencers campaigns
+                            </div>
+                            <div class="services-box-buy-now">
+                                <a href="javascript:void(0);">
+                                    <span class="txt-bye-now">Buy now</span>
+                                    <span class="arrow-bye-now"><i class="fal fa-long-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="youtube-video-section">
+        <div class="container">
+            <!-- <iframe src="https://www.youtube.com/embed/Mrst9y08JQs" title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe> -->
+
+                <iframe src="https://www.youtube.com/embed/TP2vtUVytew" title="YouTube video player" 
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="unimark-services-section">
+        <div class="container">
+            <div class="unimark-services-head">
+                Our Application Setup
+            </div>
+            <div class="head-bottom-line">
+                <span class="head-bottom-line-small"></span>
+                <span class="head-bottom-line-big"></span>
+            </div>
+            <div class="unimark-services-txt">
+                It is a long established fact that a reader will be distracted by the readable content of a page when
+                looking at its layout.
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="setup-step-section">
+                        <div class="setup-step-number">
+                            <img src="{{url('/')}}/public/assets/images/logo/step1.png" alt="" />
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="setup-step-number-head">
+                                Creative Solutions And Analysis
+                            </div>
+                            <div class="setup-step-number-content">
+                                Learn how the predictive airfare app Hopper scaled their Facebook marketing without growing
+                                their headcount.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="setup-step-section">
+                        <div class="setup-step-number">
+                            <img src="{{url('/')}}/public/assets/images/logo/step2.png" alt="" />
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="setup-step-number-head">
+                                Creative Solutions And Analysis
+                            </div>
+                            <div class="setup-step-number-content">
+                                Learn how the predictive airfare app Hopper scaled their Facebook marketing without growing
+                                their headcount.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="setup-step-section">
+                        <div class="setup-step-number">
+                            <img src="{{url('/')}}/public/assets/images/logo/step3.png" alt="" />
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="setup-step-number-head">
+                                Creative Solutions And Analysis
+                            </div>
+                            <div class="setup-step-number-content">
+                                Learn how the predictive airfare app Hopper scaled their Facebook marketing without growing
+                                their headcount.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="unimark-services-section">
+        <div class="container">
+            <div class="unimark-services-head">
+                What are we serving
+            </div>
+            <div class="head-bottom-line">
+                <span class="head-bottom-line-small"></span>
+                <span class="head-bottom-line-big"></span>
+            </div>
+            <div class="unimark-services-txt">
+                It is a long established fact that a reader will be distracted by the readable content of a page when
+                looking at its layout.
+            </div>
+        </div>
+        <div class="trusted-by-world-main">
+            <ul class="scroll1">
+                <li><img style="max-width: 130px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-1.png" alt="" /></li>
+                <li><img style="max-width: 60px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-2.png" alt="" /></li>
+                <li><img style="max-width: 140px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-3.png" alt="" /></li>
+                <li><img style="max-width: 43px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-4.png" alt="" /></li>
+                <li><img style="max-width: 100px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-5.png" alt="" /></li>
+                <li><img style="max-width: 45px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-6.png" alt="" /></li>
+                <li><img style="max-width: 130px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-7.png" alt="" /></li>
+                <li><img style="max-width: 90px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-8.png" alt="" /></li>
+                <li><img style="max-width: 130px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-1.png" alt="" /></li>
+                <li><img style="max-width: 60px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-2.png" alt="" /></li>
+                <li><img style="max-width: 140px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-3.png" alt="" /></li>
+                <li><img style="max-width: 43px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-4.png" alt="" /></li>
+                <li><img style="max-width: 100px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-5.png" alt="" /></li>
+                <li><img style="max-width: 45px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-6.png" alt="" /></li>
+                <li><img style="max-width: 130px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-7.png" alt="" /></li>
+                <li><img style="max-width: 90px;" src="{{url('/')}}/public/assets/images/logo/partners-logo-8.png" alt="" /></li>
+            </ul>
+        </div>
+    </div>
+@endsection
+

@@ -153,6 +153,15 @@ class AuthController extends Controller{
                     $request->session()->put('LoggedUser', $obj_user->id);
                     $request->session()->put('BUSINESSID', $obj_user->business_id);
                     $request->session()->put('SHOW-POPUP','1');
+					
+					/* Addd By Prashant - 07-06-2021 - Unique Business Code - Start here  */
+					$user_id = str_pad($obj_user->id, 4, '0', STR_PAD_LEFT);
+					$business_id = str_pad($obj_user->business_id, 3, '0', STR_PAD_LEFT);
+					$arr_business = []; 
+					$arr_business['business_id'] =  $user_id.'-'.$business_id ; 
+					$businessArr = Business::where('id',$obj_user->business_id)->update($arr_business);
+					/* Addd By Prashant - 07-06-2021 - Unique Business Code - End here  */
+					
                     return redirect('user/dashboard');
                 }else{
                     return back()->with('fail','We do not recognize your email address');

@@ -27,7 +27,7 @@
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper">
-        <div class="preview-ad-section">
+        <div class="preview-ad-section twitter-ad-main-section">
             <div class="breadcrem-section">
                 <h2>Twitter Ad Preview</h2>
                 <div class="brea-bx">
@@ -45,11 +45,14 @@
                     <?php 
                     $channel_id = 0;
                     $channel_category_id = 0;
-                    $channel_id = Session::get('channel_id');
-                    $channel_category_id = Session::get('channel_category_id');
-                    if($channel_category_id==""){
+                    //$channel_id = Session::get('channel_id');
+                    //$channel_category_id = Session::get('channel_category_id');
+                    //if($channel_category_id==""){
                         $channel_category_id = 1;
-                    }
+                    //}
+                    //if($channel_id==""){
+                        $channel_id = 1;
+                    //}
 
                 ?>
                     <input type="hidden" id="campaign_id" name="campaign_id"  value=""/>    
@@ -63,7 +66,8 @@
                         }
                     ?>
                     <input type="hidden" id="business_id" name="business_id"  value="<?php echo $businessID;?>"/>    
-                    <input type="hidden" id="user_id" name="user_id"  value="<?php echo $userData['id'];?>"/>                      
+                    <input type="hidden" id="user_id" name="user_id"  value="<?php echo $userData['id'];?>"/>   
+                    <input type="hidden" id="stackfiles" />                   
                     <h6> </h6>
                     <?php
                     $walletBalance = 0;
@@ -86,22 +90,47 @@
                                 <div class="form-group">
                                     <label for="accountSelect">Campaign type</label>
                                     <select class="form-control" name="campaign_target" id="campaign_target">
-                                        <option>Select Campaign type</option>
+                                        <option value="">Select Campaign type</option>
                                         <option value="Reach">Reach</option>
                                         <option value="Video Views">Video View</option>
                                         <option value="App install">App installs </option>
                                         <option value="Visit Website">Website traffic</option>
                                         <option value="Engagement">Engagement</option>
-                                        <option value="Followers">Followers</option>
                                     </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="radio-post-section">
+                                        <div class="radio-btns">  
+                                            <div class="radio-btn">
+                                                <input type="radio" id="j-option" name="post_type" class="post_type" value="New">
+                                                <label for="j-option">Create New</label>
+                                                <div class="check"></div>
+                                            </div>
+                                            <div class="radio-btn">
+                                                <input type="radio" id="l-option" name="post_type" class="post_type" value="Existing">
+                                                <label for="l-option">Existing Post</label>
+                                                <div class="check"></div>
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="form-group promote-link" style="display:none;" >
+                                    <label for="link">Link for the post you want to promote</label>
+                                    <input type="text" name="twitter_promote_link" placeholder="Enter promote link" class="form-control" id="twitter_promote_link">
+                                </div>
+
                                 <div class="form-group">
                                     <label for="post_message">Whats Happening ?</label>
                                     <textarea class="form-control" id="post_message" name="post_message" rows="2" placeholder="Whats Happening ? " maxlength="280" /></textarea>
                                 </div>
-                                <div class="form-group heading-fld" >
+                                <div class="form-group heading-fld" style="display:none;">
                                     <label for="heading">Heading <span style="color:red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Heading should be maximum 34 characters </span></span> </label>
-                                    <input type="text" placeholder="Enter Heading name" class="form-control" id="heading" name="heading" maxlength="34" />
+                                    <input type="text" placeholder="Enter Heading name" class="form-control" id="heading" name="heading" maxlength="34"  autocomplete="off" />
                                 </div>  
                                 <div class="form-group website_url" style="display:none;">
                                     <label for="website_url">Website Url </label>
@@ -114,32 +143,85 @@
                                 <!-- <input type="file" id="my_file">
                                 <div id="customfileupload">Select a file</div> -->
 
+
                                 <div class="form-group">
+                                    <label for="upload_type">Media Type</label>
+                                    <select class="form-control" id="upload_type">
+                                        <option value="">Select media Type</option>
+                                        <option value='image'>Image</option>
+                                        <option value='video'>Video</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group image-media">
                                     <div class="radio-btns campaign-radio-section">
-                                        <div class="radio-btn" id="single-browse"  >
-                                            <input type="radio" class="payment-options" id="f-option" name="payment-method" value="BANKTRANSFER">
-                                            <label for="f-option">
+                                        <div class="radio-btn" id="browse-image">
+                                            <input type="radio" class="media-options" id="k-option" name="media_type" value="SINGLE-IMAGE" >
+                                            <label for="k-option">
                                                 <div class="campaign-img">
                                                     <img src="{{url('/')}}/public/assets/images/logo/icon-img.png" alt="" />
                                                 </div>
-                                                Photo or Video
-                                                <div class="radio-small-txt">1 Photo or Video</div>
+                                                 Photo
+                                                <div class="radio-small-txt">1 Photo</div>
                                             </label>
-                                            <!-- <div class="check"></div> -->
                                         </div>
-                                        <div class="radio-btn" id="multiple-browse">
-                                            <input type="radio" class="payment-options" id="s-option" name="payment-method" value="ONLINE">
-                                            <label for="s-option">
+                                        <div class="radio-btn addMultiImages"  id="addMultiImages">
+                                            <p class="image-dimesion" style="display:none;" rel-height="0" rel-width="0" prev-height="0" prev-width="0"></p>
+                                            <input type="radio" class="media-options" id="e-option" name="media_type" value="IMAGE-CAROUSEL">
+                                            <label for="e-option">
                                                 <div class="campaign-img">
                                                     <img src="{{url('/')}}/public/assets/images/logo/icon-slider.png" alt="" />
                                                 </div>
                                                 Carousel
-                                                <div class="radio-small-txt">2-6 Photos or Videos</div>
+                                                <div class="radio-small-txt">2-6 Photos</div>
                                             </label>
                                             <!-- <div class="check"></div> -->
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <input id="multiImageInput" type="file" style="display:none" />
+                                    <!-- <button id="" type="button" style="border-radius: 5px; background-color: #fff; color: green;">+ Add Files</button> -->
+                                    <!-- <div class="multi-uploaded-img-section" id="previewImg">
+                                    </div> -->
+                                </div>  
+
+                                <div class="form-group video-media" style="display:none;">
+                                    <div class="radio-btns campaign-radio-section">
+                                        <div class="radio-btn" id="browse-video">
+                                            <input type="radio" class="media-options" id="j-option" name="media_type" value="SINGLE-VIDEO">
+                                            <label for="j-option">
+                                                <div class="campaign-img">
+                                                    <img src="{{url('/')}}/public/assets/images/logo/icon-img.png" alt="" />
+                                                </div>
+                                                 Video
+                                                <div class="radio-small-txt">1 Video</div>
+                                            </label>
+                                        </div>
+                                        <div class="radio-btn videoAddBtn" id="videoAddBtn" >
+                                            <input type="radio" class="media-options" id="r-option" name="media_type" value="VID-CAROUSEL">
+                                            <label for="r-option">
+                                                <div class="campaign-img">
+                                                    <img src="{{url('/')}}/public/assets/images/logo/icon-slider.png" alt="" />
+                                                </div>
+                                                Carousel
+                                                <div class="radio-small-txt">2-6 Videos</div>
+                                            </label>
+                                            <!-- <div class="check"></div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input id="multiVideoInput" type="file" style="display:none"  accept="video/mp4,video/mov" />
+                                    <video id="ad_video_sample" style="display:none;"  muted >
+                                        <source src="#" id="video_here_sample" type="video/mp4">
+                                    </video>
+                                    <div class="multi-uploaded-img-section" id="previewImg">
+                                    </div>
+                                </div>
+                                
                                 
                                 <div class="form-group image-input uploaded-img-section" style="display:none;">
                                     <label>Image</label>
@@ -152,13 +234,7 @@
                                     </div>
                                 </div>
                                 <div class="upload-flds" style="display:none;">
-                                    <div class="form-group">
-                                        <label for="upload_type">Upload Type</label>
-                                        <select class="form-control" id="upload_type">
-                                            <option value='image'>Image</option>
-                                            <option value='video'>Video</option>
-                                        </select>
-                                    </div>
+                                    
                                     <div class="form-group image-input">
                                         <label for="image">Upload image <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
                                         <div class="custom-file">
@@ -177,7 +253,7 @@
                                 <div class="app-sec" style="display:none;">
                                     <div class="form-group">
                                         <label for="app_name">App Name </label>
-                                        <input type="text" placeholder="Enter App Name" class="form-control" id="app_name" name="app_name">
+                                        <input type="text" placeholder="Enter App Name" class="form-control" id="app_name" name="app_name" maxlength="20">
                                     </div> 
                                     
                                     <div class="form-group">
@@ -188,27 +264,18 @@
                                         <label for="ios_url">Ios Url</label>
                                         <input type="text" placeholder="Enter ios app url" class="form-control" id="ios_url" name="ios_url">
                                     </div> 
-                                    <?php /* <div class="form-group ">
-                                        <label for="image">Upload App Icon <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="app_icon" name="app_icon">
-                                            <label class="custom-file-label" for="app_icon">Choose file</label>
-                                        </div>
-                                    </div>  */ ?>
                                 </div>
-                                <div class="form-group call_to_action" >
+                                <div class="form-group call_to_action" style="display:none;" >
                                     <label for="call_to_action">Choose call to action Tap</label>
                                     <select class="form-control" name="call_to_action" id="call_to_action">
                                         <option value="">Select Button</option>
-                                        <option value="Apply Now">Apply Now</option>
-                                        <option value="Book Now">Book Now</option>
-                                        <option value="Buy Ticket">Buy Ticket</option>
-                                        <option value="Get Now">Get Now</option>    
-                                        <option value="Listen">Listen</option>    
-                                        <option value="Read">Read</option>    
-                                        <option value="Sign up">Sign up</option>    
-                                        <option value="Play">Play</option>    
-                                        <option value="More">More</option>
+                                        <option value="Install">Install</option>
+                                        <option value="Open">Open</option>
+                                        <option value="Shop">Shop</option>
+                                        <option value="Play">Play</option>
+                                        <option value="Book">Book</option>
+                                        <option value="Connect">Connect</option>
+                                        <option value="Order">Order</option>
                                     </select>
                                 </div>
                                 <div class="audience-gender-bx">
@@ -256,13 +323,20 @@
                                                     <a href="javascript:void(0);">&times;</a>
                                                 </div>                                          
                                                 <div class="actions">
-                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary">
+                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary upload1">
                                                         <span>Upload</span>
                                                         <input type="file" id="upload1" value="Choose a file" accept="image/*" />
                                                     </a>
-                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary" onclick="changeCropSize(600,600);"><span>1200x1200</span></a>
-                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary" onclick="changeCropSize(400,600);"><span>1200x800</span></a>
-                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary" onclick="changeCropSize(300,600);"><span>1200x600</span></a>
+
+                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary upload2" style="display:none;">
+                                                        <span>Upload </span>
+                                                        <input type="file" id="upload2" value="Choose a file" accept="image/*" />
+                                                    </a>
+
+
+                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary crop-btn size-1200" onclick="changeCropSize(600,600);"><span>1200 x 1200</span></a>
+                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary crop-btn size-800" onclick="changeCropSize(400,600);"><span>1200 x 800</span></a>
+                                                    <a href="javascript:void(0);"class="btn file-btn btn-primary crop-btn size-600" onclick="changeCropSize(300,600);"><span>1200 x 600</span></a>
                                                 </div>
                                                 <div class="row">
                                                     <div class="upload-msg">
@@ -278,29 +352,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="demo-wrap upload-demo-icon hide">
-                                        <div class="container">
-                                            <div class="grid"> 
-                                                <div class="actions-close-modal" onclick="jQuery('.upload-demo-icon').addClass('hide');jQuery('.app-icon').html('Choose file');">
-                                                    <a href="javascript:void(0);">&times;</a>
-                                                </div>                              
-                                                <div class="actions">
-                                                    <a href="javascript(0);"class="btn file-btn btn-primary">
-                                                        <span>Upload</span>
-                                                        <input type="file" id="upload2" value="Choose a file" accept="image/*" />
-                                                    </a>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="upload-demo-wrap">
-                                                        <div id="upload-demo-icon"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div id="preview-crop-image_icon" style="background:#9d9d9d;width:450px;padding:50px 50px;height:450px;" class="hide"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
 
                             </div>                   
@@ -331,7 +383,7 @@
                                 </div>
                                 <div class="link-section"  style="display:none;">
                                     <div class="form-group">
-                                        <label for="password">Link for guidance - How to get account access</label>
+                                        <label for="password">Link for guidance - How to provide account access to sweply</label>
                                     </div>
                                 </div>
                                 <div class="audience-gender-bx">
@@ -420,7 +472,7 @@
                         <div class="estamations-from-bx">
                             <div class="Estamations-left-right-bx">
                                 <div class="reach-people">Estamated Reach</div>
-                                <div class="reach-click"><i class="feather icon-users"></i> 40000 - 50000</div>
+                                <div class="reach-click"><i class="feather icon-users"></i> <span class="estimated_reach">40000 - 50000 </span></div>
                                 <input type="hidden" name="estimated_reach" value="40000 - 50000" />
                                 <div class="clearfix"></div>
                             </div>
@@ -475,7 +527,7 @@
                     </div>
                     <div class="company-user-details-info">
                         <div class="company-user-details-head">
-                            Sweply marketing
+                            Business Name <span><i class="fas fa-badge-check"></i> @businessname</span>
                         </div>
                         <div class="company-user-details-content">
                             What's Happening ?
@@ -483,7 +535,21 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="images-video-section-main">
+
+
+                <!----------------------------------->
+                <div class="slider-img-video-section" style="display:none;">
+                    <div class="swiper-container images-slider-twitter">
+                        <div class="swiper-wrapper">
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <!----------------------------------->
+
+
+                <div class="images-video-section-main">                    
                     <div class="add-img-video-section"> 
                         <img src="{{url('/')}}/public/assets/images/logo/twetter-default-img.jpg" alt="" id="ad_image"/>
                         <video id="ad_video" style="background-color:black; display:none;object-fit: cover;" loop playsinline muted autoplay>
@@ -491,61 +557,30 @@
                             <source src="#" type="video/ogg">
                         </video>                
                     </div> 
-                    <?php /*
                     <div class="preview-bottom-heading-section" style="display:none;">
                         <div class="preview-bottom-heading">
                             Preview heading
                         </div>
                         <div class="preview-bottom-heading-website">
-                            <i class="fas fa-link"></i> <span id="weburl"> website.com</span>
-                        </div>   
-                        <div class="add-prive-btn website-sec-preview" style="display:none;">
-                            <span class="btn-add-prive">Apply Now</span>
-                        </div>              
-                    </div>               
-                    <div class="app-add-prive-main app-sec-preview" style="display:none;">                                        
-                        <div class="app-add-prive">
-                            <div class="app-add-icon-txt"> 
-                                <div class="app-add-icon">
-                                    <img src="" id="app-ico">
-                                </div>                           
-                                <div class="app-add-icon-txt-section">
-                                    <div class="app-add-icon-txt-head">
-                                        App Visit Name
-                                    </div>
-                                    <div class="app-add-icon-txt-headline">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Headline
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="app-add-install-btn">
-                                Install
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    */ ?>
-                    <div class="preview-bottom-heading-section" style="display:none;">
-                        <div class="preview-bottom-heading">
-                            Preview heading
-                        </div>
-                        <div class="preview-bottom-heading-website">
-                            <i class="fas fa-link"></i> website.com
+                            <i class="fas fa-link"></i> <span id="weburl">website.com</span>
                         </div>                
                     </div>               
                     <div class="app-add-prive-main app-sec-preview">                                        
                         <div class="app-add-prive">
                             <div class="app-add-icon-txt"> 
                                 <div class="app-add-icon">
-                                    <img src="" id="app-ico">
+                                    <img src="{{url('/')}}/public/assets/images/logo/app-icon.png" id="app-ico">
                                 </div>                           
                                 <div class="app-add-icon-txt-section">
                                     <div class="app-add-icon-txt-head">
                                         App Visit Name
                                     </div>
                                     <div class="app-add-icon-txt-headline">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 75.8K reviews
+                                    <i class="fas fa-star active-star"></i>
+                                    <i class="fas fa-star active-star"></i>
+                                    <i class="fas fa-star active-star"></i>
+                                    <i class="fas fa-star active-star"></i>
+                                    <i class="fas fa-star"></i> 75.8K reviews
                                     </div>
                                     <div class="app-add-icon-txt-headline">
                                         Free . Finance
@@ -560,12 +595,30 @@
                         </div>
                     </div>
                 </div>
+                <div class="icon-section-block-messages">
+                    <div class="icon-section-chat-block">
+                        <i class="fal fa-comment"></i> 216
+                    </div>
+                    <div class="icon-section-chat-block">
+                        <i class="fal fa-retweet"></i> 347
+                    </div>
+                    <div class="icon-section-chat-block">
+                        <i class="fal fa-heart"></i> 3989
+                    </div>
+                    <div class="icon-section-chat-block">
+                        <i class="fal fa-sign-out"></i> 420
+                    </div>
+                </div>
+                <div class="promoted-section-ad">
+                    <i class="fas fa-external-link-square"></i> Promoted
+                </div>
             </div>
             <!----------------------------- END PREVIEW BOX -------------------------------------->
 
         </div>
         <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'  style="display:none;"><br/>
         <img id="sample-image" />
+
     </div>
 </div>
 
@@ -638,8 +691,6 @@
                 }else{
                     $('.heading-fld').hide();
                 }
-
-                website_url
             });
             $('#android_url,#ios_url,#twitter_promote_link').focus(function(){
                 if(!$(this).val() || $(this).val()==""){
@@ -657,19 +708,30 @@
             var height = $(".mobile-bg-img").height();
                 $("#ad_video").height(230);
             $("#ad_video").width('100%');
-            $('#upload_type').change(function(){
+            $('#upload_type').change(function(e){
+                $('#upload_type').parent().find('.err-msg').remove();
+
                 var mediaType = $(this).val();
+                e.preventDefault();
+                $('.image-media').hide();
+                $('.video-media').hide();
                 if(mediaType=="video"){
+                    //document.getElementById('videofile').click();
+                    $('.video-media').show();
                     $('#ad_image').hide();
                     $('#ad_video').show();
                     $('.video-input').show();
                     $('.image-input').hide();
                 }else{
+                    //document.getElementById('inputGroupFile01').click();
+                    $('.image-media').show();
                     $('#ad_image').show();
                     $('#ad_video').hide();
                     $('.video-input').hide();
                     $('.image-input').show();
                 }
+                $('.uploaded-img-section').hide();
+
             });
             $('#contact-method').change(function(){
                 var contactMethod = $(this).val();
@@ -742,28 +804,20 @@
                 $('#upload_type').parent().append('<label class="err-msg">Please select upload type. </label>');
                 err = 1;
             }
-            if($('#heading').val()==""){
-                $('#heading').parent().append('<label class="err-msg">Please select heading. </label>');
-                err = 1;
-            }
-            if($('#brand_name').val()==""){
-                $('#brand_name').parent().append('<label class="err-msg">Please select brand. </label>');
-                err = 1;
-            }
-            <?php if(!isset($data)){ ?>
+            <?php if(!isset($data)){ /*?>
                     if($('#upload_type').val()=="image"){
                         if($('#inputGroupFile01').val()==""){
-                            $('#inputGroupFile01').parent().append('<label class="err-msg">Please select image. </label>');
+                            $('.image-media').append('<label class="err-msg">Please select image. </label>');
                             err = 1;
                         }
                     }
                     if($('#upload_type').val()=="video"){
                         if($('#videofile').val()==""){
-                            $('#videofile').parent().append('<label class="err-msg">Please select video. </label>');
+                            $('.video-media').append('<label class="err-msg">Please select video. </label>');
                             err = 1;
                         }
                     }
-            <?php } ?>
+            <?php */ }  ?>
             return err;
         }
         function validateStep2(){
@@ -825,11 +879,52 @@
             if(budget_duartion == 'Daily'){
                 budget = budget * days;
             }
-            var vat_amount = parseInt(budget) * 0.15; 
-            var total = parseInt(budget) + parseInt(vat_amount);
+
+
+            //3.75 SAR == 1 Dollar
+            /************ ESTIATED REACH ***********/
+            var budgetInDollar =  budget/parseFloat(3.75);
+            var estimated_reach = 0;
+            var campaignType = $('#campaign_target').val();
+            if(campaignType=="Reach"){
+            	estimated_reach = budgetInDollar/0.00257;
+            }else if(campaignType=="Video Views"){
+				estimated_reach = budgetInDollar/0.01;
+            }else if(campaignType=="App install"){
+				estimated_reach = budgetInDollar/0.07;
+            }else if(campaignType=="Visit Website"){
+				estimated_reach = budgetInDollar/0.11;
+            }else if(campaignType=="Engagement"){
+				estimated_reach = budgetInDollar/0.04;
+            }
+
+            var firstRange = 0;
+            var secondRange = 0;
+
+            var firstRange = estimated_reach/500;
+            firstRange = firstRange.toFixed();
+            secondRange = parseInt(firstRange)+parseInt(1);
+
+            firstRange = firstRange*500;
+            secondRange = secondRange*500;
+            console.log(firstRange+'===='+secondRange);
+
+            $('.estimated_reach').text(firstRange+' - '+secondRange);
+            $('input[name="estimated_reach"]').val(firstRange+' - '+secondRange);
+            /************ END ESTIATED REACH ***********/
+
+
+            var vat_amount = parseFloat(budget) * 0.15; 
+            var total = parseFloat(budget) + parseFloat(vat_amount);
             var service_charges = 10;
             var service_charges = (budget*service_charges)/100;
-            var total = parseInt(total) + parseInt(service_charges);
+            var total = parseFloat(total) + parseFloat(service_charges);
+
+            vat_amount = vat_amount.toFixed(2);
+            service_charges = service_charges.toFixed(2);
+            total = total.toFixed(2);
+            // budget = budget.toFixed(2);
+
             console.log(vat_amount+' -- '+total+'---'+service_charges);
              $('.service_amount').text("SAR "+service_charges);
              $('.vat_15').html("SAR "+vat_amount);
@@ -976,60 +1071,43 @@
             $('#upload_type').val('image').trigger('change');
             $('.uploaded-img-section').hide();
             $('#upload_type').removeAttr('disabled');
+            $('.call_to_action').hide();
+            $('.heading-fld').hide();
+            $('.preview-bottom-heading-section').hide();
+
             if(campaignType == 'App install'){
                 $('.app-sec').show();
                 $('.app-sec-preview').show();
                 $('.app-add-install-btn').text('Install');
-            }else if(campaignType == 'App visit'){
-                $('.app-sec').show();
-                $('.app-sec-preview').show();
-                $('.app-add-install-btn').text('Visit');
+                $('.call_to_action').show();
+            }else if(campaignType == 'Reach'){
+                //showWebsite();
+            }else if(campaignType == 'Engagement'){
+                //$('.call_to_action').show();
             }else if(campaignType == 'Visit Website'){
+                $('.heading-fld').show();
                 $('.website_url').show();
                 $('.preview-bottom-heading-section').show();
                 $('.preview-bottom-heading-website').show();
                 $('.app-sec').hide();
-            }else if(campaignType == 'Awareness'){
-                $('.awareness-sec').show();
             }else if(campaignType == 'Video Views'){
                 $('#upload_type').val('video').trigger('change');
                 $('#upload_type').attr('disabled','disabled');
                 $('.video-view-sec').show();
-            }else if(campaignType == 'Call to Action'){
-                $('.call_to_action').hide();
-                $('.callntext-sec').show();
             }
        });
        $('#videofile').change(function(){
             $('#videofile').parents().find('.err-msg').remove();
+            $('.video-media').find('.err-msg').remove();
        });
        $('#inputGroupFile01').change(function(){
             $('#inputGroupFile01').parents().find('.err-msg').remove();
+            $('.image-media').find('.err-msg').remove();
        });
 
        $('#start_date').change(function(){
             $('#start_date').parents().find('.err-msg').remove();
        });
-        function readURL(input){
-            $('#app_icon').next('.err-msg').remove();
-            $('#app-ico').attr('src'," ");
-            if (input.files && input.files[0]) {
-                var fileSize = input.files[0].size;
-                if(fileSize<5242880){
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#app-ico').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                    var app_icon_name =  input.files[0].name;
-                    jQuery('label[for="app_icon"]').text(app_icon_name);
-                }else{
-                    $('#app_icon').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
-                }
-            }
-        }
-
-
         $('.steps-li li').click(function(){
             if(validateStep1()==1){
                 return false;
@@ -1099,18 +1177,15 @@
                  $('.website-sec-preview').show();
                  $('.btn-add-prive').html(this.value);
                  $('.app-add-prive-btn').html(this.value);
+                 $('.app-add-install-btn').text(this.value);
              }
         });
         $('#heading').on("keyup change blur",function(){
-           //$('.brand-name-section').html('<span>'+this.value+'</span>');
-           //$('.app-add-icon-txt-headline').html(this.value);
-           //$('.preview-bottom-heading').html(this.value);
-
         });
         $('#app_name').on("keyup change blur",function(){
            $('.app-add-icon-txt-head').html(this.value);
         });
-	$('.datepicker').on("change",function(){ 
+	    $('.datepicker').on("change",function(){ 
             $('#campaign_budget').trigger('change');
         }); 
         $('#budget_duartion').on("change",function(){ 
@@ -1130,67 +1205,60 @@
 			enableExif: true
 		});
 		$('#inputGroupFile01').on('change', function () { 
-            if($('#upload-demo-icon').hasClass('croppie-container')){
-                $('#upload-demo-icon').croppie('destroy');
-                $uploadCrop = $('#upload-demo').croppie({
-                    viewport: {
-                        width: 600,
-                        height: 600,
-                        type: 'Square'
-                    },
-                    enableExif: true
-                });
-            }
              var fileSize = $(this)[0].files[0].size;
             if(fileSize<5242880){
                 var u = URL.createObjectURL(this.files[0]);
                 var img = new Image;
                 var input = this;
                 img.onload = function() {
-                    //alert(img.width+"-----"+img.height);
                     $('#inputGroupFile01').attr('rel-height',img.height);
                     $('#inputGroupFile01').attr('rel-width',img.width);
                 };
                 img.src = u;
+                $('.images-video-section-main').show();
+                $('.slider-img-video-section').hide();
                 setTimeout(function(){ 
                     var height = $('#inputGroupFile01').attr('rel-height');
                     var width  = $('#inputGroupFile01').attr('rel-width');     
                     console.log(height+"---"+width);
-                    if(parseInt(height)<600){
-                        $('#inputGroupFile01').parent().append('<label class="err-msg">Minimum image size should be : 1200 x 1200px </label>');
-                    }else if(parseInt(width)<1200){
-                        $('#inputGroupFile01').parent().append('<label class="err-msg">Minimum image size should be : 1200 x 1200px </label>');
-                    }else{
-                        if (input.files && input.files[0]) {
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                if(parseInt(height)>1200 && parseInt(width)>1200){
-                                    $('.upload-demo').removeClass('hide');
-                                    $('.upload-demo').addClass('ready');
-                                    $uploadCrop.croppie('bind', {
-                                        url: e.target.result
-                                    }).then(function(){
-                                        jQuery("#original_file_display").attr("src",e.target.result);
-                                    });
-                                    $('.upload-demo').addClass('ready');
-                                }else{
-                                    $("#ad_image").attr("src",e.target.result);
-                                    $("#original_file_display").attr("src",e.target.result);  
-                                    $('.uploaded-img-section').show();
-                                }
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            if(parseInt(height)==1200 && parseInt(width)==1200){
+                                $("#ad_image").attr("src",e.target.result);
+                                $("#original_file_display").attr("src",e.target.result);  
+                                $('.uploaded-img-section').show();                            
+                            }else if(parseInt(height)==600 && parseInt(width)==1200){
+                                $("#ad_image").attr("src",e.target.result);
+                                $("#original_file_display").attr("src",e.target.result);  
+                                $('.uploaded-img-section').show();
+                            }else if(parseInt(height)==800 && parseInt(width)==1200){
+                                $("#ad_image").attr("src",e.target.result);
+                                $("#original_file_display").attr("src",e.target.result);  
+                                $('.uploaded-img-section').show();
+                            }else if(parseInt(height)>1200 || parseInt(width)>1200){
+                                $('.upload-demo').removeClass('hide');
+                                $('.upload-demo').addClass('ready');
+                                $uploadCrop.croppie('bind', {
+                                    url: e.target.result
+                                }).then(function(){
+                                    jQuery("#original_file_display").attr("src",e.target.result);
+                                });
+                                $('.upload-demo').addClass('ready');
+                                $('.upload1').show();
+                                $('.upload2').hide();
+                            }else{
+                                $('.image-media').append('<label class="err-msg">Minimum image size should be : "1200 x 600px" Or "1200 x 800px" Or "1200 x 800px"</label>');
                             }
-                            reader.readAsDataURL(input.files[0]);
-                            var filename1 =  input.files[0].name;
-                            jQuery('label[for="inputGroupFile01"]').text(filename1);
-                        }else{
-                            alert("Sorry - you're browser doesn't support the FileReader API");
                         }
-                    
+                        reader.readAsDataURL(input.files[0]);
+                        var filename1 =  input.files[0].name;
+                        jQuery('label[for="inputGroupFile01"]').text(filename1);
                     }
                 }, 1000);
-                $('#inputGroupFile01').next('.err-msg').remove();
+                $('.image-media').find('.err-msg').remove();
             }else{
-                $('#inputGroupFile01').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
+                $('.image-media').append('<label class="err-msg">file size should be less than 5MB</label>');
             }
         });
 
@@ -1225,56 +1293,18 @@
 var $uploadCropIcon; 
 $("#app_icon").change(function(){
     var input = this;
-    //readURL(this);
     cropIcon(this,$uploadCropIcon);
-
 });
 
-function cropIcon(input,$uploadCropIcon){
-    $('#upload-demo').croppie('destroy');
-    if($('#upload-demo-icon').hasClass('croppie-container')){
-        $('#upload-demo-icon').croppie('destroy');
-    }
-    $uploadCropIcon = $('#upload-demo-icon').croppie({
-        viewport: {
-            width: 250,
-            height: 250,
-            type: 'Square'
-        },
-        enableExif: true
-    });
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('.upload-demo-icon').removeClass('hide');
-            $('.upload-demo-icon').addClass('ready');
-            $uploadCropIcon.croppie('bind', {
-                url: e.target.result
-            }).then(function(){
-            });
-            $('.upload-demo-icon').addClass('ready');
-        }
-        reader.readAsDataURL(input.files[0]);
-        var filename1 =  input.files[0].name;
-        jQuery('label[for="app_icon"]').text(filename1);
-    }
 
-    $('#upload2').on('click', function (ev) {
-        ev.preventDefault();
-        $uploadCropIcon.croppie('result', {
-            type: 'canvas',
-            size: 'viewport',
-            format: 'png', 
-        }).then(function (resp) {
-            html = '<img src="' + resp + '" />';
-            $('.upload-demo-icon').addClass('hide');
-            $("#app-ico").attr("src",resp);
-            $('.uploaded-img-section').show();
-            $("#upload-success").show();
-            var token = "{{csrf_token()}}"; 
-        });
-    });
+function showWebsite(){
+    $('.heading-fld').show();
+    $('.website_url').show();
+    $('.preview-bottom-heading-section').show();
+    $('.preview-bottom-heading-website').show();
 }
+
+
 /*----------------- END ------------------*/
 
         /*Price Range slider Start*/
@@ -1288,8 +1318,6 @@ function cropIcon(input,$uploadCropIcon){
                     $("#slider_price_range_txt").html("<span class='slider_price_min'> " + e.values[0] + " - </span>  <span class='slider_price_max'>  " + e.values[1] + " </span>")
                 }
             }), $("#slider_price_range_txt").html("<span class='slider_price_min'> " + $("#slider-price-range").slider("values", 0) + " - </span>  <span class='slider_price_max'> " + $("#slider-price-range").slider("values", 1) + "  </span>")
-
-
         });
         /*Price Range Slider End*/
 
@@ -1320,25 +1348,7 @@ function cropIcon(input,$uploadCropIcon){
 
     });
 
-    function submitFrm(){
-
-            if(validateStep2()==1){
-                return false;
-            }else{
-                if(parseFloat($('#wallet_amount').val())<parseFloat($('input[name="total_budget"]').val())){
-                    $('.balance-popup').trigger('click');
-                }else{
-                    saveCampaignData();
-                }
-            }
-        return true;
-    }
-    function confirmToPay(){
-        saveCampaignData();
-    }
-    function cancelToPay(){
-        swal("Please change budget to continue. Your wallet balance is : SAR "+$('#wallet_amount').val());
-    }
+    
      $(document).ready(function(){
 
         $('#brand_name').keyup(function(e){
@@ -1358,6 +1368,7 @@ function cropIcon(input,$uploadCropIcon){
                 $(this).parent().append('<label class="err-msg">Only maximum 34 characters are allowed.</label>');
                 e.preventDefault();
             }else{
+                $('.preview-bottom-heading').text(heading);
                 $(this).next('.err-msg').remove();
             }
         });
@@ -1388,84 +1399,7 @@ function cropIcon(input,$uploadCropIcon){
      function isUrlValid(url) {
             return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
     }
-    function saveCampaignData(){
-                var targetAudience = $('.campaign_target_area').val().toString();
-                var screen_shot = '';
-                var age = $.trim(jQuery(".slider_price_min").html())+ ' '+ $.trim(jQuery(".slider_price_max").html());
-                html2canvas($('#preview-section-bx'),{background: '#fff'}).then(function(canvas) {
-                     var screen_shot = canvas.toDataURL();                
-                    var gender = jQuery("#gender_f").val();
-                    if(gender == ''){
-                         gender = jQuery("#gender_m").val();
-                    }else{
-                        gender += ", "+jQuery("#gender_m").val();
-                    }
-                    var file_data = $('#inputGroupFile01').prop('files')[0]; 
-                    var videofile = $('#videofile').prop('files')[0]; 
-                    var appIcon = ""; 
-                    var token    = "{{csrf_token()}}";
-                    var call_to_action = jQuery("#call_to_action").val();
-                    var upload_type = $('#upload_type').val();
-                    var campaign_target = jQuery("#campaign_target").val();
-                    var campaign_target = jQuery("#campaign_target").val();
-                    var form_data = new FormData();   
-                     form_data.append("form_data",$('#twitter_creat').serialize());   
-                    form_data.append('file', file_data);
-                    form_data.append('videofile', videofile);
-                    form_data.append('appicon', appIcon);
-                    form_data.append('_token', token);
-                    form_data.append('screen_shot', screen_shot);
-                    form_data.append('upload_type', upload_type);
-                    form_data.append('target_audience', campaign_target);
-                    form_data.append('age', age);
-                    form_data.append('gender', gender);
-                    form_data.append('location',targetAudience);
-
-                    var image = $('#ad_image').attr('src');    
-                    form_data.append('image', image);
-
-                    jQuery.ajax({
-                        url: "{{url('/')}}/user/twitter_store",
-                        dataType: 'text',  // <-- what to expect back from the PHP script, if anything
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: form_data,                        
-                        type: 'post',
-                        beforeSend: function () {
-                            $('.loader-section-main').show();
-                            console.log("Starting...");
-                        },
-                        complete: function () {
-                            $('.loader-section-main').hide();
-                            console.log("Complete!");
-                        },
-                        success: function (data) {
-                            if($.trim(data) == 'success'){
-                                swal("Thank You!", "Campaign created successfully!", "success")
-                                    .then((value) => {
-                                        $('.loader-section-main').show();
-                                        location.href = "{{url('/')}}/user/campaign/";
-                                });
-                            }else if($.trim(data)=='updated'){
-                                swal("Thank You!", "Campaign Updated successfully!", "success")
-                                    .then((value) => {
-                                        $('.loader-section-main').show();
-                                         location.href = "{{url('/')}}/user/campaign/";
-                                });
-                            }else if($.trim(data)=='warning'){
-                                location.href = "{{url('/')}}/user/payment/";
-                            }else{
-                                swal("Oops !", "Something went Wrong", "error")
-                                .then((value) => {
-                                    $('.loader-section-main').hide();
-                                });
-                            }
-                        }
-                    }); 
-                });
-                $('.loader-section-main').hide();
-    }
+   
 </script>
 <script>
     $(function() {
@@ -1601,15 +1535,553 @@ function cropIcon(input,$uploadCropIcon){
             }
         });
 
-        document.getElementById('single-browse').onclick = function() {
-            document.getElementById('inputGroupFile01').click();
-        };
+        $('.post_type').change(function(){
+            console.log($(this).val()+"== post type");
+            if($(this).val()=="Existing"){
+                $('.promote-link').show();
+            }else{
+                $('.promote-link').hide();
+            }
+        })
 
+        document.getElementById('browse-image').onclick = function(e) {
+            e.preventDefault();
+             $('.images-video-section-main').show();
+            $('.slider-img-video-section').hide();
+            $('#previewImg').hide();
+            $('#upload_type').parent().find('.err-msg').remove();
+            if($('#upload_type').val()==""){
+                $('#upload_type').parent().append('<label class="err-msg">Please select media type. </label>');
+            }else{ 
+                document.getElementById('inputGroupFile01').click(); 
+                $(this).find('.media-options').attr('checked','checked');
+            }
+        };
+        document.getElementById('browse-video').onclick = function(e) {
+            e.preventDefault();
+            $('.images-video-section-main').show();
+            $('.slider-img-video-section').hide();
+            $('#previewImg').hide();
+            $('#upload_type').parent().find('.err-msg').remove();
+            if($('#upload_type').val()==""){
+                $('#upload_type').parent().append('<label class="err-msg">Please select media type. </label>');
+            }else{ 
+                document.getElementById('videofile').click(); 
+                $(this).find('.media-options').attr('checked','checked');
+            }
+        };
     });
 
-
+    //unused
+    function readURL(input){
+        $('#app_icon').next('.err-msg').remove();
+        $('#app-ico').attr('src'," ");
+        if (input.files && input.files[0]) {
+            var fileSize = input.files[0].size;
+            if(fileSize<5242880){
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#app-ico').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+                var app_icon_name =  input.files[0].name;
+                jQuery('label[for="app_icon"]').text(app_icon_name);
+            }else{
+                $('#app_icon').parent().append('<label class="err-msg">file size should be less than 5MB</label>');
+            }
+        }
+    }
 
 </script>
 
+<!---------------------JUGAD------------------->
+  <script type="text/javascript">
+    $(document).ready(function(){
+        var filesArr = [];
+        filesArr.push(multiImageCarousel());
+        if(filesArr.length === 0){
+            filesArr.push(multiVideoUpload());
+        }
+        console.log(filesArr[0]);
+    });
+
+    function addMoreImage(){
+        $('#addMultiImages').trigger('click');
+    }
+    function addMultiVideo(){
+        $('#videoAddBtn').trigger('click');
+    }
+
+    function filesStack(inputFile,files){
+        for(let index = 0; index < inputFile[0].files.length; index++) {
+          let file = inputFile[0].files[index];
+          files.push(file);
+        }
+        filesArr = files;
+        return files;
+    }
+
+function multiImageCarousel(){
+    let inputFile = $('#multiImageInput');
+    let button = $('#addMultiImages');
+    let buttonSubmit = $('#mySubmitButton');
+    let filesContainer = $('#previewImg');
+    var files = [];
+
+    inputFile.change(function(){
+        $('.image-media').find('.err-msg').remove();
+        var fileSize = $(this)[0].files[0].size;
+
+        var prevHeight = parseInt($('.image-dimesion').attr('rel-height'));
+        var prevWidth  = parseInt($('.image-dimesion').attr('rel-width'));  
+        
+        var uploadedSlides = 0;
+        uploadedSlides = parseInt($('#previewImg .uploaded-img-main').length);
+        if(uploadedSlides<6){
+            if(fileSize<5242880){
+                var u = URL.createObjectURL(this.files[0]);
+                var img = new Image;
+                var input = this;
+                img.onload = function() {
+                    $('.image-dimesion').attr('rel-height',img.height);
+                    $('.image-dimesion').attr('rel-width',img.width);
+                };
+                img.src = u;
+                $('.images-video-section-main').hide();
+                $('.slider-img-video-section').show();
+                setTimeout(function(){ 
+                    var height = $('.image-dimesion').attr('rel-height');
+                    var width  = $('.image-dimesion').attr('rel-width');     
+                    console.log(height+"---"+width);
+                    if (input.files && input.files[0]) {
+                        let newFiles = []; 
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+
+                            if(parseInt(prevHeight)>0 && parseInt(prevHeight)>0){
+                                console.log(prevHeight+"-"+prevWidth);
+                                if(parseInt(height)==prevHeight && parseInt(width)==prevWidth){
+                                    uploadWithoutCrop(e.target.result);
+                                    files = filesStack(inputFile,files);
+                                }else if(parseInt(height)>prevHeight || parseInt(width)>prevWidth){
+                                    // Crop functionality
+                                    $('.crop-btn').hide();
+                                    var reader = new FileReader();
+                                    for(let index = 0; index < inputFile[0].files.length; index++) {
+                                      let file = inputFile[0].files[index];
+                                      newFiles.push(file);
+                                      files = filesStack(inputFile,files);
+                                      reader.onload = function (e) {
+                                            var uniqid = Date.now();
+                                            var imageSrc = "";
+                                            var imageSliderSrc = "";
+                                            var src = "";
+                                            src = e.target.result;
+                                            /************* crop demo *************/
+                                            $('#upload-demo').croppie('destroy');
+                                            var $uploadCrop;
+                                            $uploadCrop = $('#upload-demo').croppie({
+                                                viewport: {
+                                                    width: 600,
+                                                    height: 600,
+                                                    type: 'Square'
+                                                },
+                                                enableExif: true
+                                            });
+                                            $('.upload-demo').removeClass('hide');
+                                            $('.upload-demo').addClass('ready');
+                                            $('.upload1').hide();
+                                            $('.upload2').show();
+                                            $uploadCrop.croppie('bind', {
+                                                url: e.target.result
+                                            }).then(function(){
+                                                        
+                                                $('#upload2').on('click', function (ev) {
+                                                    ev.preventDefault();
+                                                    $uploadCrop.croppie('result', {
+                                                        type: 'canvas',
+                                                        size: 'viewport',
+                                                        format: 'png', 
+                                                    }).then(function (resp) {
+                                                        $('.upload-demo').addClass('hide');
+                                                        var uniqid = Date.now();
+                                                        $('.add-preview-btn').remove();
+                                                        var imageAddBtn = '<div class="uploaded-img-main add-preview-btn addMultiImages " onclick="addMoreImage();"><div class="uploaded-img"><img src="http://localhost/sweply/public/assets/images/logo/plus-img.jpg" alt=""></div></div>';
+                                                        imageSrc = '<div class="uploaded-img-main"><div class="uploaded-img"><img src="'+resp+'" alt="" /></div><span class="close-img"  onclick="removeImage('+uniqid+')"  rel="'+uniqid+'" >×</span></div>';
+                                                        $('#previewImg').append(imageSrc+' '+imageAddBtn);
+                                                         imageSliderSrc = '<div class="swiper-slide" rel="'+uniqid+'"><img src="'+resp+'" alt="" /></div>';
+                                                        $('.swiper-wrapper').append(imageSliderSrc);
+                                                    });
+                                                });
+                                                /******* CROP END ******/
+                                            });
+                                            $('.upload-demo').addClass('ready');
+                                      }
+                                      reader.readAsDataURL(file);
+                                      //initSlder();
+                                    }
+                                    //changeCropSize(prevHeight/2,prevWidth/2);
+                                    //changeCropSize(300,600);
+                                    setTimeout(function(){ 
+                                        $('.size-'+prevHeight).trigger('click'); 
+                                        console.log('size-'+prevHeight);
+                                    }, 600);
+
+                                     $('.image-dimesion').attr('rel-height',prevHeight);
+                                     $('.image-dimesion').attr('rel-width',prevWidth);
+                                }else{
+                                     $('.image-dimesion').attr('rel-height',prevHeight);
+                                     $('.image-dimesion').attr('rel-width',prevWidth);
+                                    $('.image-media').append('<label class="err-msg">Minimum image size should be : '+prevWidth+' x '+prevHeight+'px </label>');
+                                }
+                            }else{
+                                if(parseInt(height)==1200 && parseInt(width)==1200){
+                                    uploadWithoutCrop(e.target.result);
+                                    files = filesStack(inputFile,files);
+                                }else if(parseInt(height)==600 && parseInt(width)==1200){
+                                    uploadWithoutCrop(e.target.result);
+                                    files = filesStack(inputFile,files);
+                                    
+                                }else if(parseInt(height)==800 && parseInt(width)==1200){
+                                    uploadWithoutCrop(e.target.result);
+                                    files = filesStack(inputFile,files);
+                                }else if(parseInt(height)>1200 || parseInt(width)>1200){
+                                    // Crop functionality
+                                    var reader = new FileReader();
+                                    for(let index = 0; index < inputFile[0].files.length; index++) {
+                                      let file = inputFile[0].files[index];
+                                      newFiles.push(file);
+                                      //files.push(file);
+                                      files = filesStack(inputFile,files);
+
+                                      reader.onload = function (e) {
+                                            var uniqid = Date.now();
+                                            var imageSrc = "";
+                                            var imageSliderSrc = "";
+                                            var src = "";
+                                            src = e.target.result;
+                                            /************* crop demo *************/
+                                            $('#upload-demo').croppie('destroy');
+                                            var $uploadCrop;
+                                            $uploadCrop = $('#upload-demo').croppie({
+                                                viewport: {
+                                                    width: 600,
+                                                    height: 600,
+                                                    type: 'Square'
+                                                },
+                                                enableExif: true
+                                            });
+                                            $('.upload-demo').removeClass('hide');
+                                            $('.upload-demo').addClass('ready');
+                                            $('.upload1').hide();
+                                            $('.upload2').show();
+                                            $uploadCrop.croppie('bind', {
+                                                url: e.target.result
+                                            }).then(function(){
+                                                        
+                                                $('#upload2').on('click', function (ev) {
+                                                    ev.preventDefault();
+                                                    $uploadCrop.croppie('result', {
+                                                        type: 'canvas',
+                                                        size: 'viewport',
+                                                        format: 'png', 
+                                                    }).then(function (resp) {
+                                                        $('.upload-demo').addClass('hide');
+                                                        var uniqid = Date.now();
+                                                        $('.add-preview-btn').remove();
+                                                        var imageAddBtn = '<div class="uploaded-img-main add-preview-btn addMultiImages " onclick="addMoreImage();"><div class="uploaded-img"><img src="http://localhost/sweply/public/assets/images/logo/plus-img.jpg" alt=""></div></div>';
+                                                        imageSrc = '<div class="uploaded-img-main"><div class="uploaded-img"><img src="'+resp+'" alt="" /></div><span class="close-img"  onclick="removeImage('+uniqid+')"  rel="'+uniqid+'" >×</span></div>';
+                                                        $('#previewImg').append(imageSrc+' '+imageAddBtn);
+                                                         imageSliderSrc = '<div class="swiper-slide" rel="'+uniqid+'"><img src="'+resp+'" alt="" /></div>';
+                                                        $('.swiper-wrapper').append(imageSliderSrc);
+                                                    });
+                                                });
+                                                /******* CROP END ******/
+                                            });
+                                            $('.upload-demo').addClass('ready');
+                                      }
+                                      reader.readAsDataURL(file);
+                                      //initSlder();
+                                    }
+                                }else{
+                                    $('.image-media').append('<label class="err-msg">Minimum image size should be : "1200 x 600px" Or "1200 x 800px" Or "1200 x 800px"</label>');
+                                }
+                            }
+                        }
+                        newFiles.forEach(file => {
+                               let fileElement = $(`<p style="display:none;">${file.name}</p>`);
+                               fileElement.data('fileData', file);
+                               filesContainer.append(fileElement);
+                              
+                              fileElement.click(function(event) {
+                                let fileElement = $(event.target);
+                                let indexToRemove = files.indexOf(fileElement.data('fileData'));
+                                fileElement.remove();
+                                files.splice(indexToRemove, 1);
+                              });
+                        });
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },1000);
+            }else{
+                $('.image-media').append('<label class="err-msg">file size should be less than 5MB</label>');
+            }
+        }
+    });
+
+    button.click(function(e){
+        $('#previewImg').show();
+        $('.uploaded-img-section').hide();
+        $('#upload_type').parent().find('.err-msg').remove();
+        if($('#upload_type').val()==""){
+            $('#upload_type').parent().append('<label class="err-msg">Please select media type. </label>');
+        }else{
+            e.preventDefault();
+            inputFile.click();
+        }
+    });
+    filesArr  =  files;
+    return files;
+}
+
+
+function uploadWithoutCrop(src){
+    var uniqid = Date.now();
+    var Burl = '<?php echo url("/"); ?>';
+    var imageSrc = "";
+    var imageSliderSrc = "";
+    $('.add-preview-btn').remove();
+    var imageAddBtn = '<div class="uploaded-img-main add-preview-btn addMultiImages " onclick="addMoreImage();"><div class="uploaded-img"><img src="'+Burl+'/public/assets/images/logo/plus-img.jpg" alt=""></div></div>';
+    imageSrc = '<div class="uploaded-img-main"><div class="uploaded-img"><img src="'+src+'" alt="" /></div><span class="close-img"  onclick="removeImage('+uniqid+')"  rel="'+uniqid+'" >×</span></div>';
+    $('#previewImg').append(imageSrc+' '+imageAddBtn);
+     imageSliderSrc = '<div class="swiper-slide" rel="'+uniqid+'"><img src="'+src+'" alt="" /></div>';
+    $('.swiper-wrapper').append(imageSliderSrc);
+    console.log(imageSliderSrc);
+}
+
+    function removeImage(imageID){
+     $('.swiper-slide[rel="'+imageID+'"]').remove();
+     console.log(imageID);
+     $('.close-img[rel="'+imageID+'"]').parent().remove();
+    //initSlder();
+    }  
+
+
+    //<!-------- VIDEO FUNCTION ------->
+    function multiVideoUpload(){
+       let inputVideoFile = $('#multiVideoInput');
+        let buttonVideoAdd = $('#videoAddBtn');
+        let buttonSubmit = $('#mySubmitButton');
+        let filesVideoContainer = $('#myVideoList');
+        let files = [];
+        inputVideoFile.change(function() {
+
+            $('.images-video-section-main').hide();
+            $('.slider-img-video-section').show();
+
+            let newVideoFiles = []; 
+            if(checkFileValidation(this)==0){
+                for(let index = 0; index < inputVideoFile[0].files.length; index++) {
+                  let file = inputVideoFile[0].files[index];
+                      newVideoFiles.push(file);
+                      files.push(file);
+                }
+                newVideoFiles.forEach(file => {
+                  let fileElement = $(`<p>${file.name}</p>`);
+                  fileElement.data('fileData', file);
+                  filesVideoContainer.append(fileElement);
+                  
+                  fileElement.click(function(event) {
+                    let fileElement = $(event.target);
+                    let indexToRemove = files.indexOf(fileElement.data('fileData'));
+                    fileElement.remove();
+                    files.splice(indexToRemove, 1);
+                  });
+                });
+            }else{
+              alert('wrong video uploaded ');
+            }
+        });
+        buttonVideoAdd.click(function(e) {
+            $('#previewImg').show();
+            $('#upload_type').parent().find('.err-msg').remove();
+            if($('#upload_type').val()==""){
+                $('#upload_type').parent().append('<label class="err-msg">Please select media type. </label>');
+            }else{
+                e.preventDefault();
+                inputVideoFile.click();
+            }
+        });
+        return files;
+    }
+
+
+    function checkFileValidation(fileObj){
+      var err = 0;
+      var fileSize = $(fileObj)[0].files[0].size;
+      if(fileSize<1073741824){
+          var $source = $('#video_here_sample');
+          $source[0].src = URL.createObjectURL(fileObj.files[0]);
+          var video = document.createElement('video');
+          video.preload = 'metadata';
+          video.onloadedmetadata = function(){
+              window.URL.revokeObjectURL(video.src);
+              if(parseFloat(video.duration)<=180){
+                  $source.parent()[0].load();
+                  $(fileObj).next('.err-msg').remove();
+                  var filename_video =  fileObj.files[0].name;
+                  //jQuery("label[for='inputGroupFile01']").text(filename_video);
+                  err = 0;
+              }else{
+                  err = 1;
+                  //$('.file_multi_video').parent().append('<label class="err-msg">Video duration should be less than 180 seconds </label>');
+              }
+          }
+          video.src = URL.createObjectURL(fileObj.files[0]);
+          var uniqid = Date.now();
+          var videoSrc = "";
+          var videoSliderSrc = "";
+         $('.add-preview-btn').remove();
+          videoSrc = '<div class="uploaded-img-main"><div class="uploaded-img"><video style="object-fit: cover;width: 100% !important;height: 100% !important;"><source src="'+video.src+'" type="video/mp4"></video></div><span class="close-img"  onclick="removeImage('+uniqid+')"  rel="'+uniqid+'" >×</span></div>';
+
+            var videoAddBtn = '<div class="uploaded-img-main add-preview-btn videoAddBtn " onclick="addMultiVideo()"><div class="uploaded-img"><img src="http://localhost/sweply/public/assets/images/logo/plus-img.jpg" alt=""></div></div>';
+            $('#previewImg').append(videoSrc+''+videoAddBtn);
+
+              var videoSliderSrc = '<div class="swiper-slide" rel="'+uniqid+'"><video style="background-color:black;object-fit: cover;width: 100% !important;height:216px !important" loop playsinline muted autoplay><source src="'+video.src+'" type="video/mp4"><source src="'+video.src+'" type="video/ogg"></video></div>';
+              $('.swiper-wrapper').append(videoSliderSrc);
+
+      }else{
+        err = 1;
+          //$('.file_multi_video').parent().append('<label class="err-msg">file size should be less than 1 GB</label>');
+      }
+      return err;
+    }    
+  </script>
+
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="{{url('/')}}/public/assets/css/swiper.min.css">
+<!-- Swiper JS -->
+<script src="{{url('/')}}/public/assets/js/swiper.min.js"></script>
+<script>
+    initSlder();
+    var swiper;
+    function initSlder(){
+        swiper = new Swiper('.images-slider-twitter', {
+          slidesPerView: 1,
+          spaceBetween: 1,
+          centeredSlides: true,  
+          loop:true, 
+          //slidesPerView: 'auto'
+          //freeMode: true,       
+        });   
+    }
+
+    function submitFrm(){
+        if(validateStep2()==1){
+            return false;
+        }else{
+            if(parseFloat($('#wallet_amount').val())<parseFloat($('input[name="total_budget"]').val())){
+                $('.balance-popup').trigger('click');
+            }else{
+                saveCampaignData();
+            }
+        }
+        return true;
+    }
+    function confirmToPay(){
+        saveCampaignData();
+    }
+    function cancelToPay(){
+        swal("Please change budget to continue. Your wallet balance is : SAR "+$('#wallet_amount').val());
+    }
+    function saveCampaignData(){
+        //console.log("in function of file submit"+filesArr);
+        var targetAudience = $('.campaign_target_area').val().toString();
+        var screen_shot = '';
+        var age = $.trim(jQuery(".slider_price_min").html())+ ' '+ $.trim(jQuery(".slider_price_max").html());
+        html2canvas($('#preview-section-bx'),{background: '#fff'}).then(function(canvas) {
+             var screen_shot = canvas.toDataURL();                
+            var gender = jQuery("#gender_f").val();
+            if(gender == ''){
+                 gender = jQuery("#gender_m").val();
+            }else{
+                gender += ", "+jQuery("#gender_m").val();
+            }
+            var file_data = $('#inputGroupFile01').prop('files')[0]; 
+            var videofile = $('#videofile').prop('files')[0]; 
+            var appIcon = ""; 
+            var token    = "{{csrf_token()}}";
+            var call_to_action = jQuery("#call_to_action").val();
+            var upload_type = $('#upload_type').val();
+            var campaign_target = jQuery("#campaign_target").val();
+            var campaign_target = jQuery("#campaign_target").val();
+            var form_data = new FormData();   
+             form_data.append("form_data",$('#twitter_creat').serialize());   
+            form_data.append('file', file_data);
+            form_data.append('videofile', videofile);
+            form_data.append('appicon', appIcon);
+            form_data.append('_token', token);
+            form_data.append('screen_shot', screen_shot);
+            form_data.append('upload_type', upload_type);
+            form_data.append('target_audience', campaign_target);
+            form_data.append('age', age);
+            form_data.append('gender', gender);
+            form_data.append('location',targetAudience);
+
+            var image = $('#ad_image').attr('src');    
+            form_data.append('image', image);
+
+            //let formData = new FormData();
+            filesArr.forEach(cmp_file => {
+                console.log(cmp_file);
+              form_data.append('campaign_media[]',cmp_file);
+            });
+            //form_data.append('campaign_media',filesArr);
+
+
+            jQuery.ajax({
+                url: "{{url('/')}}/user/twitter_store",
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,                        
+                type: 'post',
+                beforeSend: function () {
+                    $('.loader-section-main').show();
+                    console.log("Starting...");
+                },
+                complete: function () {
+                    $('.loader-section-main').hide();
+                    console.log("Complete!");
+                },
+                success: function (data) {
+                    if($.trim(data) == 'success'){
+                        swal("Thank You!", "Campaign created successfully!", "success")
+                            .then((value) => {
+                                $('.loader-section-main').show();
+                                location.href = "{{url('/')}}/user/campaign/";
+                        });
+                    }else if($.trim(data)=='updated'){
+                        swal("Thank You!", "Campaign Updated successfully!", "success")
+                            .then((value) => {
+                                $('.loader-section-main').show();
+                                 location.href = "{{url('/')}}/user/campaign/";
+                        });
+                    }else if($.trim(data)=='warning'){
+                        location.href = "{{url('/')}}/user/payment/";
+                    }else{
+                        swal("Oops !", "Something went Wrong", "error")
+                        .then((value) => {
+                            $('.loader-section-main').hide();
+                        });
+                    }
+                }
+            }); 
+        });
+        $('.loader-section-main').hide();
+    } 
+
+  </script>
 
     @endsection

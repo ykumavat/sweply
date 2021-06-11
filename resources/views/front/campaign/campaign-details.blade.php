@@ -19,13 +19,13 @@
 					<div class="col-sm-8 col-md-8 col-lg-8">
 						<ul class="nav nav-tabs nav-justified" id="myTab2" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="home-tab-justified" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true">Ads Information</a>
+								<a class="nav-link active" id="home-tab-justified" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true"><span>Ads</span> Information</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="profile-tab-justified" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just" aria-selected="true">Ads Media</a>
+								<a class="nav-link" id="profile-tab-justified" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just" aria-selected="true"><span>Ads</span> Media</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="messages-tab-justified" data-toggle="tab" href="#messages-just" role="tab" aria-controls="messages-just" aria-selected="false">Ads Budget</a> 
+								<a class="nav-link" id="messages-tab-justified" data-toggle="tab" href="#messages-just" role="tab" aria-controls="messages-just" aria-selected="false"><span>Ads</span> Budget</a> 
 							</li>						
 						</ul>
 

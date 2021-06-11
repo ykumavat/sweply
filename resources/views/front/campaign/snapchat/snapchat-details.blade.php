@@ -19,13 +19,13 @@
 					<div class="col-sm-8 col-md-8 col-lg-8">
 						<ul class="nav nav-tabs nav-justified" id="myTab2" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="home-tab-justified" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true">Ads Information</a>
+								<a class="nav-link active" id="home-tab-justified" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true"><span>Ads</span> Information</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="profile-tab-justified" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just" aria-selected="true">Ads Media</a>
+								<a class="nav-link" id="profile-tab-justified" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just" aria-selected="true"><span>Ads</span> Media</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="messages-tab-justified" data-toggle="tab" href="#messages-just" role="tab" aria-controls="messages-just" aria-selected="false">Ads Budget</a> 
+								<a class="nav-link" id="messages-tab-justified" data-toggle="tab" href="#messages-just" role="tab" aria-controls="messages-just" aria-selected="false"><span>Ads</span> Budget</a> 
 							</li>						
 						</ul>
 
@@ -109,7 +109,8 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-6 col-lg-6 <?php echo $web; ?>">
+									<?php if($data['campaign_target'] == 'Visit Website'){ ?>
+									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
 												Website Url 
@@ -120,7 +121,9 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-6 col-lg-6 <?php echo $app; ?>">
+								<?php } ?>
+									<?php if($data['campaign_target'] == 'App install' || $data['campaign_target'] == 'App visit'){ ?>
+									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
 												App Name 
@@ -131,7 +134,7 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-6 col-lg-6 <?php echo $app; ?>">
+									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
 												Android Link 
@@ -142,7 +145,7 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-6 col-lg-6 <?php echo $app; ?>">
+									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">
 												iOS Link 
@@ -153,6 +156,32 @@
 											<div class="clearfix"></div>
 										</div>
 									</div>
+								<?php } ?>
+
+								<?php if($data['campaign_target'] == 'Call to Action'){ ?>
+									<div class="col-sm-6 col-md-6 col-lg-6">
+										<div class="info-main-section">
+											<div class="info-main-header">
+												Contact method
+											</div>
+											<div class="info-main-content">
+												<?php echo isset($data['contact_method'])? $data['contact_method']: '-'; ?>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>	
+									<div class="col-sm-6 col-md-6 col-lg-6">
+										<div class="info-main-section">
+											<div class="info-main-header">
+												Contact Message 
+											</div>
+											<div class="info-main-content">
+												<?php echo isset($data['text_msg'])? $data['text_msg']: '-'; ?>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>	
+								<?php } ?>
 									<div class="col-sm-6 col-md-6 col-lg-6">
 										<div class="info-main-section">
 											<div class="info-main-header">

@@ -7,7 +7,7 @@
             <div class="content-body">
             <div>   
                 @include('flash-message')               
-                <div class="card mb-0 padding-left-right">                 
+                <div class="card mb-0 padding-left-right no-add-button">                 
                     <div class="m-2">
                         <div class="row">
                             <div class="users-list-filter col-6">
@@ -57,9 +57,9 @@
                                     <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                                         <div>ID</div>
                                     </th>
-                                    <!-- <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
+                                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
                                         <div>Business</div>
-                                    </th> -->
+                                    </th>
                                     <!-- <th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
                                         <div>User</div>
                                     </th> -->
@@ -99,7 +99,7 @@
         var table = $('.data-table').DataTable({
             "bDestroy": true,
             processing: true,
-            serverSide: true,
+            serverSide: true,          
             ajax: {
               url: "{{url('/')}}/user/load-wallet-data",
               data: function (d) {
@@ -113,17 +113,23 @@
             "bLengthChange": false,
             "paging": true,
             "bPaginate": false,
-            "pageLength": 15,
+            "pageLength": 20,
             columns: [
                 {data: 'id', name: 'transaction_id'},
-                //{data: 'business_name', name: 'business_name'},
+                {data: 'business_name', name: 'business_name'},
                 // {data: 'user_name', name: 'user_name'},
                 {data: 'transaction_type', name: 'transaction_type'},
                 {data: 'amount', name: 'amount'},
                 {data: 'campaign_name', name: 'campaign_name'},
                 {data: 'transaction_date', name: 'transaction_date'},
-            ]
+            ],
+            fixedHeader: {
+                header: true
+            }
         });
+
+        new $.fn.dataTable.FixedHeader( table );
+
         
         $('#status').change(function(){
             table.draw();
@@ -154,5 +160,7 @@
 
 
 </script>
+
+
 
     @endsection

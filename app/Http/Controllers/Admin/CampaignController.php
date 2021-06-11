@@ -433,6 +433,7 @@ class CampaignController extends Controller{
                 if($data->status=='PENDING' && $data->payment_status == 'PAID'){
                      $status = '<div class="badge badge-pill badge-success">'.$data->payment_status.'</div>';
                 }
+                $pay_now = "";
                 if($data->payment_status == 'PENDING'){
                    $status =  $pay_now = '<a href="#" class="table-pay-now-btn"  onclick="pay_now('.$total_amount.','.$balance_amount.",'$campaign_name','$enc_id '".')"> Pay Now</a>';
                     //$status = '<div class="badge badge-pill badge-danger">'.$pay_now.'</div>';
@@ -456,7 +457,7 @@ class CampaignController extends Controller{
                 $build_result->data[$key]->business_name        = $businessName;
                 $build_result->data[$key]->user_name            = $userName;
                 $build_result->data[$key]->channel_name         = $channelName;
-                $build_result->data[$key]->payment_status       = $pay_now;
+                //$build_result->data[$key]->payment_status       = $pay_now;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
                 $build_result->data[$key]->status               = $status;
                 $build_result->data[$key]->date                 = $date;

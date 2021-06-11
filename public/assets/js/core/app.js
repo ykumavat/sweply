@@ -31,19 +31,23 @@
       $html.removeClass("loading").addClass("loaded");
     }, 1200);
 
-    $.app.menu.init(compactMenu);
+    setTimeout(function(){  
+      $.app.menu.init(compactMenu); 
+      // Navigation configurations
+      var config = {
+        speed: 300 // set speed to expand / collpase menu
+      };
+      if ($.app.nav.initialized === false) {
+        $.app.nav.init(config);
+      }
+      Unison.on("change", function (bp) {
+        $.app.menu.change();
+      }); 
 
-    // Navigation configurations
-    var config = {
-      speed: 300 // set speed to expand / collpase menu
-    };
-    if ($.app.nav.initialized === false) {
-      $.app.nav.init(config);
-    }
+    }, 4000);
+    
 
-    Unison.on("change", function (bp) {
-      $.app.menu.change();
-    });
+
 
     // Tooltip Initialization
     $('[data-toggle="tooltip"]').tooltip({
@@ -417,9 +421,9 @@
     .has("ul")
     .addClass("has-sub");
 
-  $(".carousel").carousel({
+  /*$(".carousel").carousel({
     interval: 2000
-  });
+  });*/
 
   // Page full screen
   $(".nav-link-expand").on("click", function (e) {

@@ -52,14 +52,14 @@
 
 <!-- BEGIN: Body-->
 <?php
-$THEMEUI = "youtube-color";
+$THEMEUI = "twitter-color";
 $THEMEUI = Session::get('THEMEUI');
 if($THEMEUI==""){
-    $THEMEUI = "youtube-color";
+    $THEMEUI = "twitter-color";
 }
 ?>
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static <?php echo $THEMEUI; ?> " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" >
+<body class="container-main vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static <?php echo $THEMEUI; ?> " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" >
     <?php 
     $userData = [];
     $userData = getLoggedUserData(); 

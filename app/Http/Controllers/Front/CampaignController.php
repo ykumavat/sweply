@@ -449,7 +449,7 @@ class CampaignController extends Controller{
                     $status = '<div class="badge badge-pill badge-success">'.$data->status.'</div>';
                 }
 
-
+                $pay_now = "-";
                 if($data->payment_status == 'PENDING'){
                    $status =  $pay_now = '<a href="#" class="table-pay-now-btn"  onclick="pay_now('.$total_amount.','.$balance_amount.",'$campaign_name','$enc_id '".')"> Pay Now</a>';
                     //$status = '<div class="badge badge-pill badge-danger">'.$pay_now.'</div>';
@@ -473,7 +473,7 @@ class CampaignController extends Controller{
                 $build_result->data[$key]->business_name        = $businessName;
                 $build_result->data[$key]->user_name            = $userName;
                 $build_result->data[$key]->channel_name         = $channelName;
-                $build_result->data[$key]->payment_status       = $pay_now;
+                //$build_result->data[$key]->payment_status       = $pay_now;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
                 $build_result->data[$key]->status               = $status;
                 $build_result->data[$key]->date                 = $date;
@@ -661,6 +661,7 @@ class CampaignController extends Controller{
             
         }
 
+
         $start_date = $arr_data['start_date'];
         $end_date = $arr_data['end_date'];
         // Screenshot Upload
@@ -675,7 +676,16 @@ class CampaignController extends Controller{
             $arr_data['screen_shot'] =   $screenshot_name;
         }
         //End Screenshot upload
-
+        
+        $files = [];
+        if($request->hasFile('campaign_media')){
+            foreach($request->file('campaign_media') as $file){
+                $name = "twitter-".time().rand(1,100).'.'.$file->extension();
+                $file->move($this->campaign_image_base_img_path.$name, $name);  
+                $files[] = $name;  
+            }
+        }
+        
         if($request->hasFile('videofile')){
             $file_extension = strtolower($request->file('videofile')->getClientOriginalExtension());
             if(in_array($file_extension,['mp4','mov'])){

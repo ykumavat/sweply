@@ -52,7 +52,7 @@
                                     $walletData['balance'] = 0;
                                     $walletData = getUserWalletBalance($userData["id"]); ?>    
                                         <div class="sar-amt-img">                   
-                                            <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt="">                           
+                                            <img src="{{url('/')}}/public/assets/images/logo/wallet-balance.svg" alt="">                           
                                         </div>
                                         <div class="sar-amt-main">
                                             <div class="wallet-amt">SAR <?php echo number_format($walletData['balance'],2); ?></div>

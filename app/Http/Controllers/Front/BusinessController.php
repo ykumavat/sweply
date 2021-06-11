@@ -101,6 +101,16 @@ class BusinessController extends Controller{
 
         $queryResponse = Business::create($requestData); 
         if($queryResponse){
+            
+             /* Addd By Prashant - 07-06-2021 - Unique Business Code - Start here  */
+            $userID = Session::get('LoggedUser');
+            $user_id = str_pad($userID, 4, '0', STR_PAD_LEFT);
+            $business_id = str_pad($queryResponse->id, 3, '0', STR_PAD_LEFT);
+            $arr_business = []; 
+            $arr_business['business_id'] =  $user_id.'-'.$business_id ; 
+            $businessArr = Business::where('id',$queryResponse->id)->update($arr_business);
+            /* Addd By Prashant - 07-06-2021 - Unique Business Code - End here  */
+            
             $walletMasterArr = [];
             $walletMasterArr = array('business_id'=>$queryResponse->id,
                                      'credited_amount'=>"0",
@@ -167,6 +177,14 @@ class BusinessController extends Controller{
                 }
             }
         }
+        
+            /* Addd By Prashant - 07-06-2021 - Unique Business Code - Start here  */
+           
+            $user_id = str_pad($userID, 4, '0', STR_PAD_LEFT);
+            $business_id = str_pad($userData['business_id'], 3, '0', STR_PAD_LEFT);
+            $requestData['business_id'] =  $user_id.'-'.$business_id ; 
+           
+            /* Addd By Prashant - 07-06-2021 - Unique Business Code - End here  */
 
         $queryResponse = Business::where('id',$userData['business_id'])->update($requestData); 
         if($queryResponse){
@@ -196,7 +214,8 @@ class BusinessController extends Controller{
                                  $instance->where(function($w) use($request){
                                     $search = $request->get('search');
                                     $w->orWhere('business_name', 'LIKE', "%$search%")
-                                    ->orWhere('website_url', 'LIKE', "%$search%");
+                                    ->orWhere('website_url', 'LIKE', "%$search%")
+                                    ->orWhere('business_id', 'LIKE', "%$search%");
                                 });
                             }
                         })->make(true);
@@ -391,11 +410,22 @@ class BusinessController extends Controller{
                     $role_name = $data->get_user_role->role_name;
                 }
 
+	        $status = "";
+		
+                if($data->status==1){
+                    $status = '<div class="badge badge-pill badge-success">Active</div>';
+                }else{
+                    $status = '<div class="badge badge-pill badge-warning">Inactive</div>';
+
+                }
+	
+
                 $user_role = "User";
                 $i = $key+1;    
                 $build_result->data[$key]->id                   = $i;
                 $build_result->data[$key]->business_name        = $business_name;
-                $build_result->data[$key]->user_role        = $role_name;
+                $build_result->data[$key]->user_role        	= $role_name;
+                $build_result->data[$key]->user_status       	 = $status;
                 $build_result->data[$key]->built_action_btns    = $action_button_html;
                 
             }
@@ -425,6 +455,7 @@ class BusinessController extends Controller{
         $requestData['email']            = trim($request->email);
         $requestData['role_id']           = trim($request->role_id);
         $requestData['parent_id']           = Session::get('LoggedUser');
+         $requestData['status']           = 0;	
         $queryResponse = User::create($requestData); 
         if($queryResponse){
             return back()->with('success','User created successfully!');

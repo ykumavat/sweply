@@ -21,30 +21,33 @@
 <div class="app-content content">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper">
-        <div class="preview-ad-section">
-            <div class="breadcrem-section">
-                <h2>Snapchat Ad Preview</h2>
-                <div class="brea-bx">
-                    <ul>
-                        <li><a href="{{url('/')}}/user/dashboard/">Home <i class="fal fa-angle-right"></i></a></li>
-                        <li><a href="{{url('/')}}/user/create-ads">Create Ads <i class="fal fa-angle-right"></i></a></li>                        
-                        <li><a href="#">Snapchat </a></li>                       
-                    </ul>
-                </div>
-                <div class="clearfix"></div>               
+    <div class="content-wrapper campaign-section-head-main">
+        <div class="breadcrem-section">
+            <h2>Snapchat Ad Preview</h2>
+            <div class="brea-bx">
+                <ul>
+                    <li><a href="{{url('/')}}/user/dashboard/">Home <i class="fal fa-angle-right"></i></a></li>
+                    <li><a href="{{url('/')}}/user/create-ads">Create Ads <i class="fal fa-angle-right"></i></a></li>                        
+                    <li>Snapchat</li>                       
+                </ul>
             </div>
+            <div class="clearfix"></div>               
+        </div>
+        <div class="preview-ad-section">            
             <div class="ad-prive-bx">
                 <form action="{{url('/')}}/user/snapchat_store" class="number-tab-steps wizard-circle" id="snapchat_creat" name='snapchat_creat' enctype="multipart/form-data">
                     <!-- Step 1 -->
                     <?php 
                             $channel_id = $channel_category_id = 0;
-                            $channel_id = Session::get('channel_id');
-                            $channel_category_id = Session::get('channel_category_id'); 
+                            //$channel_id = Session::get('channel_id');
+                            //$channel_category_id = Session::get('channel_category_id'); 
+                            //if($channel_id==""){
+                                $channel_id = 3;
+                            //}
 
-                            if($channel_category_id==""){
+                            //if($channel_category_id==""){
                                 $channel_category_id = 1;
-                            }
+                            //}
                     ?>
                     <input type="hidden" id="campaign_id" name="campaign_id"  value=""/>    
                     <input type="hidden" id="channel_id" name="channel_id"  value="{{$channel_id}}"/>    
@@ -57,8 +60,7 @@
                         }
                     ?>
                     <input type="hidden" id="business_id" name="business_id"  value="<?php echo $businessID;?>"/>    
-                    <input type="hidden" id="user_id" name="user_id"  value="<?php echo $userData['id'];?>"/>                      
-                    <h6> </h6>
+                    <input type="hidden" id="user_id" name="user_id"  value="<?php echo $userData['id'];?>"/>                                          
                     <?php
                     $walletBalance = 0;
                     if($businessID>0){
@@ -680,29 +682,37 @@
                 budget = budget * days;
             }
             console.log(days);
-            var vat_amount = parseInt(budget) * 0.15; 
-            var total = parseInt(budget) + parseInt(vat_amount);
+            var vat_amount = parseFloat(budget) * 0.15; 
+            var total = parseFloat(budget) + parseFloat(vat_amount);
             var service_charges = 10;
             var service_charges = (budget*service_charges)/100;
-            var total = parseInt(total) + parseInt(service_charges);
-            console.log(vat_amount+' -- '+total+'---'+service_charges);
-             $('.service_amount').text("SAR "+service_charges);
-             $('.vat_15').html("SAR "+vat_amount);
-             $('.total_amount').html("SAR "+total);
-             $('.subtotal').html("SAR "+budget);
-            $('input[name="service_amount"]').val(service_charges);
-            $('input[name="sub_budget"]').val(budget);
-            $('input[name="vat_amount"]').val(vat_amount);
-            $('input[name="total_budget"]').val(total);
-            $('.campaign-budget').text(total);
-            $('.campaign-total-budget').text(total);
-            var walletAmount  = parseFloat($('#wallet_amount').val());
-            var paymentAmount = total;
-            if(walletAmount > 0 ){
-                paymentAmount = paymentAmount-walletAmount;
+            var total = parseFloat(total) + parseFloat(service_charges);
+
+            vat_amount = vat_amount.toFixed(2);
+            service_charges = service_charges.toFixed(2);
+            total = total.toFixed(2);
+            //budget = budget.toFixed(2);
+            if(parseInt(total)>0){
+                console.log(vat_amount+' -- '+total+'---'+service_charges);
+                 $('.service_amount').text("SAR "+service_charges);
+                 $('.vat_15').html("SAR "+vat_amount);
+                 $('.total_amount').html("SAR "+total);
+                 $('.subtotal').html("SAR "+budget);
+                $('input[name="service_amount"]').val(service_charges);
+                $('input[name="sub_budget"]').val(budget);
+                $('input[name="vat_amount"]').val(vat_amount);
+                $('input[name="total_budget"]').val(total);
+                $('.campaign-budget').text(total);
+                $('.campaign-total-budget').text(total);
+                var walletAmount  = parseFloat($('#wallet_amount').val());
+                var paymentAmount = total;
+                if(walletAmount > 0 ){
+                    paymentAmount = paymentAmount-walletAmount;
+                }
+                $('.payment-amount').text(paymentAmount);
+                $('.wallet-amount').text(paymentAmount);
             }
-            $('.payment-amount').text(paymentAmount);
-            $('.wallet-amount').text(paymentAmount);
+
         }
     $(document).ready(function(){        
         <?php 

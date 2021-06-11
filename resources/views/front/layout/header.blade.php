@@ -18,18 +18,20 @@
     <link rel="stylesheet" href="{{url('/')}}/public/assets/css/fontawesome-v5.7.2-pro.min.css" />
     <link rel="stylesheet" href="{{url('/')}}/public/assets/css/swiper.min.css">
     <!--Custom Css-->
-    <link rel="stylesheet" href="{{url('/')}}/public/assets/css/sweply.css">    
+    <link rel="stylesheet" href="{{url('/')}}/public/assets/css/sweply.css">
     <!--Main JS-->
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="{{url('/')}}/public/assets/js/bootstrap.min.js"></script>
     <link rel="icon" href="{{url('/')}}/public/assets/images/logo/favicon.png" type="image/x-icon" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 
 
 
     <?php if(App::getLocale()=='ar'){ ?>
         <link rel="stylesheet" href="{{url('/')}}/public/assets/css/swiply-rtl.css">
-        <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <?php } ?>
 
 
@@ -39,8 +41,8 @@
 
 <body class="twitter-color">
     <?php
-    $logoClass = ""; 
-    if(Request::is('/')){ $logoClass = "home-header"; } 
+    $logoClass = "";
+    if(Request::is('/')){ $logoClass = "home-header"; }
     ?>
 
     <div id="main"></div>
@@ -65,7 +67,7 @@
                     </li>
                     <li class="mobile-hide">
                         <a href="{{url('/')}}/signup">{{translate('sign-up')}}</a>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
             <div class="clearfix"></div>

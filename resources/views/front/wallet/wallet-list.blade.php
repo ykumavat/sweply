@@ -8,33 +8,38 @@
         <div class="content-wrapper">            
             <div class="content-body">         
                 <div class="wallet-main-width">                
-                    <div class="wallet-balance-bx">
-                        <div class="wallet-sub-bx">   
-                            <div class="sar-amt-img">                    
-                                <img src="{{url('/')}}/public/assets/images/logo/wallet-img-2.svg" alt=""/>
-                            </div>
-                            <div class="sar-amt-main">
-                                <div class="wallet-amt">SAR {{number_format($walletData['balance'],2)}}</div>
-                                <p class="mb-0">Wallet Balance</p>
-                            </div>
-                        </div>                       
-                    </div>
-
-                    <div class="wallet-balance-bx">
-                        <div class="wallet-sub-bx">
-                            <!-- <div class="wallet-icon-bx">
-                                <i class="fal fa-charging-station"></i>
-                            </div>                             -->
-                            <div class="sar-amt-img">
-                                <img src="{{url('/')}}/public/assets/images/logo/wallet-img.svg" alt=""/>
-                            </div>
-                            <div class="sar-amt-main">
-                                <a href="{{url('/')}}/user/payment/" style="width: 100%; color: #fff;"  class="btn btn-primary shadow waves-effect waves-light mt-2">Charge you wallet </a>    
-                                <!--data-toggle="modal" data-target="#exampleModalCenter"-->                        
+                    <div class="row ml--5 mr--5">
+                        <div class="col-sm-4 col-md-4 col-lg-4 pl-5 pr-5">
+                            <div class="wallet-balance-bx wallet-balance-section-main">
+                                <div class="wallet-sub-bx">   
+                                    <div class="sar-amt-img">                    
+                                        <img src="{{url('/')}}/public/assets/images/logo/wallet-balance.svg" alt=""/>
+                                    </div>
+                                    <div class="sar-amt-main">
+                                        <div class="wallet-amt">SAR {{number_format($walletData['balance'],2)}}</div>
+                                        <p class="mb-0">Wallet Balance</p>
+                                    </div>
+                                </div>                       
                             </div>
                         </div>
-                       
-                    </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 pl-5 pr-5">
+                            <div class="wallet-balance-bx">
+                                <div class="wallet-sub-bx">
+                                    <!-- <div class="wallet-icon-bx">
+                                        <i class="fal fa-charging-station"></i>
+                                    </div>                             -->
+                                    <div class="sar-amt-img">
+                                        <img src="{{url('/')}}/public/assets/images/logo/charge-your-wallet.svg" alt=""/>
+                                    </div>
+                                    <div class="sar-amt-main">
+                                        <a href="{{url('/')}}/user/payment/" style="width: 100%; color: #fff;"  class="btn btn-primary shadow waves-effect waves-light mt-2">Charge you wallet </a>    
+                                        <!--data-toggle="modal" data-target="#exampleModalCenter"-->                        
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>          
+                    </div>                                        
                     <div class="clearfix"></div>
                 </div>
 
@@ -63,22 +68,7 @@
 												<i class="feather icon-search px-1"></i>
 											</div>
 										</div>
-									</div>									
-                                    <!-- <div class="filtter-btn" >
-                                        <div class="btn-group">
-                                            <div class="dropdown">
-                                                <button class="btn btn-warning dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Filter 
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                                                
-                                                    <a class="dropdown-item" href="#">Week</a>
-                                                    <a class="dropdown-item" href="#">Month</a>
-                                                    <a class="dropdown-item" href="#">Year</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
+									</div>									                                    
                                     <div class="filtter-btn">
                                         <div class="btn-group">
                                             <div class="dropdown">
@@ -161,6 +151,7 @@
     <script type="text/javascript">
     $(document).ready(function(){
         var table = $('.data-table').DataTable({
+            fixedHeader: true,
             "bDestroy": true,
             processing: true,
             serverSide: true,

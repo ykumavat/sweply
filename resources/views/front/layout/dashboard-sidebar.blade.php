@@ -28,6 +28,7 @@
                         </ul>
                     </li>
 
+
                     <!-- <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-user-cog"></i><span class="menu-title" data-i18n="User">Permissions</span></a>
                         <ul class="menu-content">
                             <li><a href="{{url('/')}}/user/role/"><i class="feather icon-circle"></i><span class="menu-item">User Role</span></a></li>
@@ -35,6 +36,9 @@
                     </li> -->
 
                 <?php } ?>
+
+
+
 
                     <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-video-plus"></i><span class="menu-title" data-i18n="User">Create Ads</span> <!-- <i class="fal fa-angle-down"></i> --></a>                    
                         <ul class="menu-content">
@@ -45,7 +49,12 @@
                             $channelsArr = DB::table('channel')->where('status','1')->orderByRaw('display_order ASC')->get(); 
                             if(isset($channelsArr)){
                                 foreach($channelsArr as $channel){
-                                    echo '<li><a href="'.url('/').'/user/'.$channel->url_slug.'" channel-id="'.$channel->id.'" ><i class="feather icon-circle"></i><span class="menu-item">'.$channel->channel_name.'</span></a></li>';
+                                    if($channel->channel_name=="Snapchat" || $channel->channel_name=="Twitter"){
+                                        $url = url('/').'/user/'.$channel->url_slug;
+                                    }else{
+                                        $url = "javascript:void(0);";
+                                    }
+                                    echo '<li><a href="'.$url.'" channel-id="'.$channel->id.'" ><i class="feather icon-circle"></i><span class="menu-item">'.$channel->channel_name.'</span></a></li>';
                                 }
                             }
                             ?>
@@ -65,21 +74,21 @@
 
 
                     <li class=" nav-item"><a href="{{url('/')}}/user/campaign/"><i class="fal fa-bullhorn"></i><span class="menu-title" >Campaigns</span></a></li>
-                    <li class=" nav-item"><a href="{{url('/')}}/user/report/"><i class="fal fa-file-invoice"></i><span class="menu-title" >Reports</span></a></li>
+                    <li class=" nav-item"><a href="javascript:void(0);" chref="{{url('/')}}/user/report/"><i class="fal fa-file-invoice"></i><span class="menu-title" >Reports</span></a></li>
                     <li class=" nav-item"><a href="{{url('/')}}/user/wallet-list/"><i class="fal fa-wallet"></i><span class="menu-title" >Wallet</span></a></li>
                     <li class=" nav-item"><a href="{{url('/')}}/user/profile/"><i class="fal fa-user-cog"></i><span class="menu-title" >Profile Setting</span></a> </li>
                     <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-credit-card"></i><span class="menu-title"data-i18n="User">Billing & Payment</span> <!-- <i class="fal fa-angle-down"></i> --></a>                    
                         <ul class="menu-content">
                             <li><a href="{{url('/')}}/user/wallet/"><i class="feather icon-circle"></i><span class="menu-item">Wallet</span></a></li>
-                            <li><a href="{{url('/')}}/user/transactions/"><i class="feather icon-circle"></i><span class="menu-item">Transactions</span></a></li>
+                            <li><a href="javascript:void(0);" chref="{{url('/')}}/user/transactions/"><i class="feather icon-circle"></i><span class="menu-item">Transactions</span></a></li>
                             <li><a href="{{url('/')}}/user/payment/"><i class="feather icon-circle"></i><span class="menu-item">Payment Method</span></a></li>
 
                         </ul>
                     </li>
                     <li class=" nav-item"><a href="javascript:void(0);" class="nav-item-link"><i class="fal fa-user-headset"></i><span class="menu-title"data-i18n="User">Help Center</span> <!-- <i class="fal fa-angle-down"></i> --></a>
                         <ul class="menu-content">
-                            <li><a href="{{url('/')}}/user/faq/"><i class="feather icon-circle"></i><span class="menu-item">FAQ</span></a></li>
-                            <li><a href="{{url('/')}}/user/contact/"><i class="feather icon-circle"></i><span class="menu-item">Contact Us</span></a></li>
+                            <li><a href="javascript:void(0);" chref="{{url('/')}}/user/faq/"><i class="feather icon-circle"></i><span class="menu-item">FAQ</span></a></li>
+                            <li><a  href="javascript:void(0);" chref="{{url('/')}}/user/contact/"><i class="feather icon-circle"></i><span class="menu-item">Contact Us</span></a></li>
                         </ul>
                     </li>                    
                     <li class=" nav-item language-for-mobile">

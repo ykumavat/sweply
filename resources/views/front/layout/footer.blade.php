@@ -64,8 +64,8 @@
 
 
 <div class="loader-section-main" style="display:none;">    
-    <!-- <img src="{{url('/')}}/public/assets/images/logo/loader.gif" alt=""/> -->
-    <div class="lds-default">
+    <img src="{{url('/')}}/public/assets/images/logo/loader.gif" alt=""/>
+    <!-- <div class="lds-default">
         <div></div>
         <div></div>
         <div></div>
@@ -78,7 +78,7 @@
         <div></div>
         <div></div>
         <div></div>
-    </div>
+    </div> -->
 </div>
        
 </body>
