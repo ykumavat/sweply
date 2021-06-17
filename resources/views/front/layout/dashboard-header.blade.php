@@ -216,24 +216,57 @@ if($THEMEUI==""){
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{url('/')}}/user/upgrade-account" method="POST" id="accountUpgradeFrm">
-                    @csrf
+                <form action="{{url('/')}}/user/upgrade-account" method="POST" id="accountUpgradeFrm" enctype="multipart/form-data">
+                   
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Company Name: </label>                   
-                            <input type="text" name="business_name" placeholder="Company Name" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label>Website: </label>                    
-                            <input type="text" name="website_url" placeholder="Website" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Commercial Number: </label>                   
-                            <input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
-                        </div>  
-                        <div class="form-group">
-                            <label>Vat Number: </label>                 
-                            <input type="text" placeholder="Vat Number" name="vat_number" class="form-control">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Company Name: </label>                   
+                                <input type="text" name="business_name" placeholder="Company Name" class="form-control" required />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Website: </label>                    
+                                <input type="text" name="website_url" placeholder="Website" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Commercial Number: </label>                   
+                                <input type="text" placeholder="Commercial Number" name="contact_number" class="form-control">
+                            </div>  
+                            <div class="form-group col-md-6">
+                                <label>Vat Number: </label>                 
+                                <input type="text" placeholder="Vat Number" name="vat_number" class="form-control">
+                            </div>
+    		      <div class="form-group image-input col-md-6">
+                                <label for="image">VAT Certificate  <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="vat_certificate" accept="image/*" name="vat_certificate" />
+                                    <label class="custom-file-label" for="vat_certificate">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="form-group image-input col-md-6">
+                                <label for="image">CI Certificate  <span style="color: red">*</span> <span class="info-tool-tip"><i class="fas fa-info-circle"></i> <span class="tool-info">Size Required 1920 * 2340</span></span> </label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="ci_certificate" id="ci_certificate" accept="image/*" />
+                                    <label class="custom-file-label" for="ci_certificate">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Twitter Url </label>					
+                                <input type="text" placeholder="Twitter Url" name="twitter_url" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Facebook Url </label>					
+                                <input type="text" placeholder="Facebook Url" name="facebook_url" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Snapchat Url </label>					
+                                <input type="text" placeholder="Snapchat Url" name="snapchat_url" class="form-control">
+                            </div>
+                        
+                            <div class="form-group col-md-6">
+                                <label>Instagram Url </label>					
+                                <input type="text" placeholder="Instagram Url" name="instagram_url" class="form-control">
+                            </div>	
                         </div>                  
                     </div>
                     <div class="modal-footer">
@@ -298,7 +331,7 @@ if($THEMEUI==""){
             }else{
                 flag = 0;
             }
-            if(flag==0){
+           /* if(flag==0){
                 $.ajax({
                  type: "POST",
                   url: "{{url('/')}}/user/upgrade-account",
@@ -317,7 +350,42 @@ if($THEMEUI==""){
                    }
                 });
                 //});
-            }
+            }*/
+
+	   var  data =  $('#accountUpgradeFrm').serialize();
+            var vat_certificate =  $('#vat_certificate').prop('files')[0]; 
+            var ci_certificate =  $('#ci_certificate').prop('files')[0]; 
+            var form_data = new FormData();
+            form_data.append('_token', '{{csrf_token()}}');
+            form_data.append('data', data);
+            form_data.append('vat_certificate', vat_certificate);
+            form_data.append('ci_certificate', ci_certificate);
+              
+             
+            if(flag==0){
+                $.ajax({
+                 type: "POST",
+                  url: "{{url('/')}}/user/upgrade-account",
+                  dataType: 'text', 
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  data: form_data,
+                  success: function(data) {
+                    // callback code here
+                        if(data=="success"){
+                            swal("Thank You !", "Your account is successfully upgraded.", "success").then((value) => {
+                                location.reload();
+                            });
+                        }else{
+                            swal("Oops !", "Something went wrong.", "error").then((value) => {
+                                location.reload();
+                            });
+                        }
+                   }
+                });
+                //});
+            }	
         });
 
     });

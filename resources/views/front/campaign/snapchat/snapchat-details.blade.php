@@ -6,7 +6,7 @@
 	<div class="content-wrapper">
 		<div class="preview-ad-section ad-prive-details-bx-main">
             <div class="breadcrem-section">
-                <h2>Snapchat Ad Details</h2>
+                <h2><i class="fa fa-snapchat" title="Snapchat"></i>Snapchat Ad Details</h2>
                 <div class="brea-bx">
                     <ul>
                         <li><a href="{{url('/')}}/user/dashboard">Home <i class="fal fa-angle-right"></i></a></li>                        

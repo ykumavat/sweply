@@ -23,7 +23,7 @@
 
 $en_Arr = $ar_Arr=[];
 $row = 1;
-if (($handle = fopen(base_path()."/resources/lang/lang.csv", "r")) !== FALSE) {
+if (($handle = fopen(url('/')."/resources/lang/lang.csv", "r")) !== FALSE) {
   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
     $num = count($data);
     $row++;

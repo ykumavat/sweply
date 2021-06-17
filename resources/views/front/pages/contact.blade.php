@@ -23,9 +23,7 @@
                                     <img src="{{url('/')}}/public/assets/images/logo/contact-us-info-icon1.png" alt=""/>
                                     <h3>Administrative Office</h3>
                                     <div class="contact-details">
-                                        King Fahd District - intersection of
-                                        King Abdul Aziz with Imam
-                                       Riyadh: 11361 
+                                        Intersection of King Abdul Aziz with Imam Riyadh: 11361 
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +41,7 @@
                                     <img src="{{url('/')}}/public/assets/images/logo/contact-us-info-icon3.png" alt=""/>
                                     <h3>Email</h3>
                                     <div class="contact-details">
-                                        support@unimarkme.com
+                                        support@sweply.com
                                     </div>
                                 </div>
                             </div>

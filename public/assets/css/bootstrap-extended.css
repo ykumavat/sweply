@@ -3789,5 +3789,5 @@ button:focus {
   outline : none;
 }
 @media (max-width: 385px) {
-  .upgrade-now-btn-link{padding: 23px 2px;}
+  .upgrade-now-btn-link{padding: 23px 10px;}
 }

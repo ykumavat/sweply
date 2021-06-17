@@ -407,7 +407,7 @@ body.fixed-footer footer.footer-dark {
   background: linear-gradient(#FFFFFF 41%, rgba(255, 255, 255, 0.11) 95%, rgba(255, 255, 255, 0));
 }
 .left-menu-section-main .main-menu-content {
-  height: calc(100% - 10.5rem) !important;
+  height: calc(100% - 6.5rem) !important;
   position: relative;
   overflow: auto;
 }
@@ -452,7 +452,7 @@ li.nav-item.language-leftbar-section a{display: flex;align-items: center;}
 .language-txt{margin-left: auto;}
 li.nav-item.language-leftbar-section {
   position: fixed;
-  width: 260px;
+  width: 245px;
   bottom: 10px;
   background: #ffffff;
 }
@@ -567,14 +567,14 @@ li.nav-item.language-leftbar-section img{width: 25px;height: 25px;border-radius:
   padding : 0;
 }
 .dropdown-notification .dropdown-menu.dropdown-menu-right::before {
-  background : #7367F0;
-  border-color : #7367F0;
+  background : #399dd6;
+  border-color : #399dd6;
 }
 
 .dropdown-notification .dropdown-menu-header {
   border-top-left-radius : 5px;
   border-top-right-radius : 5px;
-  background : #7367F0;
+  background : #399dd6;
   color : #FFFFFF;
   text-align : center;
 }
@@ -1494,6 +1494,7 @@ body.fixed-footer .main-menu.menu-fixed {
 .avatar.avatar-xl .avatar-content {
   height : 70px;
   width : 70px;
+  cursor: auto;
 }
 .avatar.avatar-xl .avatar-content .avatar-icon {
   font-size : 3rem;
@@ -3156,6 +3157,10 @@ input[type='date'].form-control, input[type='time'].form-control, input[type='da
   outline : 0;
 }
 .select2-container{width: 100% !important;}
+.select2-container.select2-container--default.select2-container--open{width: auto !important;}
+.select2.select2-container.select2-container--default.select2-container--below.select2-container--focus.select2-container--open{
+  width: 100% !important;
+}
 .select2-container--classic.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
   border-color : #EE364E !important;
   outline : 0;

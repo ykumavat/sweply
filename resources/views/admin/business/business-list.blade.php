@@ -33,7 +33,7 @@
 											</div>                                                                   
 										</div>
 									</div>
-									<div class="hide">
+									<div class="">
 										<button type="button" class="btn btn-primary add-form-btn btn-add-bussiness"  data-toggle="modal" data-target="#inlineForm">											
 											<span class="text-nowrap"><span class="table-add-txt">Add Business</span><span class="table-add-icon"><i class="fal fa-plus"></i></span></span>
 										</button>
@@ -51,9 +51,6 @@
 									</th>
 									<th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
 										<div>Business</div>
-									</th>
-									<th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
-										<div>Business ID</div>
 									</th>
 									<th role="columnheader" scope="col" tabindex="0" aria-colindex="3" aria-sort="none" class="">
 										<div>Website</div>
@@ -149,7 +146,6 @@
 	        columns: [
 	            {data: 'id', name: 'id'},
 	            {data: 'business_name', name: 'business_name'},
-		   {data: 'business_id', name: 'business_id'},
 	            {data: 'website_url', name: 'website_url'},
 	            {data: 'business_status', name: 'business_status'},
 	            {data: 'built_action_btns', name: 'built_action_btns'},

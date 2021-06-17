@@ -6,7 +6,7 @@
 	<div class="content-wrapper">
 		<div class="preview-ad-section ad-prive-details-bx-main">
             <div class="breadcrem-section">
-                <h2>Twitter Ad Details</h2>
+                <h2><i class="fa fa-twitter" title="Twitter"></i>Twitter Ad Details</h2>
                 <div class="brea-bx">
                     <ul>
                         <li><a href="{{url('/')}}/user/dashboard">Home <i class="fal fa-angle-right"></i></a></li>                        
@@ -28,6 +28,8 @@
 								<a class="nav-link" id="messages-tab-justified" data-toggle="tab" href="#messages-just" role="tab" aria-controls="messages-just" aria-selected="false"><span>Ads</span> Budget</a> 
 							</li>						
 						</ul>
+						
+
 
 						<!-- Tab panes -->
 						<div class="tab-content pt-1">
@@ -322,48 +324,75 @@
 													 } ?>
 										</div>
 										<div class="info-main-content">
+											<?php if($data['preview_type']=="carousel" && isset($data['campaign_media_croped'])){ 
+												foreach($data['campaign_media_croped'] as $croppedMedia){
+													if($data['upload_type']=='video'){ ?>
+														<div class="uploaded-img-main">
+															<div class="uploaded-img">
+																<video id="ad_video" style="background-color: black; object-fit: cover;height:570px; width:296px;"  loop playsinline muted >
+																	<source src="<?php echo $croppedMedia; ?>" id="video_here" type="video/mp4">
+																</video>  
+															</div>
+															Original Video 
+															<a href="<?php echo $croppedMedia; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+														</div>
+													<?php }else{ ?>
 
-											<?php if($data['upload_type']=='video'){ ?>
-											<div class="uploaded-img-main">
-												<div class="uploaded-img">
-													<video id="ad_video" style="background-color: black; object-fit: cover;height:570px; width:296px;"  loop playsinline muted >
-                        								<source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
-                        								<source src="movie.ogg" type="video/ogg">
-                    								</video>  
-												</div>
-												Original Video 
-												<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+														<div class="uploaded-img-main">
+															<div class="uploaded-img">
+																<img id="original_file_display" src="<?php echo $croppedMedia; ?>">
+															</div>
+															Original
+															<a href="<?php echo $croppedMedia; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+														</div>
 
-											</div>
-											
-											<?php }else{ ?>
 
-											<div class="uploaded-img-main">
-												<div class="uploaded-img">
-													<img id="original_file_display" src="<?php echo $data['original_image']; ?>">
+													<?php }
+												}
+											 }else{ ?>
+
+												<?php if($data['upload_type']=='video'){ ?>
+												<div class="uploaded-img-main">
+													<div class="uploaded-img">
+														<video id="ad_video" style="background-color: black; object-fit: cover;height:570px; width:296px;"  loop playsinline muted >
+															<source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
+															<source src="movie.ogg" type="video/ogg">
+														</video>  
+													</div>
+													Original Video 
+													<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
 												</div>
-												Original
-												<a href="<?php echo $data['original_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
-											</div>
-											<div class="uploaded-img-main">
-												<div class="uploaded-img">
-													<img id="original_file_display" src="<?php echo $data['post_image']; ?>">												
+
+												<?php }else{ ?>
+
+												<div class="uploaded-img-main">
+													<div class="uploaded-img">
+														<img id="original_file_display" src="<?php echo $data['original_image']; ?>">
+													</div>
+													Original
+													<a href="<?php echo $data['original_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
 												</div>
-												Croped 
-												<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
-											</div>
+												<div class="uploaded-img-main">
+													<div class="uploaded-img">
+														<img id="original_file_display" src="<?php echo $data['post_image']; ?>">												
+													</div>
+													Croped 
+													<a href="<?php echo $data['post_image']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+												</div>
+
+												<?php } ?>
+												<?php 
+												if(isset($data['app_icon']) && $data['app_icon']!=""){ ?>
+												<div class="uploaded-img-main">
+													<div class="uploaded-img">
+														<img id="original_file_display" src="<?php echo $data['app_icon']; ?>">
+														App Icon <a href="<?php echo $data['app_icon']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
+													</div>
+													App Icon
+												</div>
+												<?php } ?>
 
 											<?php } ?>
-											<?php 
-											if(isset($data['app_icon']) && $data['app_icon']!=""){ ?>
-											<div class="uploaded-img-main">
-												<div class="uploaded-img">
-													<img id="original_file_display" src="<?php echo $data['app_icon']; ?>">
-													App Icon <a href="<?php echo $data['app_icon']; ?>"  class="uploaded-img-download"  download><i class="fal fa-download"></i></a>
-												</div>
-												App Icon
-											</div>
-										<?php } ?>
 										</div>
 										<div class="clearfix"></div>
 									</div>								
@@ -403,7 +432,7 @@
 				<div class="col-sm-4 col-md-4 col-lg-4">
 					<div class="ad-prive-bx preview-ads-mobile twitter-preview-main" id="preview-section-bx">  
 		                <div class="mobile-black-bg"></div>
-		                <div class="mobile-top-time-icons-strip">
+		                <!-- <div class="mobile-top-time-icons-strip">
 		                    <div class="mobile-top-time">
 		                       17:24 
 		                    </div>
@@ -413,10 +442,10 @@
 		                        <span><i class="fal fa-battery-three-quarters"></i></span>
 		                    </div>
 		                    <div class="clearfix"></div>
-		                </div>
-		                <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img"/>
+		                </div> -->
+		                <!-- <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img"/> -->
 		                <div class="company-user-details">
-		                    <div class="company-user-details-icon"></div>
+		                    <div class="company-user-details-icon"> <i class="fa fa-twitter" title="Twitter"></i> </div>
 		                    <div class="company-user-details-info">
 		                        <div class="company-user-details-head">
 		                            Sweply marketing
@@ -431,59 +460,106 @@
 		                    </div>
 		                    <div class="clearfix"></div>
 		                </div>
-		                <div class="images-video-section-main">
-		                    <div class="add-img-video-section"> 
-		                        <?php if($data['upload_type']=='video'){ ?>
-			                        <video id="ad_video" style="background-color: black; object-fit: cover;height:250px;width:100%;" loop playsinline muted autoplay>
-			                            <source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
-			                            <source src="#" type="video/ogg">
-			                        </video>
-		                        <?php }else{ ?>
-		                        	<img src="{{$data['post_image']}}" id="ad_image"/>
-		                        <?php } ?>                
-		                    </div> 
+		                
 
-		                    <?php if($data['campaign_target'] != 'App install' ){ ?>
-		                    <div class="preview-bottom-heading-section">
-		                        <div class="preview-bottom-heading">
-		                            <?php echo $data['heading']; ?>
-		                        </div>
-		                        <div class="preview-bottom-heading-website">
-		                            <i class="fas fa-link"></i> <span id="weburl"><?php echo $data['website_url']; ?></span>
-		                        </div>                
-		                    </div>
-		                    <?php }else if($data['campaign_target'] == 'App install'){ ?>               
-		                    <div class="app-add-prive-main app-sec-preview">                                        
-		                        <div class="app-add-prive">
-		                            <div class="app-add-icon-txt"> 
-		                                <div class="app-add-icon">
-		                                    <img src="{{url('/')}}/public/assets/images/logo/app-icon.png" id="app-ico">
-		                                </div>                           
-		                                <div class="app-add-icon-txt-section">
-		                                    <div class="app-add-icon-txt-head">
-		                                        {{$data['app_name']}}
-		                                    </div>
-		                                    <div class="app-add-icon-txt-headline">
-		                                    <i class="fas fa-star active-star"></i>
-		                                    <i class="fas fa-star active-star"></i>
-		                                    <i class="fas fa-star active-star"></i>
-		                                    <i class="fas fa-star active-star"></i>
-		                                    <i class="fas fa-star"></i> 75.8K reviews
-		                                    </div>
-		                                    <div class="app-add-icon-txt-headline">
-		                                        Free . Finance
-		                                    </div>
-		                                </div>
-		                                <div class="clearfix"></div>
-		                            </div>
-		                            <div class="app-add-install-btn" style="text-align:center;">
-		                                {{$data['call_to_action']}}
-		                            </div>
-		                            <div class="clearfix"></div>
-		                        </div>
-		                    </div>
-		                	<?php } ?>
-		                </div>
+
+		                <?php 
+							$sliderStr = "";
+							if($data['preview_type']=="carousel" && isset($data['campaign_media_croped'])){
+								//$data['campaign_media']
+								foreach($data['campaign_media_croped'] as $croppedMedia){
+									if($data['media_type'] == "image"){
+										$sliderStr .= '<div class="swiper-slide"><img src="'.$croppedMedia.'" alt="" /></div>';
+									}else{
+										$sliderStr .= '<div class="swiper-slide"><video style="background-color:black;object-fit: cover;width: 100% !important;height:216px !important" loop playsinline muted autoplay><source src="'.$croppedMedia.'" type="video/mp4"><source src="'.$croppedMedia.'" type="video/ogg"></video></div>';
+									}
+								}
+								?>
+								<!----------------------------------->
+								<div class="slider-img-video-section" >
+									<div class="swiper-container images-slider-twitter">
+								    	<div class="swiper-wrapper">
+								    		<?php echo $sliderStr; ?>
+								    	</div>
+								    	<!-- Add Pagination -->
+								    	<div class="swiper-pagination"></div>
+									</div>
+								</div>
+								<!----------------------------------->
+								<?php
+							}else{ ?>
+								<div class="images-video-section-main">
+				                    <div class="add-img-video-section"> 
+				                        <?php if($data['upload_type']=='video'){ ?>
+					                        <video id="ad_video" style="background-color: black; object-fit: cover;height:250px;width:100%;" loop playsinline muted autoplay>
+					                            <source src="<?php echo $data['post_image']; ?>" id="video_here" type="video/mp4">
+					                            <source src="#" type="video/ogg">
+					                        </video>
+				                        <?php }else{ ?>
+				                        	<img src="{{$data['post_image']}}" id="ad_image"/>
+				                        <?php } ?>                
+				                    </div> 
+				                    <?php if($data['campaign_target'] != 'App install' ){ ?>
+				                    <div class="preview-bottom-heading-section">
+				                        <div class="preview-bottom-heading">
+				                            <?php echo $data['heading']; ?>
+				                        </div>
+				                        <div class="preview-bottom-heading-website">
+				                            <i class="fas fa-link"></i> <span id="weburl"><?php echo $data['website_url']; ?></span>
+				                        </div>                
+				                    </div>
+				                    <?php }else if($data['campaign_target'] == 'App install'){ ?>               
+				                    <div class="app-add-prive-main app-sec-preview">
+				                        <div class="app-add-prive">
+				                            <div class="app-add-icon-txt"> 
+				                                <div class="app-add-icon">
+				                                    <img src="{{url('/')}}/public/assets/images/logo/app-icon.png" id="app-ico">
+				                                </div>                           
+				                                <div class="app-add-icon-txt-section">
+				                                    <div class="app-add-icon-txt-head">
+				                                        {{$data['app_name']}}
+				                                    </div>
+				                                    <div class="app-add-icon-txt-headline">
+				                                    <i class="fas fa-star active-star"></i>
+				                                    <i class="fas fa-star active-star"></i>
+				                                    <i class="fas fa-star active-star"></i>
+				                                    <i class="fas fa-star active-star"></i>
+				                                    <i class="fas fa-star"></i> 75.8K reviews
+				                                    </div>
+				                                    <div class="app-add-icon-txt-headline">
+				                                        Free . Finance
+				                                    </div>
+				                                </div>
+				                                <div class="clearfix"></div>
+				                            </div>
+				                            <div class="app-add-install-btn" style="text-align:center;">
+				                                {{$data['call_to_action']}}
+				                            </div>
+				                            <div class="clearfix"></div>
+				                        </div>
+				                    </div>
+				                	<?php } ?>
+		                		</div>
+							<?php } ?>
+
+							<div class="icon-section-block-messages">
+			                    <div class="icon-section-chat-block">
+			                        <i class="fal fa-comment"></i> 216
+			                    </div>
+			                    <div class="icon-section-chat-block">
+			                        <i class="fal fa-retweet"></i> 347
+			                    </div>
+			                    <div class="icon-section-chat-block">
+			                        <i class="fal fa-heart"></i> 3989
+			                    </div>
+			                    <div class="icon-section-chat-block">
+			                        <i class="fal fa-sign-out"></i> 420
+			                    </div>
+			                </div>
+			                <div class="promoted-section-ad">
+			                    <i class="fas fa-external-link-square"></i> Promoted
+			                </div>
+
 		            </div>
 					</div>
 
@@ -495,8 +571,31 @@
     @endsection
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('.company-user-details-content').html($('.company-user-details-content').html().replace(/(@\S+)/, '<span style="color: blue">$1</span>'));
-        $('.company-user-details-content').html($('.company-user-details-content').html().replace(/(#\S+)/, '<span style="color: blue">$1</span>'));
-	});
+	// $(document).ready(function(){
+	// 	$('.company-user-details-content').html($('.company-user-details-content').html().replace(/(@\S+)/, '<span style="color: blue">$1</span>'));
+ //        $('.company-user-details-content').html($('.company-user-details-content').html().replace(/(#\S+)/, '<span style="color: blue">$1</span>'));
+	// });
 </script>
+
+
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="{{url('/')}}/public/assets/css/swiper.min.css">
+<!-- Swiper JS -->
+<script src="{{url('/')}}/public/assets/js/swiper.min.js"></script>
+<script>
+    var swiper;
+
+    setTimeout(function(){ initSlder(); }, 4000);
+
+    function initSlder(){
+        swiper = new Swiper('.images-slider-twitter', {
+          slidesPerView: 1,
+          spaceBetween: 1,
+          centeredSlides: true,  
+          loop:true, 
+          //slidesPerView: 'auto'
+          //freeMode: true,       
+        });   
+        console.log('slide started');
+    }
+   </script>

@@ -23,7 +23,7 @@
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper campaign-section-head-main">
         <div class="breadcrem-section">
-            <h2>Snapchat Ad Preview</h2>
+            <h2><i class="fa fa-snapchat" title="Snapchat"></i>Snapchat Ad Preview</h2>
             <div class="brea-bx">
                 <ul>
                     <li><a href="{{url('/')}}/user/dashboard/">Home <i class="fal fa-angle-right"></i></a></li>

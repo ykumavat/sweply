@@ -118,11 +118,11 @@
             $('body').addClass(relClass);
             //setTimeout(function(){ location.reload }, 3000);
         });
-          $(function() {  
+          /*$(function() {  
                 $( "#draggable" ).draggable({
                      containment: "parent"  
                 });  
-          }); 
+          }); */
     </script>
 <!--     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
  -->

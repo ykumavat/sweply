@@ -254,15 +254,16 @@
 		            	$('input[name="website_url"]').val(data.website_url);
 		            	$('input[name="contact_number"]').val(data.contact_number);
 		            	$('input[name="vat_number"]').val(data.vat_number);
+$('input[name="twitter_url"]').val(data.twitter_url);
+		            	$('input[name="facebook_url"]').val(data.facebook_url);
+		                $('input[name="snapchat_url"]').val(data.snapchat_url);
+		            	$('input[name="instagram_url"]').val(data.instagram_url);
 		            	$('#businessFrm').append('<input type="hidden" name="id" value="'+btoa(data.id)+'" />');
 		            	$('#businessFrm').attr('action','{{url("/")}}/user/update-business');
 
 		            	$('input[name="ci_certificate"]').val(data.ci_certificate);
 		            	$('input[name="vat_certificate"]').val(data.vat_certificate);
-		            	$('input[name="twitter_url"]').val(data.twitter_url);
-		            	$('input[name="facebook_url"]').val(data.facebook_url);
-		                $('input[name="snapchat_url"]').val(data.snapchat_url);
-		            	$('input[name="instagram_url"]').val(data.instagram_url);
+		            	
 
 		            }
 	            	console.log(data);

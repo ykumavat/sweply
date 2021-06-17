@@ -29,6 +29,9 @@ class CampaignModel extends Model
     public function get_channel(){
         return $this->hasOne('App\Models\Channel', 'id', 'channel_id');
     }  
+    // public function get_media(){
+    //     return $this->hasOne('App\Models\CampaignMediaModel', 'id', 'campaign_id');
+    // }  
 
 
     

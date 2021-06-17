@@ -29,7 +29,7 @@
     <div class="content-wrapper">
         <div class="preview-ad-section twitter-ad-main-section">
             <div class="breadcrem-section">
-                <h2>Twitter Ad Preview</h2>
+                <h2><i class="fa fa-twitter" title="Twitter"></i> Twitter Ad Preview</h2>
                 <div class="brea-bx">
                     <ul>
                         <li><a href="{{url('/')}}/user/dashboard/">Home <i class="fal fa-angle-right"></i></a></li>
@@ -509,7 +509,7 @@
             <!------------------------------- PREVIEW BOX -------------------------------------->
             <div class="ad-prive-bx preview-ads-mobile twitter-preview-main" id="preview-section-bx">  
                 <div class="mobile-black-bg"></div>
-                <div class="mobile-top-time-icons-strip">
+                <!-- <div class="mobile-top-time-icons-strip">
                     <div class="mobile-top-time">
                        17:24 
                     </div>
@@ -519,11 +519,11 @@
                         <span><i class="fal fa-battery-three-quarters"></i></span>
                     </div>
                     <div class="clearfix"></div>
-                </div>
-                <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img"/>
+                </div> -->
+                <!-- <img src="{{url('/')}}/public/assets/images/logo/mobile.png" alt="" class="mobile-bg-img"/> -->
                 <div class="company-user-details">
                     <div class="company-user-details-icon">
-
+                        <i class="fa fa-twitter" title="Twitter"></i>
                     </div>
                     <div class="company-user-details-info">
                         <div class="company-user-details-head">
@@ -541,6 +541,7 @@
                 <div class="slider-img-video-section" style="display:none;">
                     <div class="swiper-container images-slider-twitter">
                         <div class="swiper-wrapper">
+                            <!-- <div class="swiper-slide" rel="'+uniqid+'"><img src="'+resp+'" alt="" /></div> -->
                         </div>
                         <!-- Add Pagination -->
                         <div class="swiper-pagination"></div>
@@ -997,10 +998,9 @@
                                     $('#ad_image').show();
                                     $('#ad_video').hide();
                                 <?php } ?>
+                                $('#upload_type').val('<?php print_r($value); ?>').trigger('change');
+
                         <?php }  ?>
-
-
-                        
 
                         <?php if($key == 'call_to_action'){ ?>
                                 var optVal = '<?php print_r($value); ?>';
@@ -1032,7 +1032,46 @@
                             }, 9000);
                 <?php } ?>
                <?php
-           } ?>  
+           } 
+
+            if($media){
+                foreach($media as $d){
+                    //dd($d['media_type']);
+                    if($d['media_type']=="video"){ ?>
+                        var uploadFileUrl = '<?php echo url("/"); ?>/uploads/campaign_image/<?php print_r($d['original_media_src']); ?>';
+                        $('.images-video-section-main').hide();
+                        $('.slider-img-video-section').show();
+                        var Burl = '<?php echo url("/"); ?>';
+                        var uniqid = Date.now();
+                        $('.add-preview-btn').remove();
+                        var videoSrc = '<div class="uploaded-img-main"><div class="uploaded-img"><video style="object-fit: cover;width: 100% !important;height: 100% !important;"><source src="'+uploadFileUrl+'" type="video/mp4"></video></div><span class="close-img"  onclick="removeImage('+uniqid+')"  rec-id="<?php print_r($d['id']); ?>"  file="'+uploadFileUrl+'"  rel="'+uniqid+'" >×</span></div>';
+
+                        var videoAddBtn = '<div class="uploaded-img-main add-preview-btn videoAddBtn " onclick="addMultiVideo()"><div class="uploaded-img"><img src="'+Burl+'/public/assets/images/logo/plus-img.jpg" alt=""></div></div>';
+                        $('#previewImg').append(videoSrc+''+videoAddBtn);
+
+                        var videoSliderSrc = '<div class="swiper-slide" rel="'+uniqid+'"><video style="background-color:black;object-fit: cover;width: 100% !important;height:216px !important" loop playsinline muted autoplay><source src="'+uploadFileUrl+'" type="video/mp4"><source src="'+uploadFileUrl+'" type="video/ogg"></video></div>';
+                        $('.swiper-wrapper').append(videoSliderSrc);
+
+                    <?php }else if($d['media_type']=="image"){ ?>
+                        var uploadFileUrl = '<?php echo url("/"); ?>/uploads/campaign_image/<?php print_r($d['original_media_src']); ?>';
+                        $('.images-video-section-main').hide();
+                        $('.slider-img-video-section').show();
+                        var uniqid = Date.now();
+                        var Burl = '<?php echo url("/"); ?>';
+                        $('.add-preview-btn').remove();
+                        var imageAddBtn = '<div class="uploaded-img-main add-preview-btn addMultiImages " onclick="addMoreImage();"><div class="uploaded-img"><img src="'+Burl+'/public/assets/images/logo/plus-img.jpg" alt=""></div></div>';
+                        var imageSrc = '<div class="uploaded-img-main"><div class="uploaded-img"><img src="'+uploadFileUrl+'" alt="" /></div><span class="close-img"  onclick="removeImage('+uniqid+')"  rel="'+uniqid+'" >×</span></div>';
+                        $('#previewImg').append(imageSrc+' '+imageAddBtn);
+                        var imageSliderSrc = '<div class="swiper-slide" rel="'+uniqid+'"><img src="'+uploadFileUrl+'" alt="" /></div>';
+                        $('.swiper-wrapper').append(imageSliderSrc);
+
+                        console.log("-----------"+imageSliderSrc);
+
+                   <?php  }
+                }
+            }
+           ?> 
+
 <?php }  ?> 
          $('#end_date,#start_date').change(function(){
                 var start = $('#start_date').val();
@@ -1068,7 +1107,7 @@
             $('.video-view-sec').hide();
             $('.website_url').hide();
             $('.call_to_action').show();
-            $('#upload_type').val('image').trigger('change');
+            //$('#upload_type').val('image').trigger('change');
             $('.uploaded-img-section').hide();
             $('#upload_type').removeAttr('disabled');
             $('.call_to_action').hide();
@@ -1523,6 +1562,8 @@ function showWebsite(){
 </div>
 <script>
     $(document).ready(function(){
+
+
         $("#wallet_payment").change(function() {
             var wallet_amount = parseFloat(jQuery('#wallet_amount').val());
             var amountToPay = parseFloat($('input[name="total_budget"]').val());
@@ -1599,10 +1640,10 @@ function showWebsite(){
     $(document).ready(function(){
         var filesArr = [];
         filesArr.push(multiImageCarousel());
-        if(filesArr.length === 0){
-            filesArr.push(multiVideoUpload());
-        }
-        console.log(filesArr[0]);
+        filesArr.push(multiVideoUpload());
+        // var intervalId = window.setInterval(function(){
+        //     console.log(filesArr);       
+        // }, 1000);
     });
 
     function addMoreImage(){
@@ -1862,8 +1903,11 @@ function uploadWithoutCrop(src){
     function removeImage(imageID){
      $('.swiper-slide[rel="'+imageID+'"]').remove();
      console.log(imageID);
+     var recID = $('.close-img[rel="'+imageID+'"]').attr('rec-id');
+     var file = $('.close-img[rel="'+imageID+'"]').attr('file');
+     console.log(recID);
      $('.close-img[rel="'+imageID+'"]').parent().remove();
-    //initSlder();
+        //initSlder();
     }  
 
 
@@ -1873,7 +1917,7 @@ function uploadWithoutCrop(src){
         let buttonVideoAdd = $('#videoAddBtn');
         let buttonSubmit = $('#mySubmitButton');
         let filesVideoContainer = $('#myVideoList');
-        let files = [];
+        var files = [];
         inputVideoFile.change(function() {
 
             $('.images-video-section-main').hide();
@@ -1881,11 +1925,13 @@ function uploadWithoutCrop(src){
 
             let newVideoFiles = []; 
             if(checkFileValidation(this)==0){
-                for(let index = 0; index < inputVideoFile[0].files.length; index++) {
-                  let file = inputVideoFile[0].files[index];
-                      newVideoFiles.push(file);
-                      files.push(file);
-                }
+                // for(let index = 0; index < inputVideoFile[0].files.length; index++) {
+                //   let file = inputVideoFile[0].files[index];
+                //       newVideoFiles.push(file);
+                //       files.push(file);    
+                // }
+                files = filesStack(inputVideoFile,files);
+
                 newVideoFiles.forEach(file => {
                   let fileElement = $(`<p>${file.name}</p>`);
                   fileElement.data('fileData', file);
@@ -1901,7 +1947,15 @@ function uploadWithoutCrop(src){
             }else{
               alert('wrong video uploaded ');
             }
+
+           
+
+            console.log('filestack fun op');
+            console.log(files);
+
+            return files;
         });
+
         buttonVideoAdd.click(function(e) {
             $('#previewImg').show();
             $('#upload_type').parent().find('.err-msg').remove();
@@ -1912,7 +1966,7 @@ function uploadWithoutCrop(src){
                 inputVideoFile.click();
             }
         });
-        return files;
+   
     }
 
 
@@ -1996,6 +2050,13 @@ function uploadWithoutCrop(src){
     }
     function saveCampaignData(){
         //console.log("in function of file submit"+filesArr);
+
+        //var filesArr = [];
+        //filesArr.push(multiImageCarousel());
+        //filesArr.push(multiVideoUpload());
+        console.log(filesArr);
+        console.log("================>");
+
         var targetAudience = $('.campaign_target_area').val().toString();
         var screen_shot = '';
         var age = $.trim(jQuery(".slider_price_min").html())+ ' '+ $.trim(jQuery(".slider_price_max").html());
@@ -2030,6 +2091,9 @@ function uploadWithoutCrop(src){
 
             var image = $('#ad_image').attr('src');    
             form_data.append('image', image);
+
+            ///console.log(filesArr);
+            //console.log("===================================>");
 
             //let formData = new FormData();
             filesArr.forEach(cmp_file => {
@@ -2081,6 +2145,34 @@ function uploadWithoutCrop(src){
         });
         $('.loader-section-main').hide();
     } 
+
+
+
+
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {   
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 
   </script>
 

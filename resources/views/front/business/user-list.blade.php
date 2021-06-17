@@ -70,10 +70,6 @@
 									<th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
 										<div>Role</div>
 									</th>
-									<th role="columnheader" scope="col" tabindex="0" aria-colindex="2" aria-sort="none" class="">
-										<div>Status</div>
-									</th>
-
 									<th role="columnheader" scope="col" aria-colindex="6" class="" style="text-align: center">
 										<div>Actions</div>
 									</th>
@@ -183,7 +179,6 @@
 	            {data: 'email', name: 'email'},
 	            {data: 'business_name', name: 'business_name'},
 	            {data: 'user_role', name: 'user_role'},
-	            {data: 'user_status', name: 'user_status'},
 	            {data: 'built_action_btns', name: 'built_action_btns'},
 
 	        ]

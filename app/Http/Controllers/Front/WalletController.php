@@ -76,7 +76,7 @@ class WalletController extends Controller{
         }
     }
 
-    public function get_payment_methods(Request $request){
+    public function get_payment_methods(){
         $this->arr_view_data['page_title']       = "Payment Methods";
         $this->arr_view_data['module_title']     = "Payment Methods";
         $this->arr_view_data['module_url_path']  = $this->module_url_path;  

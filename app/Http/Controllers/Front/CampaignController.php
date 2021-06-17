@@ -10,6 +10,9 @@ use App\Models\CampaignModel;
 use App\Models\WalletMasterModel;
 use App\Models\WalletModel;
 use App\Models\Channel;
+use App\Models\CampaignMediaModel;
+
+
 
 
 use DataTables;
@@ -403,9 +406,11 @@ class CampaignController extends Controller{
         {
             foreach ($build_result->data as $key => $data) 
             {
+
                 $channelName = $urlSlug = "";
                 if(isset($data->get_channel)){                       
-                    $channelName = $data->get_channel->channel_name;
+                    $channelName = '<i class="fa fa-'.strtolower($data->get_channel->channel_name).'"   title="'.$data->get_channel->channel_name.'"></i>';
+                    //$data->get_channel->channel_name;
                     $urlSlug = $data->get_channel->url_slug;
                 }
 
@@ -517,6 +522,21 @@ class CampaignController extends Controller{
             //dd($urlSlug);
 
             $arr_data = $obj_responce_data->toArray();
+
+
+            $campaignMedia = [];
+            $campaignMedia = CampaignMediaModel::where('campaign_id',$id)->get();
+            $arr_data['preview_type'] = "single";
+            if($campaignMedia){
+                foreach($campaignMedia as $media){
+                    $arr_data['campaign_media'][] = $this->campaign_image_public_img_path.$media['original_media_src'];
+                    $arr_data['campaign_media_croped'][] = $this->campaign_image_public_img_path.$media['media_src'];
+                    $arr_data['media_type'] = $media['media_type'];
+
+                }
+                $arr_data['preview_type'] = "carousel";
+
+            }
             
             $arr_data['original_image'] = $this->campaign_image_public_img_path.$arr_data['original_image'];
             $arr_data['post_image'] = $this->campaign_image_public_img_path.$arr_data['post_image'];
@@ -576,7 +596,6 @@ class CampaignController extends Controller{
             $walletArr = WalletMasterModel::where('business_id',$bussiness_id)->first();
             $balance_amount = $walletArr['balance_amount']; 
                     
-         
             $wallet_status = "warning";
             if($walletArr){
                 if($walletArr['balance_amount']>=$camp_data['total_budget']){
@@ -661,6 +680,9 @@ class CampaignController extends Controller{
             
         }
 
+        $uploadType = $request->input('upload_type');
+
+
 
         $start_date = $arr_data['start_date'];
         $end_date = $arr_data['end_date'];
@@ -677,14 +699,20 @@ class CampaignController extends Controller{
         }
         //End Screenshot upload
         
-        $files = [];
+        $filesArr = [];
         if($request->hasFile('campaign_media')){
             foreach($request->file('campaign_media') as $file){
                 $name = "twitter-".time().rand(1,100).'.'.$file->extension();
-                $file->move($this->campaign_image_base_img_path.$name, $name);  
-                $files[] = $name;  
+                //echo $this->campaign_image_base_img_path.$name."=====>";
+                //die;
+                $file->move($this->campaign_image_base_img_path, $name);  
+                $filesArr[] = $name;  
             }
         }
+        //dd($request->file('campaign_media'));
+
+
+
         
         if($request->hasFile('videofile')){
             $file_extension = strtolower($request->file('videofile')->getClientOriginalExtension());
@@ -756,9 +784,31 @@ class CampaignController extends Controller{
         if($campaign_id  != ''  && $campaign_id  != 'undefined' && $campaign_id  != null){
                 $scall_from = 'update';
              $create    = $this->BaseModel->where('id',$campaign_id)->update($arr_data);
+            if($filesArr){
+                foreach($filesArr as $filename){
+                    CampaignMediaModel::create(array("campaign_id"=>$campaign_id,
+                     "media_src"=>$filename,
+                     "media_type"=>$uploadType,
+                     "preview_type"=>'',
+                     "original_media_src"=>$filename
+                    ));
+                }
+            }
+
         }else{
-                $scall_from = 'create';
+             $scall_from = 'create';
              $create    = $this->BaseModel->create($arr_data);
+             if($filesArr){
+                foreach($filesArr as $filename){
+                    CampaignMediaModel::create(array("campaign_id"=>$create->id,
+                     "media_src"=>$filename,
+                     "media_type"=>$uploadType,
+                     "preview_type"=>'',
+                     "original_media_src"=>$filename
+                    ));
+                }
+            }
+
         }
        
         if($create){
@@ -866,15 +916,15 @@ class CampaignController extends Controller{
             $obj_user  = User::where('id',$userID)
                                    ->first();
             $obj_responce_data = $this->BaseModel->with('get_user','get_business')->where('id',$id)->first();
-            
             $arr_data = $obj_responce_data->toArray();
-            
             $arr_data['original_image'] = $this->campaign_image_public_img_path.$arr_data['original_image'];
             $arr_data['post_image'] = $this->campaign_image_public_img_path.$arr_data['post_image'];
             $arr_data['screen_shot'] = $this->campaign_image_public_img_path.$arr_data['screen_shot'];
-            
+            $campaignMedia = [];
+            $campaignMedia = CampaignMediaModel::where('campaign_id',$id)->get();           
             $this->arr_view_data['userData']  = $obj_user;              
-            $this->arr_view_data['data']  = $arr_data;              
+            $this->arr_view_data['data']  = $arr_data;     
+            $this->arr_view_data['media']  = $campaignMedia;     
             return view($this->module_view_folder.'.twitter.create',$this->arr_view_data);
         }
     }

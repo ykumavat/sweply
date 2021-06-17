@@ -42,8 +42,8 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <!-- END: Custom CSS-->
 
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/unimark-user.css">
-    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/unimark.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/sweply-user.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/public/assets/css/sweply.css">
 
     <!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">

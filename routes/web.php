@@ -23,6 +23,19 @@ Route::get('cache_clear', function () {
 	Cache::flush();
 	dd("Cache cleared!");
 });
+
+
+Route::get('send-mail', function () {
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing email using smtp'
+    ];
+    \Mail::to('kumavatyogesh11@gmail.com')->send(new \App\Mail\MyTestMail($details));
+   
+    dd("Email is Sent.");
+});
+
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
@@ -207,6 +220,7 @@ Route::group(['prefix' =>'/','middleware' => ['Front','web']], function ()
 	$module_controller = "App\Http\Controllers\Front\PageController@";
 	Route::get('/user/contact', [ 'as'=>'', 'uses'=>$module_controller.'contact_load']);
 	Route::get('/user/faq', [ 'as'=>'', 'uses'=>$module_controller.'faq_load']);
+	Route::get('/user/test', [ 'as'=>'', 'uses'=>$module_controller.'test_load']);
 	/******************************* WALLET CONTROLLER  ************************************************/
 	$module_controller = "App\Http\Controllers\Front\WalletController@";
 	Route::get('/user/wallet', [ 'as'=>'', 'uses'=>$module_controller.'index']);

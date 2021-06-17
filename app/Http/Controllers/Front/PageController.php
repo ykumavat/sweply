@@ -80,4 +80,49 @@ class PageController extends Controller{
         }
     }
 
+
+    public function test_load(){
+        $this->arr_view_data['page_title']       = "Contact";
+        $this->arr_view_data['module_title']     = "pages";
+        $this->arr_view_data['module_url_path']  = $this->module_url_path;  
+        $sessionData = [];        
+        if(!session()->has('LoggedUser')){
+            //return view($this->module_view_folder.'.login',$this->arr_view_data);
+            return redirect(url('/').'/login');
+        }else{
+            $sessionData = Session::all();
+            $userID = 0;
+            $userID = Session::get('LoggedUser');
+            $this->arr_view_data['user'] = $userID;
+             $obj_user  = User::where('id',$userID)
+                                   ->first();
+            $this->arr_view_data['userData']  = $obj_user;              
+            return view($this->module_view_folder.'.test',$this->arr_view_data);
+        }
+    }
+
+    public function demo_load(){
+        $this->arr_view_data['page_title']       = "Contact";
+        $this->arr_view_data['module_title']     = "pages";
+        $this->arr_view_data['module_url_path']  = $this->module_url_path;  
+        $sessionData = [];        
+        if(!session()->has('LoggedUser')){
+            //return view($this->module_view_folder.'.login',$this->arr_view_data);
+            return redirect(url('/').'/login');
+        }else{
+            $sessionData = Session::all();
+            $userID = 0;
+            $userID = Session::get('LoggedUser');
+            $this->arr_view_data['user'] = $userID;
+             $obj_user  = User::where('id',$userID)
+                                   ->first();
+            $this->arr_view_data['userData']  = $obj_user;              
+            return view($this->module_view_folder.'.demo',$this->arr_view_data);
+        }
+    }
+
+
+
+    
+
 }

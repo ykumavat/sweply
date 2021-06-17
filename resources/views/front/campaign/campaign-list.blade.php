@@ -184,7 +184,7 @@
              "pageLength": 15,
             columns: [
                 {data: 'id', name: 'id'},
-	            {data: 'channel_name', name: 'channel_name'},
+	            {data: 'channel_name', name: 'channel_name',className: 'text-align-center channel-icon'},
                 {data: 'campaign_name', name: 'campaign_name'},
                 {data: 'campaign_target', name: 'campaign_target',className: 'text-align-center'},
                 //{data: 'heading', name: 'heading'},
